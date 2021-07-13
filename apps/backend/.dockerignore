@@ -1,0 +1,11 @@
+# Common dirs
+.rush
+dist
+node_modules
+test
+
+# Common files
+.env
+.env.template
+Dockerfile
+docker-compose.yml

@@ -8,6 +8,7 @@ specifiers:
   '@nestjs/schematics': ^8.0.0
   '@nestjs/testing': ^8.0.0
   '@rush-temp/backend': file:./projects/backend.tgz
+  '@rush-temp/docker': file:./projects/docker.tgz
   '@types/express': ^4.17.13
   '@types/jest': ^26.0.24
   '@types/node': ^16.0.0
@@ -37,6 +38,7 @@ dependencies:
   '@nestjs/schematics': 8.0.1_typescript@4.3.5
   '@nestjs/testing': 8.0.2_4a76b0219c13cd87272f870fd4818ead
   '@rush-temp/backend': file:projects/backend.tgz
+  '@rush-temp/docker': file:projects/docker.tgz
   '@types/express': 4.17.13
   '@types/jest': 26.0.24
   '@types/node': 16.3.1
@@ -5325,4 +5327,10 @@ packages:
       - utf-8-validate
       - webpack
       - webpack-cli
+    dev: false
+
+  file:projects/docker.tgz:
+    resolution: {integrity: sha512-lak+DN9FY0sOYBfz3rpiL+3FTYIY+Ee1MMR+yXoYtSuCM8xsFpxjXsh96PrWpO4wydl4Zy7JKEh9lFUcf2Dwfw==, tarball: file:projects/docker.tgz}
+    name: '@rush-temp/docker'
+    version: 0.0.0
     dev: false

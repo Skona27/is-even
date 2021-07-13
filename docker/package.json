@@ -1,0 +1,12 @@
+{
+  "name": "@is-even/docker",
+  "version": "1.0.0",
+  "description": "Docker environment for 'is-even' project",
+  "author": "Jakub Skoneczny",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "docker-compose build",
+    "up": "docker-compose up"
+  }
+}

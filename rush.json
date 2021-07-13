@@ -451,6 +451,10 @@
     {
       "packageName": "@is-even/backend",
       "projectFolder": "apps/backend"
+    },
+    {
+      "packageName": "@is-even/docker",
+      "projectFolder": "docker"
     }
   ]
 }
