@@ -453,6 +453,10 @@
       "projectFolder": "apps/backend"
     },
     {
+      "packageName": "@is-even/frontend",
+      "projectFolder": "apps/frontend"
+    },
+    {
       "packageName": "@is-even/docker",
       "projectFolder": "docker"
     }

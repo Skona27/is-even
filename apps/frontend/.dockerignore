@@ -2,7 +2,6 @@
 .rush
 dist
 node_modules
-test
 
 # Common files
 .env

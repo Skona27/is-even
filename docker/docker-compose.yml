@@ -1,6 +1,19 @@
 version: '3.7'
 
 services:
+  frontend:
+    build:
+      context: ../apps/frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ../apps/frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    environment:
+      - PORT=${FRONTEND_PORT}
+    command: npm run dev
+
   backend:
     build:
       context: ../apps/backend
@@ -9,7 +22,9 @@ services:
       - ../apps/backend:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - ${APP_PORT}:${APP_PORT}
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    environment:
+      - PORT=${BACKEND_PORT}
     command: npm run start:dev
     depends_on:
       - postgres
