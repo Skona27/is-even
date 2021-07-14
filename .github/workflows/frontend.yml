@@ -27,9 +27,10 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
+        cache: npm
+    - run: npm install
       working-directory: apps/frontend
-    - run: npm run build --if-present
+    - run: npm run lint
       working-directory: apps/frontend
-    - run: npm lint
+    - run: npm run build
       working-directory: apps/frontend
