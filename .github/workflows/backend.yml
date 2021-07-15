@@ -47,11 +47,11 @@ jobs:
     - run: npm install
       working-directory: apps/backend
       
-    - run: npm lint
+    - run: npm run lint
       working-directory: apps/backend
 
-    - run: npm test
+    - run: npm run test
       working-directory: apps/backend
 
-    - run: npm build
+    - run: npm run build
       working-directory: apps/backend
