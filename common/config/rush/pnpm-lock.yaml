@@ -17,6 +17,8 @@ specifiers:
   '@types/supertest': ^2.0.11
   '@typescript-eslint/eslint-plugin': ^4.28.2
   '@typescript-eslint/parser': ^4.28.2
+  aws-sdk: ~2.946.0
+  emotion: ~11.0.0
   eslint-config-next: 11.0.1
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^3.4.0
@@ -52,6 +54,8 @@ dependencies:
   '@types/supertest': 2.0.11
   '@typescript-eslint/eslint-plugin': 4.28.3_1c9d952b0dc54af5a6ec241f969f206f
   '@typescript-eslint/parser': 4.28.3_typescript@4.3.5
+  aws-sdk: 2.946.0
+  emotion: 11.0.0
   eslint-config-next: 11.0.1_next@11.0.1+typescript@4.3.5
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier: 3.4.0_ae3805332b62cec006ed24a9ec35ea79
@@ -1774,6 +1778,22 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
+  /aws-sdk/2.946.0:
+    resolution: {integrity: sha512-d0fbVNHdpoeszGUcxOV8m+/kLNxUfKP5QsGwaRjcQfvEokFmvdKsvw87LhepFOa00NaI4J3jt8AbsX4mvmcChg==}
+    engines: {node: '>= 0.8.0'}
+    requiresBuild: true
+    dependencies:
+      buffer: 4.9.2
+      events: 1.1.1
+      ieee754: 1.1.13
+      jmespath: 0.15.0
+      querystring: 0.2.0
+      sax: 1.2.1
+      url: 0.10.3
+      uuid: 3.3.2
+      xml2js: 0.4.19
+    dev: false
+
   /axe-core/4.3.1:
     resolution: {integrity: sha512-3WVgVPs/7OnKU3s+lqMtkv3wQlg3WxK1YifmpJSDO0E1aPBrZWlrrTO6cxRqCXLuX2aYgCljqXIQd0VnRidV0g==}
     engines: {node: '>=4'}
@@ -2686,6 +2706,10 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
+  /emotion/11.0.0:
+    resolution: {integrity: sha512-QW3CRqic3aRw1OBOcnvxaHEpCmxtlGwZ5tM9dV5rY3Rn+F41E8EgTPOqJ5VfsqQ5ZXHDs2zSDyUwGI0ZfC2+5A==}
+    dev: false
+
   /encodeurl/1.0.2:
     resolution: {integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=}
     engines: {node: '>= 0.8'}
@@ -3235,6 +3259,11 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /events/1.1.1:
+    resolution: {integrity: sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=}
+    engines: {node: '>=0.4.x'}
+    dev: false
+
   /events/3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
@@ -3780,6 +3809,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
+    dev: false
+
+  /ieee754/1.1.13:
+    resolution: {integrity: sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==}
     dev: false
 
   /ieee754/1.2.1:
@@ -4619,6 +4652,11 @@ packages:
       - supports-color
       - ts-node
       - utf-8-validate
+    dev: false
+
+  /jmespath/0.15.0:
+    resolution: {integrity: sha1-o/Iiqarp+Wb10nx5ZRDigJF2Qhc=}
+    engines: {node: '>= 0.6.0'}
     dev: false
 
   /js-tokens/4.0.0:
@@ -6020,6 +6058,10 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: false
 
+  /sax/1.2.1:
+    resolution: {integrity: sha1-e45lYZCyKOgaZq6nSEgNgozS03o=}
+    dev: false
+
   /saxes/5.0.1:
     resolution: {integrity: sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==}
     engines: {node: '>=10'}
@@ -6857,6 +6899,13 @@ packages:
       punycode: 2.1.1
     dev: false
 
+  /url/0.10.3:
+    resolution: {integrity: sha1-Ah5NnHcF8hu/N9A861h2dAJ3TGQ=}
+    dependencies:
+      punycode: 1.3.2
+      querystring: 0.2.0
+    dev: false
+
   /url/0.11.0:
     resolution: {integrity: sha1-ODjpfPxgUh63PFJajlW/3Z4uKPE=}
     dependencies:
@@ -6903,6 +6952,12 @@ packages:
   /utils-merge/1.0.1:
     resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
     engines: {node: '>= 0.4.0'}
+    dev: false
+
+  /uuid/3.3.2:
+    resolution: {integrity: sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==}
+    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    hasBin: true
     dev: false
 
   /uuid/8.3.2:
@@ -7151,6 +7206,18 @@ packages:
     resolution: {integrity: sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==}
     dev: false
 
+  /xml2js/0.4.19:
+    resolution: {integrity: sha512-esZnJZJOiJR9wWKMyuvSE1y6Dq5LCuJanqhxslH2bxM6duahNZ+HMpCLhBQGZkbX6xRf8x1Y2eJlgt2q3qo49Q==}
+    dependencies:
+      sax: 1.2.1
+      xmlbuilder: 9.0.7
+    dev: false
+
+  /xmlbuilder/9.0.7:
+    resolution: {integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=}
+    engines: {node: '>=4.0'}
+    dev: false
+
   /xmlchars/2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
     dev: false
@@ -7203,7 +7270,7 @@ packages:
     dev: false
 
   file:projects/backend.tgz:
-    resolution: {integrity: sha512-FPv/0S4WuSkwujC6iNZVjRXiEAHOG/CmEeeogEAamHDSSF/DCTM8VaO94nwV7PmRi9Vgf/XV1xXg0lgmwD2NHA==, tarball: file:projects/backend.tgz}
+    resolution: {integrity: sha512-7Y05jyKZscAzDfOk38QJgircq5W/gAu9EfWnSCaodYi1UHbILqoFIzSWbQfyRN0fxZL8wbAB0U1Dn+0jT0HGnQ==, tarball: file:projects/backend.tgz}
     name: '@rush-temp/backend'
     version: 0.0.0
     dependencies:
@@ -7219,6 +7286,7 @@ packages:
       '@types/supertest': 2.0.11
       '@typescript-eslint/eslint-plugin': 4.28.3_8da3816a7c3fb8ebc9f4c4b3e4b2e38f
       '@typescript-eslint/parser': 4.28.3_eslint@7.30.0+typescript@4.3.5
+      aws-sdk: 2.946.0
       eslint: 7.30.0
       eslint-config-prettier: 8.3.0_eslint@7.30.0
       eslint-plugin-prettier: 3.4.0_0470f3bcd018a045da11d0bbb868d6c6
@@ -7258,11 +7326,12 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-GA2s9Y6FZ+vdxv6YUrxFDkWtzjrvONaHDh7W0tbr0bvQi4aTWAEy3Eyq9b13/pDr7a4XIP6tqDbqhKzWyIjNag==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-AxheHw38IiFIBOfz/6fZWzapDSc1/YYDHm3f8LX1ZTg1/X14BgCxAEgk+645FjO89zVvfZJ5wCrzC/Qa3N3ulA==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
       '@types/react': 17.0.14
+      emotion: 11.0.0
       eslint: 7.30.0
       eslint-config-next: 11.0.1_6b78ba35645ed557addbb8714920eb26
       next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
