@@ -1,22 +1,18 @@
 ---
-name: "Tagged Release"
+name: 'Tagged Release'
 
 on:
-  create:
-    tags:
-      - "v*"
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 jobs:
   tagged-release:
-    name: "Tagged Release"
-    runs-on: "ubuntu-latest"
+    name: 'Tagged Release'
+    runs-on: 'ubuntu-latest'
 
     steps:
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: 'marvinpinto/action-automatic-releases@latest'
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
           prerelease: false
-          
