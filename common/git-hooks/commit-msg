@@ -1,0 +1,9 @@
+#!/bin/sh
+
+commit_msg=$(cat "${1:?Missing commit message file}")
+
+if [[ ! $commit_msg =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test).* ]]; then
+  echo "Invalid commit message."
+	exit 1
+fi
+
