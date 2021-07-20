@@ -1,6 +1,6 @@
 {
   "name": "@is-even/backend",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Backend for 'is-even' application",
   "author": "Jakub Skoneczny",
   "private": true,
@@ -29,7 +29,10 @@
     "rxjs": "^7.2.0",
     "swagger-ui-express": "~4.1.6",
     "@nestjs/swagger": "~5.0.3",
-    "@nestjs/config": "~1.0.0"
+    "@nestjs/config": "~1.0.0",
+    "@nestjs/typeorm": "~8.0.1",
+    "typeorm": "~0.2.34",
+    "pg": "~8.6.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

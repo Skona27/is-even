@@ -6,12 +6,35 @@ import { Config } from './config.interface';
 export class AppConfigService {
   constructor(private readonly configService: ConfigService) {}
 
+  get appConfig(): Config['appConfig'] {
+    return {
+      port: this.configService.get<string>('PORT'),
+      version: process.env.npm_package_version,
+    };
+  }
+
   get swaggerConfig(): Config['swaggerConfig'] {
     return {
       title: '@is-even/backend API documentation',
-      version: '1.0',
+      version: this.appConfig.version,
       description: '',
       enabled: true,
+    };
+  }
+
+  get databaseConfig(): Config['databaseConfig'] {
+    return {
+      name: 'default',
+      type: 'postgres',
+      host: this.configService.get<string>('DB_HOST'),
+      port: this.configService.get<number>('DB_PORT'),
+      username: this.configService.get<string>('DB_USERNAME'),
+      password: this.configService.get<string>('DB_PASSWORD'),
+      database: this.configService.get<string>('DB_DATABASE_NAME'),
+      entities: ['dist/**/*.entity{ .ts,.js}'],
+      migrations: ['dist/**/database/migrations/*.js'],
+      synchronize: false,
+      migrationsRun: true,
     };
   }
 }
