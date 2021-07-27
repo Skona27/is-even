@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AwsSdkModule } from 'nest-aws-sdk';
+import { CognitoIdentityServiceProvider } from 'aws-sdk';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AppConfigService } from '../config/config.service';
 import { AppConfigModule } from '../config/config.module';
+import { UserModule } from '../user/user.module';
 import { LoggerModule } from '../logger/logger.module';
 
 @Module({
@@ -17,8 +21,21 @@ import { LoggerModule } from '../logger/logger.module';
         return configService.databaseConfig;
       },
     }),
+    AwsSdkModule.forRootAsync({
+      defaultServiceOptions: {
+        useFactory: (configService: AppConfigService) => {
+          return {
+            region: configService.awsConfig.region,
+          };
+        },
+        inject: [AppConfigService],
+        imports: [AppConfigModule],
+      },
+      services: [CognitoIdentityServiceProvider],
+    }),
     AppConfigModule,
     LoggerModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
