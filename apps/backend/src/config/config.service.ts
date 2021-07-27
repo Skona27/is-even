@@ -37,4 +37,13 @@ export class AppConfigService {
       migrationsRun: true,
     };
   }
+
+  get awsConfig(): Config['awsConfig'] {
+    return {
+      region: this.configService.get<string>('AWS_REGION'),
+      cognito_userPoolId: this.configService.get<string>(
+        'AWS_COGNITO_USER_POOL_ID',
+      ),
+    };
+  }
 }

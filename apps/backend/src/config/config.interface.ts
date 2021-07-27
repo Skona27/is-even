@@ -12,4 +12,8 @@ export interface Config {
     enabled: boolean;
   };
   databaseConfig: TypeOrmModuleOptions;
+  awsConfig: {
+    region: string;
+    cognito_userPoolId: string;
+  };
 }
