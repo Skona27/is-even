@@ -12,12 +12,12 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  @ApiTags('user')
+  @ApiTags('users')
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'User has been successfully createds',
