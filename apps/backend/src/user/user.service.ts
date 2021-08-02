@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as util from 'util';
 
 import { User } from './user.entity';
 import { LoggerService } from '../logger/logger.service';
 import { CognitoService } from '../cognito/cognito.service';
 import { CreateUserError } from './error/create-user.error';
+import { UserWithAuth } from './interface/user-with-auth.interface';
+import { LoginUserError } from './error/login-user.error';
+import { ReadUserError } from './error/read-user.error';
 
 @Injectable()
 export class UserService {
@@ -36,8 +40,41 @@ export class UserService {
     try {
       return await this.usersRepository.save(user);
     } catch (error) {
-      this.loggerService.log(`Failed to create a new user. ${error}`);
+      this.loggerService.log(
+        `Failed to create a new user. ${util.inspect(error)}`,
+      );
       throw new CreateUserError(error);
+    }
+  }
+
+  public async loginUser(
+    email: string,
+    password: string,
+  ): Promise<UserWithAuth> {
+    try {
+      const auth = await this.cognitoService.login(email, password);
+      const user = await this.findUserByEmail(email);
+
+      return {
+        user,
+        auth,
+      };
+    } catch (error) {
+      this.loggerService.log(`Failed to login user. ${error}`);
+      throw new LoginUserError(error);
+    }
+  }
+
+  public async findUserByEmail(email: string): Promise<User> {
+    try {
+      return await this.usersRepository.findOne({
+        where: {
+          email,
+        },
+      });
+    } catch (error) {
+      this.loggerService.log(`Failed to read user data. ${error}`);
+      throw new ReadUserError(error);
     }
   }
 }
