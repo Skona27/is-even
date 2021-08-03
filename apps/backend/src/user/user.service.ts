@@ -77,4 +77,17 @@ export class UserService {
       throw new ReadUserError(error);
     }
   }
+
+  public async findUserByAuthId(authId: string): Promise<User> {
+    try {
+      return await this.usersRepository.findOne({
+        where: {
+          authId,
+        },
+      });
+    } catch (error) {
+      this.loggerService.log(`Failed to read user data. ${error}`);
+      throw new ReadUserError(error);
+    }
+  }
 }

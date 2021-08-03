@@ -10,6 +10,7 @@ import { AppConfigService } from '../config/config.service';
 import { AppConfigModule } from '../config/config.module';
 import { UserModule } from '../user/user.module';
 import { LoggerModule } from '../logger/logger.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { LoggerModule } from '../logger/logger.module';
     AppConfigModule,
     LoggerModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

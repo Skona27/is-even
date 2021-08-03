@@ -16,5 +16,6 @@ export interface Config {
     region: string;
     cognito_userPoolId: string;
     cognito_clientId: string;
+    cognito_issuer: string;
   };
 }

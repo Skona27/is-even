@@ -8,7 +8,7 @@ import { AppConfigService } from '../config/config.service';
 import { CognitoCreateUserError } from './error/cognito-create-user.error';
 import { CognitoUserIdMissingError } from './error/cognito-user-id-missing.error';
 import { CognitoLoginUserError } from './error/cognito-login-user.error';
-import { AuthResponse } from './interface/auth-response.interface';
+import { TokenResponse } from './interface/auth-response.interface';
 
 @Injectable()
 export class CognitoService {
@@ -64,7 +64,7 @@ export class CognitoService {
    * @param password
    * @returns RefreshToken, AccessToken, Expiration date
    */
-  public async login(email: string, password: string): Promise<AuthResponse> {
+  public async login(email: string, password: string): Promise<TokenResponse> {
     try {
       const response = await this.cognitoService
         .adminInitiateAuth({

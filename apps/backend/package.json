@@ -38,7 +38,11 @@
     "nest-aws-sdk": "~2.0.0",
     "aws-sdk": "~2.953.0",
     "class-validator": "~0.13.1",
-    "class-transformer": "~0.4.0"
+    "class-transformer": "~0.4.0",
+    "passport": "~0.4.1",
+    "passport-jwt": "~4.0.0",
+    "@nestjs/passport": "~8.0.0",
+    "jwks-rsa": "~2.0.4"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

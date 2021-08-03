@@ -9,6 +9,7 @@ import { LoggerModule } from '../logger/logger.module';
 
 @Module({
   providers: [UserService],
+  exports: [UserService],
   controllers: [UserController],
   imports: [TypeOrmModule.forFeature([User]), CognitoModule, LoggerModule],
 })

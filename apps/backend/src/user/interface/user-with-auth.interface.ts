@@ -1,7 +1,7 @@
-import { AuthResponse } from '../../cognito/interface/auth-response.interface';
+import { TokenResponse } from '../../cognito/interface/auth-response.interface';
 import { User } from '../user.entity';
 
 export interface UserWithAuth {
   user: User;
-  auth: AuthResponse;
+  auth: TokenResponse;
 }

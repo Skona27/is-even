@@ -4,6 +4,8 @@ import {
   HttpStatus,
   HttpException,
   Body,
+  Get,
+  Req,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -14,6 +16,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UserWithAuth } from './interface/user-with-auth.interface';
 import { User } from './user.entity';
 import { UserService } from './user.service';
+import { Authorised } from '../auth/auth.decorator';
+import { RequestWithUser } from '../common/interface/request-with-user.interface';
 
 @Controller('users')
 export class UserController {
@@ -91,6 +95,28 @@ export class UserController {
           HttpStatus.SERVICE_UNAVAILABLE,
         );
       }
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get('me')
+  @Authorised()
+  @ApiTags('users')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'User data has been successfully retrieved',
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
+  })
+  public async me(@Req() request: RequestWithUser): Promise<User> {
+    try {
+      return request.user;
+    } catch (error) {
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
