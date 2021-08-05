@@ -28,6 +28,7 @@ specifiers:
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^3.4.0
   jest: 27.0.6
+  jwks-rsa: ~2.0.4
   nest-aws-sdk: ~2.0.0
   next: 11.0.1
   passport: ~0.4.1
@@ -76,6 +77,7 @@ dependencies:
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier: 3.4.0_ae3805332b62cec006ed24a9ec35ea79
   jest: 27.0.6_ts-node@10.1.0
+  jwks-rsa: 2.0.4
   nest-aws-sdk: 2.0.0_dc210ca148555eb68d524389ccff6fdb
   next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
   passport: 0.4.1
@@ -2672,6 +2674,11 @@ packages:
       public-encrypt: 4.0.3
       randombytes: 2.1.0
       randomfill: 1.0.4
+    dev: false
+
+  /crypto/1.0.1:
+    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
+    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
     dev: false
 
   /css.escape/1.5.1:
@@ -7902,7 +7909,7 @@ packages:
     dev: false
 
   file:projects/backend.tgz:
-    resolution: {integrity: sha512-M+E9bAK9s78ddFCrrNpifKz7RYe+ZYYX9qbQ72JetnAbHO7r9jelnkOfCdPhAvw/GUiMqPHg8IyACyPegZWLbg==, tarball: file:projects/backend.tgz}
+    resolution: {integrity: sha512-pB/V82P7rG5s0oBBpBA4sGWR1QG3P5/+pCVq8iKhrQbT8qIoJleureKCE5+jcVwOutOYQxLiTEqHfGcS4WWYCg==, tarball: file:projects/backend.tgz}
     name: '@rush-temp/backend'
     version: 0.0.0
     dependencies:
@@ -7925,6 +7932,7 @@ packages:
       aws-sdk: 2.953.0
       class-transformer: 0.4.0
       class-validator: 0.13.1
+      crypto: 1.0.1
       eslint: 7.30.0
       eslint-config-prettier: 8.3.0_eslint@7.30.0
       eslint-plugin-prettier: 3.4.0_0470f3bcd018a045da11d0bbb868d6c6

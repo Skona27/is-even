@@ -11,6 +11,7 @@ import { AppConfigModule } from '../config/config.module';
 import { UserModule } from '../user/user.module';
 import { LoggerModule } from '../logger/logger.module';
 import { AuthModule } from '../auth/auth.module';
+import { ApiKeyModule } from '../api-key/api-key.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { AuthModule } from '../auth/auth.module';
     LoggerModule,
     UserModule,
     AuthModule,
+    ApiKeyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
