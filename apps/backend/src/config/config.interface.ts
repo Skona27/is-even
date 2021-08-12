@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { CreditLimit } from '../credit/interface/credit-limit.interface';
 
 export interface Config {
   appConfig: {
@@ -18,4 +19,5 @@ export interface Config {
     cognito_clientId: string;
     cognito_issuer: string;
   };
+  creditsConfig: Record<CreditLimit, number>;
 }

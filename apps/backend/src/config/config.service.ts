@@ -31,7 +31,7 @@ export class AppConfigService {
       username: this.configService.get<string>('DB_USERNAME'),
       password: this.configService.get<string>('DB_PASSWORD'),
       database: this.configService.get<string>('DB_DATABASE_NAME'),
-      entities: ['dist/**/*.entity{ .ts,.js}'],
+      entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: ['dist/**/database/migrations/*.js'],
       synchronize: false,
       migrationsRun: true,
@@ -46,6 +46,13 @@ export class AppConfigService {
       ),
       cognito_clientId: this.configService.get<string>('AWS_COGNITO_CLIENT_ID'),
       cognito_issuer: this.configService.get<string>('AWS_COGNITO_ISSUER'),
+    };
+  }
+
+  get creditsConfig(): Config['creditsConfig'] {
+    return {
+      FREE: 1000,
+      STANDARD: 1000000,
     };
   }
 }

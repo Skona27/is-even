@@ -43,7 +43,8 @@
     "passport-jwt": "~4.0.0",
     "@nestjs/passport": "~8.0.0",
     "jwks-rsa": "~2.0.4",
-    "crypto": "~1.0.1"
+    "crypto": "~1.0.1",
+    "date-fns": "~2.23.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

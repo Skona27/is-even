@@ -12,6 +12,7 @@ import { UserModule } from '../user/user.module';
 import { LoggerModule } from '../logger/logger.module';
 import { AuthModule } from '../auth/auth.module';
 import { ApiKeyModule } from '../api-key/api-key.module';
+import { CreditModule } from '../credit/credit.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ApiKeyModule } from '../api-key/api-key.module';
     UserModule,
     AuthModule,
     ApiKeyModule,
+    CreditModule,
   ],
   controllers: [AppController],
   providers: [AppService],
