@@ -1,6 +1,6 @@
 {
   "name": "@is-even/backend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Backend for 'is-even' application",
   "author": "Jakub Skoneczny",
   "private": true,
