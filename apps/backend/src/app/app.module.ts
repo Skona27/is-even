@@ -13,6 +13,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { AuthModule } from '../auth/auth.module';
 import { ApiKeyModule } from '../api-key/api-key.module';
 import { CreditModule } from '../credit/credit.module';
+import { UsageModule } from '../usage/usage.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { CreditModule } from '../credit/credit.module';
     AuthModule,
     ApiKeyModule,
     CreditModule,
+    UsageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

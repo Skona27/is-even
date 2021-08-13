@@ -77,6 +77,25 @@ export class ApiKeyService {
     }
   }
 
+  public async useApiKey(apiKeyValue: string): Promise<ApiKey> {
+    try {
+      const apiKey = await this.apiKeyRepository.findOneOrFail({
+        where: {
+          value: apiKeyValue,
+        },
+      });
+
+      apiKey.lastUsed = new Date();
+
+      await this.apiKeyRepository.save(apiKey);
+
+      return apiKey;
+    } catch (error) {
+      this.loggerService.log(`Failed to fetch owner of API key. ${error}`);
+      throw new NotFoundApiKeyError();
+    }
+  }
+
   private async findApiKeyById(apiKeyId: string): Promise<ApiKey> {
     return await this.apiKeyRepository.findOne({ id: apiKeyId });
   }

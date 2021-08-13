@@ -15,6 +15,7 @@ import { CreditDuration } from './interface/credit-duration.interface';
 import { ReadCreditError } from './error/read-credit.error';
 import { CreateCreditError } from './error/create-credit.error';
 import { IncrementCreditError } from './error/increment-credit.error';
+import { ReadActiveCreditError } from './error/read-active-credit.error';
 
 @Injectable()
 export class CreditService {
@@ -65,10 +66,25 @@ export class CreditService {
     }
   }
 
-  public async incrementActiveCreditUsage(user: User): Promise<void> {
+  public async getActiveCredit(user: User): Promise<Credit> {
     try {
-      const credit = await this.getActiveCredit(user);
+      const presentDate = new Date();
 
+      return await this.creditRepository.findOneOrFail({
+        where: {
+          user,
+          fromDate: LessThan(presentDate),
+          toDate: MoreThan(presentDate),
+        },
+      });
+    } catch (error) {
+      this.loggerService.log(`No active credit is available. ${error}`);
+      throw new ReadActiveCreditError(error);
+    }
+  }
+
+  public async incrementCreditUsage(credit: Credit): Promise<void> {
+    try {
       this.checkLimit(credit);
       credit.incrementUsage();
 
@@ -83,18 +99,6 @@ export class CreditService {
     if (credit.isExceeded()) {
       throw new Error(`Credit is exceeded`);
     }
-  }
-
-  private async getActiveCredit(user: User): Promise<Credit> {
-    const presentDate = new Date();
-
-    return await this.creditRepository.findOneOrFail({
-      where: {
-        user,
-        fromDate: LessThan(presentDate),
-        toDate: MoreThan(presentDate),
-      },
-    });
   }
 
   private calculateCreditDuration(duration: CreditDuration): {
