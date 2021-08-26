@@ -1,1 +1,4 @@
-export type CreditLimit = 'FREE' | 'STANDARD';
+export enum CreditLimit {
+  Free = 'Free',
+  Standard = 'Standard',
+}

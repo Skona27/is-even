@@ -6,8 +6,9 @@ import { CreditService } from '../credit/credit.service';
 import { Credit } from '../credit/credit.entity';
 
 import { InvalidApiKeyError } from './error/invalid-api-key.error';
-import { NoActiveCreditError } from './error/no-active-credit.error';
 import { UsedCreditError } from './error/used-credit.error';
+import { CreditLimit } from '../credit/interface/credit-limit.interface';
+import { CreditDuration } from '../credit/interface/credit-duration.interface';
 
 @Injectable()
 export class UsageService {
@@ -18,7 +19,13 @@ export class UsageService {
 
   public async charge(apiKey: string): Promise<void> {
     const user = await this.getApiKeyOwner(apiKey);
-    const credit = await this.getActiveCredit(user);
+
+    let credit: Credit;
+    credit = await this.getActiveCredit(user);
+
+    if (!credit) {
+      credit = await this.createFreeCredit(user);
+    }
 
     await this.incrementCredit(credit);
   }
@@ -33,11 +40,15 @@ export class UsageService {
   }
 
   private async getActiveCredit(user): Promise<Credit> {
-    try {
-      return await this.creditService.getActiveCredit(user);
-    } catch (error) {
-      throw new NoActiveCreditError(error);
-    }
+    return await this.creditService.getActiveCredit(user);
+  }
+
+  private async createFreeCredit(user): Promise<Credit> {
+    return await this.creditService.createCredit(
+      CreditLimit.Free,
+      CreditDuration.Monthly,
+      user,
+    );
   }
 
   private async incrementCredit(credit: Credit): Promise<void> {

@@ -1,1 +1,3 @@
-export type CreditDuration = 'MONTHLY';
+export enum CreditDuration {
+  Monthly = 'Monthly',
+}

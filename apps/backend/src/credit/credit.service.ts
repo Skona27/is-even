@@ -70,7 +70,7 @@ export class CreditService {
     try {
       const presentDate = new Date();
 
-      return await this.creditRepository.findOneOrFail({
+      return await this.creditRepository.findOne({
         where: {
           user,
           fromDate: LessThan(presentDate),
@@ -78,7 +78,7 @@ export class CreditService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`No active credit is available. ${error}`);
+      this.loggerService.log(`Failed to read user's active credit. ${error}`);
       throw new ReadActiveCreditError(error);
     }
   }
@@ -106,7 +106,7 @@ export class CreditService {
     toDate: Date;
   } {
     switch (duration) {
-      case 'MONTHLY': {
+      case CreditDuration.Monthly: {
         const fromDate = new Date();
         const toDate = addMonths(fromDate, 1);
 
@@ -123,10 +123,10 @@ export class CreditService {
     const creditsConfig = this.configService.creditsConfig;
 
     switch (limit) {
-      case 'FREE':
-        return creditsConfig.FREE;
-      case 'STANDARD':
-        return creditsConfig.STANDARD;
+      case CreditLimit.Free:
+        return creditsConfig.Free;
+      case CreditLimit.Standard:
+        return creditsConfig.Standard;
       default:
         throw new Error(`Cannot read credit limit value for type ${limit}`);
     }

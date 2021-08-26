@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { CreditLimit } from '../credit/interface/credit-limit.interface';
 import { Config } from './config.interface';
 
 @Injectable()
@@ -51,8 +52,8 @@ export class AppConfigService {
 
   get creditsConfig(): Config['creditsConfig'] {
     return {
-      FREE: 1000,
-      STANDARD: 1000000,
+      [CreditLimit.Free]: 1000,
+      [CreditLimit.Standard]: 1000000,
     };
   }
 }
