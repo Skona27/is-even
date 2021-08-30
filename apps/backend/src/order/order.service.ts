@@ -18,6 +18,7 @@ import { ReadOrderError } from './error/read-order.error';
 import { UpdateOrderError } from './error/update-order.error';
 import { InvalidOrderStatusError } from './error/invalid-order-status.error';
 import { FulfilledOrderError } from './error/fulfilled-order.error';
+import { DeleteOrderError } from './error/delete-order.error';
 
 @Injectable()
 export class OrderService {
@@ -111,6 +112,24 @@ export class OrderService {
     } catch (error) {
       this.loggerService.log(`Failed to update order status. ${error}`);
       throw new UpdateOrderError(error);
+    }
+  }
+
+  public async deleteOrder(order: Order): Promise<void> {
+    try {
+      if (
+        order.status === OrderStatus.PaymentPending ||
+        order.status === OrderStatus.PaymentSuccessful
+      ) {
+        throw new Error(
+          'Cannot delete the order with "PaymentPending" or "PaymentSuccessful" status',
+        );
+      }
+
+      await this.orderRepository.delete(order);
+    } catch (error) {
+      this.loggerService.log(`Failed to delete order. ${error}`);
+      throw new DeleteOrderError(error);
     }
   }
 
