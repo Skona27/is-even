@@ -15,6 +15,7 @@ import { ApiKeyModule } from '../api-key/api-key.module';
 import { CreditModule } from '../credit/credit.module';
 import { UsageModule } from '../usage/usage.module';
 import { OrderModule } from '../order/order.module';
+import { PaymentModule } from '../payment/payment.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { OrderModule } from '../order/order.module';
     CreditModule,
     UsageModule,
     OrderModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
