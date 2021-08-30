@@ -2,7 +2,9 @@ import { Column, ManyToOne, JoinColumn, Entity, OneToOne } from 'typeorm';
 
 import { User } from '../user/user.entity';
 import { Credit } from '../credit/credit.entity';
+import { Payment } from '../payment/payment.entity';
 import { BaseEditableEntity } from '../common/model/base-editable.entity';
+
 import { OrderStatus } from './interface/order-status.interface';
 import { CreditLimit } from '../credit/interface/credit-limit.interface';
 import { CreditDuration } from '../credit/interface/credit-duration.interface';
@@ -41,6 +43,10 @@ export class Order extends BaseEditableEntity {
   @OneToOne(() => Credit, { eager: true, nullable: true })
   @JoinColumn({ name: 'credit_id', referencedColumnName: 'id' })
   public credit?: Credit;
+
+  @OneToOne(() => Payment, { eager: true, nullable: true })
+  @JoinColumn({ name: 'payment_id', referencedColumnName: 'id' })
+  public payment?: Payment;
 
   public belongsTo(userId: string): boolean {
     return this.user.id === userId;

@@ -4,15 +4,20 @@ import { Repository } from 'typeorm';
 
 import { CreditDuration } from '../credit/interface/credit-duration.interface';
 import { CreditLimit } from '../credit/interface/credit-limit.interface';
-import { LoggerService } from '../logger/logger.service';
 import { OrderStatus } from './interface/order-status.interface';
+
+import { LoggerService } from '../logger/logger.service';
+import { CreditService } from '../credit/credit.service';
+
 import { Order } from './order.entity';
 import { User } from '../user/user.entity';
+
 import { UnathorizedOrderError } from './error/unathorized-order.error';
 import { CreateOrderError } from './error/create-order.error';
 import { ReadOrderError } from './error/read-order.error';
 import { UpdateOrderError } from './error/update-order.error';
-import { InvalidOrderStatusError } from './error/invalid-order-status.order';
+import { InvalidOrderStatusError } from './error/invalid-order-status.error';
+import { FulfilledOrderError } from './error/fulfilled-order.error';
 
 @Injectable()
 export class OrderService {
@@ -20,6 +25,7 @@ export class OrderService {
     private readonly loggerService: LoggerService,
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
+    private readonly creditService: CreditService,
   ) {
     this.loggerService.setContext(OrderService.name);
   }
@@ -60,24 +66,16 @@ export class OrderService {
     }
   }
 
-  public async getOrderById(orderId: string, user: User): Promise<Order> {
+  public async getOrderById(id: string): Promise<Order> {
     try {
-      return await this.orderRepository.findOne({
+      return await this.orderRepository.findOneOrFail({
         where: {
-          id: orderId,
-          user,
+          id,
         },
       });
     } catch (error) {
       this.loggerService.log(`Failed to read a order. ${error}`);
       throw new ReadOrderError(error);
-    }
-  }
-
-  public checkOrderOwner(order: Order, user: User): void {
-    if (!order.belongsTo(user.id)) {
-      this.loggerService.log(`Order does not belong to the user.`);
-      throw new UnathorizedOrderError();
     }
   }
 
@@ -111,37 +109,53 @@ export class OrderService {
     try {
       return await this.orderRepository.save(order);
     } catch (error) {
-      this.loggerService.log(`Failed to update order status.`);
+      this.loggerService.log(`Failed to update order status. ${error}`);
       throw new UpdateOrderError(error);
     }
   }
 
-  // TODO: Implement if needed
-  public async setCreditForOrder(
-    order: Order,
-    credit: OrderStatus,
-    user: User,
-  ): Promise<Order> {
+  public async fulfillOrder(order: Order): Promise<Order> {
     try {
-      return new Order();
-    } catch (error) {}
+      const { creditLimit, creditDuration } = order;
+
+      const credit = await this.creditService.createCredit(
+        creditLimit,
+        creditDuration,
+        order.user,
+      );
+
+      order.credit = credit;
+
+      return await this.orderRepository.save(order);
+    } catch (error) {
+      this.loggerService.log('Failed to fulfill and save order.');
+      throw new UpdateOrderError(error);
+    }
   }
 
-  // TODO: Implement if needed
-  public async setPaymentForOrder(
-    order: Order,
-    credit: OrderStatus,
-    user: User,
-  ): Promise<Order> {
-    try {
-      return new Order();
-    } catch (error) {}
+  public checkOrderOwner(order: Order, user: User): void {
+    if (!order.belongsTo(user.id)) {
+      this.loggerService.log(`Order does not belong to the user.`);
+      throw new UnathorizedOrderError();
+    }
+  }
+
+  public checkOrderFulfillment(order: Order): void {
+    if (
+      order.status === OrderStatus.PaymentPending ||
+      order.status === OrderStatus.PaymentSuccessful
+    ) {
+      this.loggerService.log('Order is already fulfilled');
+      throw new FulfilledOrderError();
+    }
   }
 
   // TODO: Calculate order price
   private calculateOrderPrice(
-    creditLimit: CreditLimit,
-    creditDuration: CreditDuration,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _creditLimit: CreditLimit,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _creditDuration: CreditDuration,
   ): number {
     return 10;
   }
