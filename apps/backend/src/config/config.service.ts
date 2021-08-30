@@ -56,4 +56,13 @@ export class AppConfigService {
       [CreditLimit.Standard]: 1000000,
     };
   }
+
+  get stripeConfig(): Config['stripeConfig'] {
+    return {
+      api_key: this.configService.get<string>('STRIPE_API_KEY'),
+      success_url: this.configService.get<string>('STRIPE_SUCCESS_URL'),
+      cancel_url: this.configService.get<string>('STRIPE_CANCEL_URL'),
+      webhook_secret: this.configService.get<string>('STRIPE_WEBHOOK_SECRET'),
+    };
+  }
 }

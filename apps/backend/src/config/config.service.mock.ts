@@ -4,4 +4,5 @@ export const AppConfigServiceMock = {
   databseConfig: jest.fn(),
   awsConfig: jest.fn(),
   creditsConfig: jest.fn(),
+  stripeConfig: jest.fn(),
 };
