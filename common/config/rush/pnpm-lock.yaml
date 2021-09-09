@@ -44,6 +44,7 @@ specifiers:
   prettier: ^2.3.2
   react: 17.0.2
   react-dom: 17.0.2
+  react-icons: 4.2.0
   reflect-metadata: ^0.1.13
   rimraf: ^3.0.2
   rxjs: ^7.2.0
@@ -101,6 +102,7 @@ dependencies:
   prettier: 2.3.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-icons: 4.2.0_react@17.0.2
   reflect-metadata: 0.1.13
   rimraf: 3.0.2
   rxjs: 7.2.0
@@ -7513,6 +7515,14 @@ packages:
       - '@types/react'
     dev: false
 
+  /react-icons/4.2.0_react@17.0.2:
+    resolution: {integrity: sha512-rmzEDFt+AVXRzD7zDE21gcxyBizD/3NqjbX6cmViAgdqfJ2UiLer8927/QhhrXQV7dEj/1EGuOTPp7JnLYVJKQ==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -9246,7 +9256,7 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-mMLFPRx5nVGAkZTL7kGme4OxOo36NUBA1JALQ7wdFA4AGZyh+t0XhMBukqT8IsMzZeXn3Z6yrROfzvuv/Islbg==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-wMKLqhH9XDiR+GiaxCA4TQCUeE5RD2GgQolzA7fxF6Bl2075dZjdb8C3AgN//HOXYr4Tp18lR2tvP215QBQ22A==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
@@ -9260,6 +9270,7 @@ packages:
       next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      react-icons: 4.2.0_react@17.0.2
       typescript: 4.3.5
     transitivePeerDependencies:
       - '@babel/core'

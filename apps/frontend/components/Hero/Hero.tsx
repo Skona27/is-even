@@ -1,26 +1,35 @@
 import * as React from 'react';
-import { Box, Heading, Container, Text, Button, Stack } from '@chakra-ui/react';
+import { Heading, Text, Button, Flex, Stack } from '@chakra-ui/react';
+import { Container } from '../../ui/Container';
 
 export function Hero() {
   return (
-    <Container maxW="3xl">
-      <Stack textAlign="center" spacing="12" py="28">
-        <Heading fontWeight="bold" fontSize="6xl">
-          <Text as="span" color="green.400">
+    <Container py={['20', '32', '36', '44']}>
+      <Stack textAlign="center" spacing={['6', '8', '12']}>
+        <Heading fontSize={['3xl', '4xl', '6xl']}>
+          <Text
+            as="span"
+            fontWeight="900"
+            color="green.400"
+            fontSize={['4xl', '5xl', '6xl']}
+          >
             isEven API <br />
           </Text>
           tell if a number is even
         </Heading>
 
-        <Text color="gray.500">
-          Phasellus at urna nunc. Vestibulum at dui eu lorem rutrum consequat.
-          Morbi vitae bibendum justo. In nec diam lectus. Cras a ornare sapien,
-          vel venenatis est.
-        </Text>
+        <Flex>
+          <Text color="gray.500" maxWidth="4xl" margin="auto">
+            Phasellus at urna nunc. Vestibulum at dui eu lorem rutrum consequat.
+            Morbi vitae bibendum justo. In nec diam lectus. Cras a ornare
+            sapien, vel venenatis est.
+          </Text>
+        </Flex>
 
-        <Stack spacing={4} direction="column" align="center" alignSelf="center">
+        <Stack spacing="4" direction="column" align="center" alignSelf="center">
           <Button
-            p="6"
+            p={['5', '5', '6']}
+            fontWeight="800"
             colorScheme="green"
             bg="green.400"
             textTransform="uppercase"
@@ -31,7 +40,7 @@ export function Hero() {
             View docs
           </Button>
 
-          <Button variant="link" colorScheme="black" size="m">
+          <Button variant="link" fontWeight="700" colorScheme="black" size="m">
             Learn more
           </Button>
         </Stack>
