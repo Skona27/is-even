@@ -12,6 +12,10 @@ async function bootstrap() {
 
   const config = app.get(AppConfigService);
 
+  if (config.appConfig.cors) {
+    app.enableCors();
+  }
+
   if (config.swaggerConfig.enabled) {
     const swaggerParams = new DocumentBuilder()
       .setTitle(config.swaggerConfig.title)

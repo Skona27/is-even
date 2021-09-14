@@ -6,6 +6,7 @@ export interface Config {
   appConfig: {
     port: string;
     version: string;
+    cors: boolean;
   };
   swaggerConfig: {
     title: string;

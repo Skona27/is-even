@@ -11,6 +11,7 @@ export class AppConfigService {
     return {
       port: this.configService.get<string>('PORT'),
       version: process.env.npm_package_version,
+      cors: true,
     };
   }
 
