@@ -35,6 +35,7 @@ specifiers:
   framer-motion: ^4.1.17
   jest: 27.0.6
   jwks-rsa: ~2.0.4
+  jwt-decode: ~3.1.2
   nest-aws-sdk: ~2.0.0
   nestjs-stripe: ~0.4.1
   next: 11.0.1
@@ -94,6 +95,7 @@ dependencies:
   framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
   jest: 27.0.6_ts-node@10.1.0
   jwks-rsa: 2.0.4
+  jwt-decode: 3.1.2
   nest-aws-sdk: 2.0.0_dc210ca148555eb68d524389ccff6fdb
   nestjs-stripe: 0.4.1_660dbb7c7c847b9d0a6020c847bddabd
   next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
@@ -6764,6 +6766,10 @@ packages:
       path-key: 3.1.1
     dev: false
 
+  /nprogress/0.2.0:
+    resolution: {integrity: sha1-y480xTIT2JVyP8urkH6UIq28r7E=}
+    dev: false
+
   /nwsapi/2.2.0:
     resolution: {integrity: sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==}
     dev: false
@@ -9271,7 +9277,7 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-PjhLeMcRndgPblY13Z3b4TwpFKdMwzp4zK28hlShEg2z7/roL6LNFo/bKnHzwt9XA+EjNhHGzp0LWI7fjkiQoQ==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-0gqpifWYiPq8wOU6mXhFgV8oOhWSivje5TjII8CY66piDMGcrNgMjBR0ReJtv904gqjBaMFAs2nZKwwMNP3Qqg==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
@@ -9283,6 +9289,7 @@ packages:
       eslint-config-next: 11.0.1_6b78ba35645ed557addbb8714920eb26
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
       next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
+      nprogress: 0.2.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-hook-form: 7.15.3_react@17.0.2

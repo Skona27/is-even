@@ -13,8 +13,6 @@ export function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
-  console.log(userContext.user);
-
   return (
     <Container bg="green.500" py={['4', '6']}>
       <Flex justifyContent="space-between" alignItems="center">
