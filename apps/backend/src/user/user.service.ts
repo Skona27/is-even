@@ -67,7 +67,7 @@ export class UserService {
 
   public async findUserByEmail(email: string): Promise<User> {
     try {
-      return await this.usersRepository.findOne({
+      return await this.usersRepository.findOneOrFail({
         where: {
           email,
         },
@@ -80,7 +80,7 @@ export class UserService {
 
   public async findUserByAuthId(authId: string): Promise<User> {
     try {
-      return await this.usersRepository.findOne({
+      return await this.usersRepository.findOneOrFail({
         where: {
           authId,
         },

@@ -6,10 +6,10 @@ import {
   Body,
   Get,
   Req,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { CognitoLoginUserError } from '../cognito/error/cognito-login-user.error';
 import { CognitoCreateUserError } from '../cognito/error/cognito-create-user.error';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -18,6 +18,7 @@ import { User } from './user.entity';
 import { UserService } from './user.service';
 import { Authorised } from '../auth/auth.decorator';
 import { RequestWithUser } from '../common/interface/request-with-user.interface';
+import { LoginUserError } from './error/login-user.error';
 
 @Controller('users')
 export class UserController {
@@ -89,11 +90,8 @@ export class UserController {
     try {
       return await this.userService.loginUser(email, password);
     } catch (error) {
-      if (error instanceof CognitoLoginUserError) {
-        throw new HttpException(
-          'Service temporary unavailable',
-          HttpStatus.SERVICE_UNAVAILABLE,
-        );
+      if (error instanceof LoginUserError) {
+        throw new BadRequestException('Invalid email or password');
       }
       throw new HttpException(
         'Internal server error',
