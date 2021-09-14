@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Stack, Text } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
-import { SocialLink } from '../../ui/Link';
-import { Container } from '../../ui/Container';
+import { SocialLink } from '@ui/Link';
+import { Container } from '@ui/Container';
 
 export function Footer() {
   return (

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Stack, Divider } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-import { NavigationElement } from './NavigationElement';
+import { NavigationElement } from './navigation-element.component';
 
 const links = [
   {

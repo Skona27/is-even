@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text } from '@chakra-ui/react';
 
-import { Link, LinkProps } from '../../ui/Link';
+import { Link, LinkProps } from '@ui/Link';
 
 interface NavigationElementProps extends LinkProps {
   text: string;

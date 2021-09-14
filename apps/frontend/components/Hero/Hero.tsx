@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Heading, Text, Button, Flex, Stack } from '@chakra-ui/react';
-import { Container } from '../../ui/Container';
+import { Container } from '@ui/Container';
 
 export function Hero() {
   return (

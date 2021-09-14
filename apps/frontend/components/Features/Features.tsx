@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Heading, Stack, Flex } from '@chakra-ui/react';
 import { FcAssistant, FcAlarmClock, FcGlobe } from 'react-icons/fc';
 
-import { Container } from '../../ui/Container';
+import { Container } from '@ui/Container';
 import { Feature } from './Feature';
 
 const features = [

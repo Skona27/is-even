@@ -2,13 +2,18 @@ import * as React from 'react';
 import { Flex, IconButton, Text, useDisclosure, Box } from '@chakra-ui/react';
 import { FaBars } from 'react-icons/fa';
 
-import { Container } from '../../ui/Container';
-import { Sidemenu } from './Sidemenu';
-import { Navigation } from './Navigation';
+import { Container } from '@ui/Container';
+import { useUserContext } from '@context/user-context';
+
+import { Sidemenu } from './sidemenu.component';
+import { Navigation } from './navigation.component';
 
 export function Header() {
+  const userContext = useUserContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+
+  console.log(userContext.user);
 
   return (
     <Container bg="green.500" py={['4', '6']}>

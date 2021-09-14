@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Stack, Heading, Text } from '@chakra-ui/react';
-import { Container } from '../../ui/Container';
+import { Container } from '@ui/Container';
 import { Card } from './Card';
 
 const cards = [

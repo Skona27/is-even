@@ -1,0 +1,12 @@
+import { Authentication } from '@common/interface/authentication.interface';
+import { User } from '@common/interface/user.interface';
+
+export type UserReducerActionInterface =
+  | {
+      type: 'SET_AUTHENTICATION';
+      payload: Authentication;
+    }
+  | {
+      type: 'SET_USER';
+      payload: User;
+    };
