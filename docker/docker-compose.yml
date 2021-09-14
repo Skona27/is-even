@@ -12,6 +12,7 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     environment:
       - PORT=${FRONTEND_PORT}
+      - API_BASE_URL=${API_BASE_URL}
     command: npm run dev
 
   backend:

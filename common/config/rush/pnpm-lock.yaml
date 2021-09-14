@@ -44,6 +44,7 @@ specifiers:
   prettier: ^2.3.2
   react: 17.0.2
   react-dom: 17.0.2
+  react-hook-form: ~7.15.3
   react-icons: 4.2.0
   reflect-metadata: ^0.1.13
   rimraf: ^3.0.2
@@ -102,6 +103,7 @@ dependencies:
   prettier: 2.3.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-hook-form: 7.15.3_react@17.0.2
   react-icons: 4.2.0_react@17.0.2
   reflect-metadata: 0.1.13
   rimraf: 3.0.2
@@ -6173,6 +6175,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+  /jwt-decode/3.1.2:
+    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
+    dev: false
+
   /kleur/3.0.3:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
@@ -7513,6 +7519,14 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-hook-form/7.15.3_react@17.0.2:
+    resolution: {integrity: sha512-z30aZoEHkWE8oZvad4OcYSBI0kQua/T5sFGH9tB2HfeykFnP/pGXNap8lDio4/U1yPj2ffpbvRIvqKd/6jjBVA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /react-icons/4.2.0_react@17.0.2:
@@ -9181,7 +9195,7 @@ packages:
     dev: false
 
   file:projects/backend.tgz:
-    resolution: {integrity: sha512-XAgDfQS5uIauzEEhNysiBrW9dcNV1fMQlf6Q4bj3vu6wUE0HOljf9+beNs0Xr1Tq5syg7lAWruQb1Pq8uOJVBQ==, tarball: file:projects/backend.tgz}
+    resolution: {integrity: sha512-svnXhNJxxWGZtqNDkUndp1Pgc3uwtUsyDJOGkxR8ikuNfNGIlUlB8clrwdqO9AQYOSTHoctUobtM0op/EqYPGQ==, tarball: file:projects/backend.tgz}
     name: '@rush-temp/backend'
     version: 0.0.0
     dependencies:
@@ -9211,6 +9225,7 @@ packages:
       eslint-plugin-prettier: 3.4.0_0470f3bcd018a045da11d0bbb868d6c6
       jest: 27.0.6_ts-node@10.1.0
       jwks-rsa: 2.0.4
+      jwt-decode: 3.1.2
       nest-aws-sdk: 2.0.0_dc210ca148555eb68d524389ccff6fdb
       nestjs-stripe: 0.4.1_660dbb7c7c847b9d0a6020c847bddabd
       passport: 0.4.1
@@ -9256,7 +9271,7 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-wMKLqhH9XDiR+GiaxCA4TQCUeE5RD2GgQolzA7fxF6Bl2075dZjdb8C3AgN//HOXYr4Tp18lR2tvP215QBQ22A==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-PjhLeMcRndgPblY13Z3b4TwpFKdMwzp4zK28hlShEg2z7/roL6LNFo/bKnHzwt9XA+EjNhHGzp0LWI7fjkiQoQ==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
@@ -9270,6 +9285,7 @@ packages:
       next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      react-hook-form: 7.15.3_react@17.0.2
       react-icons: 4.2.0_react@17.0.2
       typescript: 4.3.5
     transitivePeerDependencies:
