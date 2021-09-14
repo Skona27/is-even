@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useRouter } from 'next/router';
 import {
   Drawer,
   DrawerBody,
@@ -21,6 +22,15 @@ export function Sidemenu({
   returnFocusRef,
   children,
 }: SidemenuProps) {
+  const { asPath } = useRouter();
+
+  React.useEffect(
+    function close() {
+      onClose();
+    },
+    [asPath, onClose],
+  );
+
   return (
     <Drawer
       isOpen={isOpen}

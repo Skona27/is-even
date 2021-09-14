@@ -1,8 +1,22 @@
 import * as React from 'react';
-import { Stack, Divider } from '@chakra-ui/react';
+import {
+  Stack,
+  Divider,
+  Flex,
+  Menu,
+  MenuButton,
+  Avatar,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Button,
+  Text,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import { NavigationElement } from './navigation-element.component';
+import { User } from '@common/interface/user.interface';
+import { Link } from '@ui/Link';
 
 const links = [
   {
@@ -19,7 +33,7 @@ const links = [
   },
 ];
 
-const sidebarLink = [
+const sidebarLinks_loggedOut = [
   {
     href: '/login',
     text: 'Login',
@@ -30,16 +44,54 @@ const sidebarLink = [
   },
 ];
 
-export function Navigation() {
+const sidebarLinks_loggedIn = [
+  {
+    href: '/account',
+    text: 'Account',
+  },
+  {
+    href: '/logout',
+    text: 'Logout',
+  },
+];
+
+const avatarUrl = 'https://randomuser.me/api/portraits/men/32.jpg';
+
+interface NavigationProps {
+  user?: User;
+}
+
+export function Navigation({ user }: NavigationProps) {
   const { asPath } = useRouter();
+  const sidebarLinks = user ? sidebarLinks_loggedIn : sidebarLinks_loggedOut;
 
   return (
     <Stack
       as="nav"
+      spacing="8"
       align="center"
       direction={['column', 'column', 'row']}
-      spacing="8"
     >
+      {user && (
+        <Stack
+          pb="4"
+          spacing="2"
+          alignItems="center"
+          display={['flex', 'flex', 'none']}
+        >
+          <Avatar size="lg" src={avatarUrl} />
+
+          <Text
+            as="span"
+            fontSize={['3xl', '3xl']}
+            color="blackAlpha.800"
+            fontWeight="800"
+          >
+            {user.firstName} {user.lastName}
+          </Text>
+        </Stack>
+      )}
+
       <Stack
         direction={['column', 'column', 'row']}
         spacing={['3', '3', '8']}
@@ -70,12 +122,13 @@ export function Navigation() {
       />
 
       <Stack
-        direction={['column', 'column', 'row']}
-        spacing={['3', '3', '8']}
+        spacing="3"
+        direction="column"
         align="center"
         justify="flex-end"
+        display={['flex', 'flex', 'none']}
       >
-        {sidebarLink.map(({ href, text }) => (
+        {sidebarLinks.map(({ href, text }) => (
           <NavigationElement
             key={href}
             href={href}
@@ -84,6 +137,33 @@ export function Navigation() {
           />
         ))}
       </Stack>
+
+      {user && (
+        <Stack
+          spacing="2"
+          direction="row"
+          alignItems="center"
+          display={['none', 'none', 'flex']}
+        >
+          <Text as="span" color="white" fontWeight="700" fontSize="lg">
+            Hi, {user.firstName}!
+          </Text>
+
+          <Menu>
+            <MenuButton as={Button} variant="link">
+              <Avatar size="sm" src={avatarUrl} />
+            </MenuButton>
+
+            <MenuList>
+              {sidebarLinks.map(({ href, text }) => (
+                <MenuItem key={href}>
+                  <Link href={href}>{text}</Link>
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+        </Stack>
+      )}
     </Stack>
   );
 }

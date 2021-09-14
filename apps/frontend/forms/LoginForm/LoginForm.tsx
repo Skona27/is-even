@@ -18,6 +18,7 @@ import { UserApiService } from '@api/user-api/user-api.service';
 interface LoginFormData {
   email: string;
   password: string;
+  remember: boolean;
 }
 
 export function LoginForm() {
@@ -37,10 +38,18 @@ export function LoginForm() {
       setError(null);
       setIsLoading(true);
 
-      const response = await UserApiService.login(data);
+      const { user, auth } = await UserApiService.login({
+        email: data.email,
+        password: data.password,
+      });
 
-      userContext.setUser(response.user);
-      userContext.setAuthentication(response.auth);
+      userContext.setUser(user);
+      userContext.setAuthentication({
+        remember: data.remember,
+        expiration: auth.expiration,
+        accessToken: auth.accessToken,
+        refreshToken: auth.refreshToken,
+      });
 
       router.push('/');
     } catch (error) {
@@ -77,7 +86,7 @@ export function LoginForm() {
         </FormControl>
 
         <Stack spacing={['6', '6', '8']}>
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox {...register('remember')}>Remember me</Checkbox>
 
           <Button
             disabled={isLoading}

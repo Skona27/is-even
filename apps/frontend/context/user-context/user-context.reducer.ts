@@ -10,6 +10,8 @@ export function userContextReducer(
       return { ...state, authentication: action.payload };
     case 'SET_USER':
       return { ...state, user: action.payload };
+    case 'REPLACE_STATE':
+      return { ...state, ...action.payload };
     default:
       return state;
   }

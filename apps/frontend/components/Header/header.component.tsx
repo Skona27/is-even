@@ -9,7 +9,7 @@ import { Sidemenu } from './sidemenu.component';
 import { Navigation } from './navigation.component';
 
 export function Header() {
-  const userContext = useUserContext();
+  const { user } = useUserContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
@@ -29,12 +29,12 @@ export function Header() {
         />
 
         <Box display={['none', 'none', 'block']}>
-          <Navigation />
+          <Navigation user={user} />
         </Box>
       </Flex>
 
       <Sidemenu onClose={onClose} isOpen={isOpen} returnFocusRef={buttonRef}>
-        <Navigation />
+        <Navigation user={user} />
       </Sidemenu>
     </Container>
   );
