@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
 import { InjectAwsService } from 'nest-aws-sdk';
 import * as util from 'util';
+import jwtDecode from 'jwt-decode';
 
 import { LoggerService } from '../logger/logger.service';
 import { AppConfigService } from '../config/config.service';
@@ -85,9 +86,17 @@ export class CognitoService {
         throw new Error('AccessToken or RefreshToken is missing');
       }
 
+      const accessToken = response.AuthenticationResult.AccessToken;
+      const refreshToken = response.AuthenticationResult.RefreshToken;
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      const expiration = jwtDecode(accessToken).exp as number;
+
       return {
-        accessToken: response.AuthenticationResult.AccessToken,
-        refreshToken: response.AuthenticationResult.RefreshToken,
+        accessToken,
+        refreshToken,
+        expiration,
       };
     } catch (error) {
       this.loggerService.log(`Failed to login user: ${util.inspect(error)}`);
