@@ -10,8 +10,4 @@ export type UserReducerActionInterface =
   | {
       type: 'SET_USER';
       payload: User;
-    }
-  | {
-      type: 'REPLACE_STATE';
-      payload: UserContextInterface;
     };

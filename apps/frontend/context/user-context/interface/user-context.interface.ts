@@ -6,4 +6,5 @@ export interface UserContextInterface {
   authentication: Authentication;
   setUser(user: User): void;
   setAuthentication(authentication: Authentication): void;
+  getAccessToken(): Promise<string>;
 }

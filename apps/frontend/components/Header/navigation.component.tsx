@@ -122,11 +122,11 @@ export function Navigation({ user }: NavigationProps) {
       />
 
       <Stack
-        spacing="3"
-        direction="column"
+        spacing={['3', '3', '8']}
+        direction={['column', 'column', 'row']}
         align="center"
         justify="flex-end"
-        display={['flex', 'flex', 'none']}
+        display={['flex', 'flex', user ? 'none' : 'flex']}
       >
         {sidebarLinks.map(({ href, text }) => (
           <NavigationElement
@@ -149,14 +149,14 @@ export function Navigation({ user }: NavigationProps) {
             Hi, {user.firstName}!
           </Text>
 
-          <Menu>
+          <Menu isLazy id="menu">
             <MenuButton as={Button} variant="link">
               <Avatar size="sm" src={avatarUrl} />
             </MenuButton>
 
             <MenuList>
               {sidebarLinks.map(({ href, text }) => (
-                <MenuItem key={href}>
+                <MenuItem id={href} key={href}>
                   <Link href={href}>{text}</Link>
                 </MenuItem>
               ))}

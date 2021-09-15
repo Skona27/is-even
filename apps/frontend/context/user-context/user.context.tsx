@@ -2,64 +2,63 @@ import * as React from 'react';
 
 import { Authentication } from '@common/interface/authentication.interface';
 import { User } from '@common/interface/user.interface';
+import { UserApiService } from '@api/user-api/user-api.service';
 
 import { UserContextInterface } from './interface/user-context.interface';
 import { userContextReducer } from './user-context.reducer';
+import { persistRefreshToken } from './utils/persist-refresh-token.util';
 
-interface UserContextProviderProps extends React.PropsWithChildren<{}> {}
-
-const STORAGE_KEY = 'is-even_user-context';
+interface UserContextProviderProps extends React.PropsWithChildren<{}> {
+  user?: User;
+  authentication?: Authentication;
+}
 
 const Context = React.createContext<Partial<UserContextInterface>>({});
 
-export function UserContextProvider({ children }: UserContextProviderProps) {
-  const [state, dispatch] = React.useReducer(userContextReducer, {});
+export function UserContextProvider({
+  children,
+  user,
+  authentication,
+}: UserContextProviderProps) {
+  const [state, dispatch] = React.useReducer(userContextReducer, {
+    user,
+    authentication,
+  });
 
   function setUser(payload: User) {
     dispatch({ type: 'SET_USER', payload });
   }
 
   function setAuthentication(payload: Authentication) {
+    persistRefreshToken(payload);
     dispatch({ type: 'SET_AUTHENTICATION', payload });
   }
 
-  React.useEffect(function restore() {
-    try {
-      const local = window.localStorage.getItem(STORAGE_KEY);
-      const session = window.sessionStorage.getItem(STORAGE_KEY);
+  async function getAccessToken() {
+    const date = Date.now();
 
-      const state = JSON.parse(local || session);
-
-      dispatch({ type: 'REPLACE_STATE', payload: state });
-    } catch (error) {
-      console.error(`Failed to reststore user context from storage`);
+    if (!state.authentication) {
+      throw new Error('User is not logged in');
     }
-  }, []);
 
-  React.useEffect(
-    function persist() {
-      if (!state.authentication || !state.user) {
-        return;
-      }
+    if (state.authentication.expiration * 1000 > date) {
+      return state.authentication.accessToken;
+    }
 
-      try {
-        const data = JSON.stringify(state);
-        const storage = state.authentication.remember
-          ? window.localStorage
-          : window.sessionStorage;
+    const { auth, user } = await UserApiService.refreshToken({
+      refreshToken: state.authentication.refreshToken,
+    });
 
-        storage.setItem(STORAGE_KEY, data);
-      } catch (error) {
-        console.error(
-          `Failed to store user context in storage. ${error.message}`,
-        );
-      }
-    },
-    [state],
-  );
+    setUser(user);
+    setAuthentication({ ...auth, remember: state.authentication.remember });
+
+    return auth.accessToken;
+  }
 
   return (
-    <Context.Provider value={{ ...state, setAuthentication, setUser }}>
+    <Context.Provider
+      value={{ ...state, setAuthentication, setUser, getAccessToken }}
+    >
       {children}
     </Context.Provider>
   );

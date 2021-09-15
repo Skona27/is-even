@@ -39,6 +39,7 @@ specifiers:
   nest-aws-sdk: ~2.0.0
   nestjs-stripe: ~0.4.1
   next: 11.0.1
+  nprogress: ~0.2.0
   passport: ~0.4.1
   passport-jwt: ~4.0.0
   pg: ~8.6.0
@@ -59,6 +60,7 @@ specifiers:
   tsconfig-paths: ^3.10.1
   typeorm: ~0.2.34
   typescript: ^4.3.5
+  universal-cookie: ~4.0.4
 
 dependencies:
   '@chakra-ui/react': 1.6.7_0cd8ff107246f5f64fee70d97cd6c4d3
@@ -99,6 +101,7 @@ dependencies:
   nest-aws-sdk: 2.0.0_dc210ca148555eb68d524389ccff6fdb
   nestjs-stripe: 0.4.1_660dbb7c7c847b9d0a6020c847bddabd
   next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
+  nprogress: 0.2.0
   passport: 0.4.1
   passport-jwt: 4.0.0
   pg: 8.6.0
@@ -119,6 +122,7 @@ dependencies:
   tsconfig-paths: 3.10.1
   typeorm: 0.2.34
   typescript: 4.3.5
+  universal-cookie: 4.0.4
 
 packages:
 
@@ -2162,6 +2166,10 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 16.3.1
+    dev: false
+
+  /@types/cookie/0.3.3:
+    resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
     dev: false
 
   /@types/cookiejar/2.1.2:
@@ -8737,6 +8745,13 @@ packages:
       which-boxed-primitive: 1.0.2
     dev: false
 
+  /universal-cookie/4.0.4:
+    resolution: {integrity: sha512-lbRVHoOMtItjWbM7TwDLdl8wug7izB0tq3/YVKhT/ahB4VDvWMyvnADfnJI8y6fSvsjh51Ix7lTGC6Tn4rMPhw==}
+    dependencies:
+      '@types/cookie': 0.3.3
+      cookie: 0.4.0
+    dev: false
+
   /universalify/0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
@@ -9277,7 +9292,7 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-0gqpifWYiPq8wOU6mXhFgV8oOhWSivje5TjII8CY66piDMGcrNgMjBR0ReJtv904gqjBaMFAs2nZKwwMNP3Qqg==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-cyiAPei4b2rM9lTSTLGKmh0chwTkvNGYnNWJ7oiDrhOnGo27HSRwVWdh1uSYzxBxdmRkaool48zyYxrPgdbOew==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
@@ -9285,6 +9300,7 @@ packages:
       '@emotion/react': 11.4.1_b2f98f1a44929e460196386bafc39b6a
       '@emotion/styled': 11.3.0_a0344699844b5dd03f4113e250f0ed74
       '@types/react': 17.0.14
+      date-fns: 2.23.0
       eslint: 7.30.0
       eslint-config-next: 11.0.1_6b78ba35645ed557addbb8714920eb26
       framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
@@ -9295,6 +9311,7 @@ packages:
       react-hook-form: 7.15.3_react@17.0.2
       react-icons: 4.2.0_react@17.0.2
       typescript: 4.3.5
+      universal-cookie: 4.0.4
     transitivePeerDependencies:
       - '@babel/core'
       - fibers
