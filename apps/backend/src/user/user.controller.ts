@@ -7,6 +7,8 @@ import {
   Get,
   Req,
   BadRequestException,
+  ForbiddenException,
+  HttpCode,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -19,6 +21,8 @@ import { UserService } from './user.service';
 import { Authorised } from '../auth/auth.decorator';
 import { RequestWithUser } from '../common/interface/request-with-user.interface';
 import { LoginUserError } from './error/login-user.error';
+import { RefreshUserTokenDto } from './dto/refresh-user-token.dto';
+import { LogoutUserDto } from './dto/logout-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -72,10 +76,6 @@ export class UserController {
     description: 'User has been successfully logged in',
   })
   @ApiResponse({
-    status: HttpStatus.SERVICE_UNAVAILABLE,
-    description: 'Third party service error',
-  })
-  @ApiResponse({
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Internal server error',
   })
@@ -88,11 +88,83 @@ export class UserController {
   ): Promise<UserWithAuth> {
     const { email, password } = loginUserDto;
     try {
-      return await this.userService.loginUser(email, password);
+      return await this.userService.loginWithCredentials(email, password);
     } catch (error) {
       if (error instanceof LoginUserError) {
         throw new BadRequestException('Invalid email or password');
       }
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Post('refresh')
+  @ApiTags('users')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Token has been successfully refreshed',
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Bad request',
+  })
+  public async refreshUserToken(
+    @Body() refreshUserTokenDto: RefreshUserTokenDto,
+  ): Promise<UserWithAuth> {
+    const { refreshToken } = refreshUserTokenDto;
+    try {
+      return await this.userService.loginWithToken(refreshToken);
+    } catch (error) {
+      if (error instanceof LoginUserError) {
+        throw new BadRequestException('Invalid token');
+      }
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post('logout')
+  @Authorised()
+  @ApiTags('users')
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: 'User has been successfully logout',
+  })
+  @ApiResponse({
+    status: HttpStatus.FORBIDDEN,
+    description: 'Access forbidden',
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Bad request',
+  })
+  public async logoutUser(
+    @Req() request: RequestWithUser,
+    @Body() logoutUserDto: LogoutUserDto,
+  ): Promise<void> {
+    const { email } = logoutUserDto;
+    const user = request.user;
+
+    if (user.email !== email) {
+      throw new ForbiddenException('Access forbidden');
+    }
+
+    try {
+      return await this.userService.logoutUser(email);
+    } catch (error) {
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,

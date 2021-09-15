@@ -10,12 +10,12 @@ import { CognitoCreateUserError } from './error/cognito-create-user.error';
 import { CognitoUserIdMissingError } from './error/cognito-user-id-missing.error';
 import { CognitoLoginUserError } from './error/cognito-login-user.error';
 import { TokenResponse } from './interface/auth-response.interface';
+import { CognitoLogoutUserError } from './error/cognito-logout-user.error';
 
 @Injectable()
 export class CognitoService {
   private readonly userPoolId: string;
   private readonly clientId: string;
-  private readonly authFlow: string;
 
   constructor(
     private readonly loggerService: LoggerService,
@@ -23,7 +23,6 @@ export class CognitoService {
     @InjectAwsService(CognitoIdentityServiceProvider)
     private readonly cognitoService: CognitoIdentityServiceProvider,
   ) {
-    this.authFlow = 'ADMIN_USER_PASSWORD_AUTH';
     this.userPoolId = this.configService.awsConfig.cognito_userPoolId;
     this.clientId = this.configService.awsConfig.cognito_clientId;
   }
@@ -70,7 +69,7 @@ export class CognitoService {
       const response = await this.cognitoService
         .adminInitiateAuth({
           ClientId: this.clientId,
-          AuthFlow: this.authFlow,
+          AuthFlow: 'ADMIN_USER_PASSWORD_AUTH',
           UserPoolId: this.userPoolId,
           AuthParameters: {
             USERNAME: email,
@@ -88,10 +87,7 @@ export class CognitoService {
 
       const accessToken = response.AuthenticationResult.AccessToken;
       const refreshToken = response.AuthenticationResult.RefreshToken;
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      const expiration = jwtDecode(accessToken).exp as number;
+      const expiration = this.getTokenExpiration(accessToken);
 
       return {
         accessToken,
@@ -104,6 +100,56 @@ export class CognitoService {
     }
   }
 
+  public async refreshToken(token: string): Promise<TokenResponse> {
+    try {
+      const response = await this.cognitoService
+        .adminInitiateAuth({
+          ClientId: this.clientId,
+          UserPoolId: this.userPoolId,
+          AuthFlow: 'REFRESH_TOKEN_AUTH',
+          AuthParameters: { REFRESH_TOKEN: token },
+        })
+        .promise();
+
+      if (!response.AuthenticationResult.AccessToken) {
+        throw new Error('AccessToken is missing');
+      }
+
+      const refreshToken = token;
+      const accessToken = response.AuthenticationResult.AccessToken;
+      const expiration = this.getTokenExpiration(accessToken);
+
+      return {
+        accessToken,
+        refreshToken,
+        expiration,
+      };
+    } catch (error) {
+      this.loggerService.log(`Failed to refresh token: ${util.inspect(error)}`);
+      throw new CognitoLoginUserError(error);
+    }
+  }
+
+  public async logout(email: string): Promise<void> {
+    try {
+      await this.cognitoService
+        .adminUserGlobalSignOut({
+          Username: email,
+          UserPoolId: this.userPoolId,
+        })
+        .promise();
+    } catch (error) {
+      this.loggerService.log(`Failed to logout user: ${util.inspect(error)}`);
+      throw new CognitoLogoutUserError(error);
+    }
+  }
+
+  public getTokenEmail(accessToken: string): string {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    return jwtDecode(accessToken).username;
+  }
+
   private getUserId(user: CognitoIdentityServiceProvider.UserType): string {
     const userId = user.Attributes.find((attr) => attr.Name === 'sub').Value;
 
@@ -113,5 +159,11 @@ export class CognitoService {
     }
 
     return userId;
+  }
+
+  private getTokenExpiration(accessToken: string): number {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    return jwtDecode(accessToken).exp;
   }
 }

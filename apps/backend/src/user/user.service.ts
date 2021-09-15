@@ -10,6 +10,7 @@ import { CreateUserError } from './error/create-user.error';
 import { UserWithAuth } from './interface/user-with-auth.interface';
 import { LoginUserError } from './error/login-user.error';
 import { ReadUserError } from './error/read-user.error';
+import { LogoutUserError } from './error/logout-user.error';
 
 @Injectable()
 export class UserService {
@@ -47,7 +48,7 @@ export class UserService {
     }
   }
 
-  public async loginUser(
+  public async loginWithCredentials(
     email: string,
     password: string,
   ): Promise<UserWithAuth> {
@@ -60,8 +61,33 @@ export class UserService {
         auth,
       };
     } catch (error) {
-      this.loggerService.log(`Failed to login user. ${error}`);
+      this.loggerService.log(`Failed to login user with credentials. ${error}`);
       throw new LoginUserError(error);
+    }
+  }
+
+  public async loginWithToken(refreshToken): Promise<UserWithAuth> {
+    try {
+      const auth = await this.cognitoService.refreshToken(refreshToken);
+      const email = this.cognitoService.getTokenEmail(auth.accessToken);
+      const user = await this.findUserByEmail(email);
+
+      return {
+        user,
+        auth,
+      };
+    } catch (error) {
+      this.loggerService.log(`Failed to login user with token. ${error}`);
+      throw new LoginUserError(error);
+    }
+  }
+
+  public async logoutUser(email: string): Promise<void> {
+    try {
+      await this.cognitoService.logout(email);
+    } catch (error) {
+      this.loggerService.log(`Failed to logout user. ${error}`);
+      throw new LogoutUserError(error);
     }
   }
 
