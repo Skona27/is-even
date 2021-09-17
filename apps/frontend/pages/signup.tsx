@@ -5,15 +5,15 @@ import { makeTemporaryRedirect } from '@common/utils/make-temporary-redirect.uti
 import { GetInitialPropsWithUser } from '@common/interface/get-initial-props-with-user.interface';
 
 import { Container } from '@ui/Container';
-import { LoginForm } from '@forms/LoginForm';
+import { SignupForm } from '@forms/SignupForm';
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
-    <Container>
+    <Container py="16">
       <Stack spacing={['8', '8', '16']} alignItems="center">
         <Stack spacing={['2', '2', '4']} textAlign="center">
           <Heading fontSize={['4xl', '4xl', '6xl']}>
-            Sign in to your account
+            Create a new account
           </Heading>
 
           <Text color="gray.500" maxWidth="4xl">
@@ -23,14 +23,14 @@ export default function LoginPage() {
         </Stack>
 
         <Box width="100%" maxWidth="md">
-          <LoginForm />
+          <SignupForm />
         </Box>
       </Stack>
     </Container>
   );
 }
 
-LoginPage.getInitialProps = ({ ctx, user }: GetInitialPropsWithUser) => {
+SignupPage.getInitialProps = ({ ctx, user }: GetInitialPropsWithUser) => {
   if (user) {
     makeTemporaryRedirect(ctx, '/');
   }

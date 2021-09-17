@@ -23,19 +23,17 @@ export class UserApiService extends ApiClientService {
     return data;
   }
 
-  public static async logout(params: { email: string }): Promise<void> {
-    const result = await this.client('/users/refresh', {
+  public static async logout(params: { accessToken: string }): Promise<void> {
+    const result = await this.client('/users/logout', {
       method: 'POST',
-      body: JSON.stringify(params),
       headers: {
         'content-type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${params.accessToken}`,
       },
     });
 
-    const data = await result.json();
-
     if (!result.ok) {
-      throw new Error(data.message);
+      throw new Error('Failed to logout user');
     }
   }
 

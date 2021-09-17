@@ -10,10 +10,12 @@ import { Footer } from '@components/Footer';
 import {
   UserContextProvider,
   REFRESH_TOKEN_COOKIE_NAME,
+  REMEMBER_USER_COOKIE_NAME,
 } from '@context/user-context';
 import { UserApiService } from '@api/user-api/user-api.service';
 import { User } from '@common/interface/user.interface';
 import { Authentication } from '@common/interface/authentication.interface';
+import { GetInitialPropsWithUser } from '@common/interface/get-initial-props-with-user.interface';
 
 NProgress.configure({ showSpinner: false });
 
@@ -40,7 +42,7 @@ const theme = extendTheme({
   },
 });
 
-interface AppProps extends NextAppProps {
+interface AppProps {
   user?: User;
   authentication?: Authentication;
 }
@@ -50,7 +52,7 @@ export default function App({
   pageProps,
   user,
   authentication,
-}: AppProps) {
+}: AppProps & NextAppProps) {
   return (
     <ChakraProvider theme={theme}>
       <UserContextProvider user={user} authentication={authentication}>
@@ -66,24 +68,52 @@ export default function App({
   );
 }
 
-App.getInitialProps = async function getInitialProps({ ctx }) {
+App.getInitialProps = async function getInitialProps({
+  ctx,
+  Component,
+}): Promise<AppProps> {
   try {
-    if (!ctx.req) {
-      return {};
+    const cookies = ctx.req
+      ? ctx.req.headers.cookie
+      : typeof document !== 'undefined'
+      ? document.cookie
+      : '';
+
+    const cookie = new UniversalCookie(cookies);
+    const refreshToken = cookie.get(REFRESH_TOKEN_COOKIE_NAME);
+    const remember = cookie.get(REMEMBER_USER_COOKIE_NAME) ? true : false;
+
+    let user: User;
+    let authentication: Authentication;
+
+    if (refreshToken) {
+      const response = await UserApiService.refreshToken({
+        refreshToken,
+      });
+
+      user = response.user;
+      authentication = {
+        ...response.auth,
+        remember,
+      };
     }
 
-    const cookies = new UniversalCookie(ctx.req.headers.cookie);
-    const refreshToken = cookies.get(REFRESH_TOKEN_COOKIE_NAME);
+    if (Component.getInitialProps) {
+      const pageProps = await Component.getInitialProps({
+        ctx,
+        user,
+      } as GetInitialPropsWithUser);
 
-    if (!refreshToken) {
-      return {};
+      return {
+        ...pageProps,
+        user,
+        authentication,
+      };
     }
-
-    const { auth, user } = await UserApiService.refreshToken({ refreshToken });
 
     return {
       user,
-      authentication: auth,
+      authentication,
     };
   } catch (error) {
     console.error(`Failed to fetch initial props for page. ${error.message}`);

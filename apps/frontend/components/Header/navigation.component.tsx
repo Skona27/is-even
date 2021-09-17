@@ -2,13 +2,11 @@ import * as React from 'react';
 import {
   Stack,
   Divider,
-  Flex,
   Menu,
   MenuButton,
   Avatar,
   MenuList,
   MenuItem,
-  MenuDivider,
   Button,
   Text,
 } from '@chakra-ui/react';

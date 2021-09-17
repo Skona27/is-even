@@ -4,9 +4,9 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
+  Flex,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
@@ -14,13 +14,14 @@ import { useRouter } from 'next/router';
 import { FieldError } from '@ui/FieldError';
 import { useUserContext } from '@context/user-context';
 
-interface LoginFormData {
+interface SignupFormData {
   email: string;
   password: string;
-  remember: boolean;
+  firstName: string;
+  lastName: string;
 }
 
-export function LoginForm() {
+export function SignupForm() {
   const router = useRouter();
   const userContext = useUserContext();
   const {
@@ -32,18 +33,19 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  async function onSubmit(data: LoginFormData) {
+  async function onSubmit(data: SignupFormData) {
     try {
       setError(null);
       setIsLoading(true);
 
-      await userContext.login({
+      await userContext.register({
         email: data.email,
         password: data.password,
-        remember: data.remember,
+        firstName: data.firstName,
+        lastName: data.lastName,
       });
 
-      router.push('/');
+      router.push('/login');
     } catch (error) {
       setError(error.message);
       setIsLoading(false);
@@ -77,10 +79,33 @@ export function LoginForm() {
           )}
         </FormControl>
 
-        <Stack spacing={['6', '6', '8']}>
-          <Checkbox {...register('remember')}>Remember me</Checkbox>
+        <FormControl id="firstName">
+          <FormLabel>First name</FormLabel>
+          <Input
+            type="text"
+            bg="whiteAlpha.600"
+            {...register('firstName', { required: 'First name is required' })}
+          />
+          {errors.firstName && (
+            <FieldError message={errors.firstName.message} pt="2" pb="1" />
+          )}
+        </FormControl>
 
+        <FormControl id="lastName">
+          <FormLabel>Last name</FormLabel>
+          <Input
+            type="text"
+            bg="whiteAlpha.600"
+            {...register('lastName', { required: 'Last name is required' })}
+          />
+          {errors.lastName && (
+            <FieldError message={errors.lastName.message} pt="2" pb="1" />
+          )}
+        </FormControl>
+
+        <Flex pt="3">
           <Button
+            flex="1"
             disabled={isLoading}
             type="submit"
             bg="green.400"
@@ -89,9 +114,9 @@ export function LoginForm() {
               bg: 'green.500',
             }}
           >
-            {!isLoading ? 'Sign in' : 'Please wait...'}
+            {!isLoading ? 'Sign up' : 'Please wait...'}
           </Button>
-        </Stack>
+        </Flex>
 
         {error && <FieldError message={error} pt="1" />}
       </Stack>
