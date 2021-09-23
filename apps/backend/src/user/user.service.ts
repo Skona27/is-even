@@ -69,8 +69,8 @@ export class UserService {
   public async loginWithToken(refreshToken): Promise<UserWithAuth> {
     try {
       const auth = await this.cognitoService.refreshToken(refreshToken);
-      const email = this.cognitoService.getTokenEmail(auth.accessToken);
-      const user = await this.findUserByEmail(email);
+      const userAuthId = this.cognitoService.getTokenAuthId(auth.accessToken);
+      const user = await this.findUserByAuthId(userAuthId);
 
       return {
         user,

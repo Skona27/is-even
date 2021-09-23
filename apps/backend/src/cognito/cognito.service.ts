@@ -144,10 +144,10 @@ export class CognitoService {
     }
   }
 
-  public getTokenEmail(accessToken: string): string {
+  public getTokenAuthId(accessToken: string): string {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    return jwtDecode(accessToken).username;
+    return jwtDecode(accessToken).sub;
   }
 
   private getUserId(user: CognitoIdentityServiceProvider.UserType): string {
