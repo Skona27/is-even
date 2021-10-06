@@ -10,12 +10,28 @@ import {
 } from '@chakra-ui/react';
 import { FaCheckCircle } from 'react-icons/fa';
 
-interface CardProps {
+interface Button {
+  type: 'BUTTON';
+  props: {
+    name: string;
+    action(): void;
+  };
+}
+
+interface Link {
+  type: 'LINK';
+  props: {
+    name: string;
+    href: string;
+  };
+}
+
+export interface CardProps {
   badge?: string;
   name: string;
   price: string;
-  cta: string;
   specification: string[];
+  cta: Button | Link;
 }
 
 export function Card({ name, price, badge, specification, cta }: CardProps) {
@@ -89,9 +105,17 @@ export function Card({ name, price, badge, specification, cta }: CardProps) {
           ))}
         </List>
 
-        <Button w="80%" colorScheme="green" fontWeight="800" variant="solid">
-          {cta}
-        </Button>
+        {cta.type === 'BUTTON' && (
+          <Button
+            w="80%"
+            colorScheme="green"
+            fontWeight="800"
+            variant="solid"
+            onClick={cta.props.action}
+          >
+            {cta.props.name}
+          </Button>
+        )}
       </Stack>
     </Box>
   );

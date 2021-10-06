@@ -30,7 +30,10 @@ export class StripeService {
     });
   }
 
-  public constructEvent(payload: string, signature: string) {
+  public constructEvent(
+    payload: string | Buffer,
+    signature: string | string[],
+  ) {
     const { webhook_secret } = this.configService.stripeConfig;
 
     return this.stripePaymentService.webhooks.constructEvent(

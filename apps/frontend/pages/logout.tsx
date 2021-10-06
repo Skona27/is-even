@@ -25,7 +25,7 @@ export default function LogoutPage() {
   }, []);
 
   return (
-    <Container>
+    <Container flex="1" direction="column" justifyContent="center">
       <Stack alignItems="center" justifyContent="center" textAlign="center">
         <Heading fontSize={['2xl', '2xl', '3xl']}>
           You have been successfully logged out

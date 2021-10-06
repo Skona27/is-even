@@ -18,7 +18,6 @@ import { ReadOrderError } from './error/read-order.error';
 import { UpdateOrderError } from './error/update-order.error';
 import { InvalidOrderStatusError } from './error/invalid-order-status.error';
 import { FulfilledOrderError } from './error/fulfilled-order.error';
-import { DeleteOrderError } from './error/delete-order.error';
 
 @Injectable()
 export class OrderService {
@@ -115,24 +114,6 @@ export class OrderService {
     }
   }
 
-  public async deleteOrder(order: Order): Promise<void> {
-    try {
-      if (
-        order.status === OrderStatus.PaymentPending ||
-        order.status === OrderStatus.PaymentSuccessful
-      ) {
-        throw new Error(
-          'Cannot delete the order with "PaymentPending" or "PaymentSuccessful" status',
-        );
-      }
-
-      await this.orderRepository.delete(order);
-    } catch (error) {
-      this.loggerService.log(`Failed to delete order. ${error}`);
-      throw new DeleteOrderError(error);
-    }
-  }
-
   public async fulfillOrder(order: Order): Promise<Order> {
     try {
       const { creditLimit, creditDuration } = order;
@@ -144,6 +125,7 @@ export class OrderService {
       );
 
       order.credit = credit;
+      order.status = OrderStatus.Fulfilled;
 
       return await this.orderRepository.save(order);
     } catch (error) {
@@ -160,10 +142,7 @@ export class OrderService {
   }
 
   public checkOrderFulfillment(order: Order): void {
-    if (
-      order.status === OrderStatus.PaymentPending ||
-      order.status === OrderStatus.PaymentSuccessful
-    ) {
+    if (order.status === OrderStatus.Fulfilled) {
       this.loggerService.log('Order is already fulfilled');
       throw new FulfilledOrderError();
     }
@@ -176,6 +155,6 @@ export class OrderService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _creditDuration: CreditDuration,
   ): number {
-    return 10;
+    return 1000;
   }
 }

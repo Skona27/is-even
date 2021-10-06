@@ -15,6 +15,9 @@ import { sessionEventMapper } from './mapper/session-event.mapper';
 import { RegisterPaymentError } from './error/register-payment.error';
 import { ConstructPaymentEventError } from './error/construct-payment-event.error';
 import { CreatePaymentError } from './error/create-payment.error';
+import { PaymentStatus } from './interface/payment-status.interface';
+import { InvalidPaymentStatusError } from './error/invalid-payment-status.error';
+import { UpdatePaymentError } from './error/update-payment.error';
 
 @Injectable()
 export class PaymentService {
@@ -29,14 +32,22 @@ export class PaymentService {
 
   public async registerPayment(order: Order): Promise<PaymentSession> {
     try {
-      const price = order.price.toString();
-      const name = `${order.creditLimit} ${order.creditDuration}`;
+      const price = order.price;
 
       const session = await this.stripeService.createSession([
-        { quantity: 1, price, name },
+        {
+          quantity: 1,
+          price_data: {
+            currency: 'eur',
+            unit_amount: price,
+            product_data: {
+              name: `is-even_${order.creditDuration}_${order.creditLimit}`,
+            },
+          },
+        },
       ]);
 
-      return { url: session.url };
+      return { url: session.url, id: session.id };
     } catch (error) {
       this.loggerService.log(`Failed to register payment. ${error}`);
       throw new RegisterPaymentError(error);
@@ -60,7 +71,7 @@ export class PaymentService {
   }
 
   public async createPayment(
-    paymentProviderId: string,
+    sessionId: string,
     order: Order,
   ): Promise<Payment> {
     try {
@@ -68,12 +79,60 @@ export class PaymentService {
 
       payment.order = order;
       payment.user = order.user;
-      payment.paymentProviderId = paymentProviderId;
+      payment.sessionId = sessionId;
 
       return await this.paymentRepository.save(payment);
     } catch (error) {
       this.loggerService.log(`Failed to create payment. ${error}`);
       throw new CreatePaymentError(error);
+    }
+  }
+
+  public async getPaymentBySessionId(sessionId: string): Promise<Payment> {
+    try {
+      return await this.paymentRepository.findOneOrFail({
+        where: {
+          sessionId,
+        },
+      });
+    } catch (error) {
+      this.loggerService.error(
+        `Failed to get payment by sessionId ${sessionId}. ${error.message}`,
+      );
+      throw error;
+    }
+  }
+
+  public async updatePaymentStatus(
+    payment: Payment,
+    status: PaymentStatus,
+  ): Promise<Payment> {
+    if (payment.status === status) {
+      this.loggerService.log(
+        `Cannot update payment status with the exact same value`,
+      );
+      throw new InvalidPaymentStatusError(
+        `Cannot update payment status with the exact same value`,
+      );
+    }
+
+    if (payment.status === PaymentStatus.Successful) {
+      this.loggerService.log(
+        `Cannot change the status of successfull payment's`,
+      );
+      throw new InvalidPaymentStatusError(
+        `Cannot change the status of successfull payment's`,
+      );
+    }
+
+    try {
+      payment.status = status;
+      return await this.paymentRepository.save(payment);
+    } catch (error) {
+      this.loggerService.log(
+        `Failed to update payment status. ${error.message}`,
+      );
+      throw new UpdatePaymentError(error.message);
     }
   }
 }

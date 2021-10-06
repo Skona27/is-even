@@ -1,7 +1,7 @@
-import { Box, BoxProps, Flex } from '@chakra-ui/react';
+import { Box, Flex, FlexProps } from '@chakra-ui/react';
 import * as React from 'react';
 
-interface ContainerProps extends React.PropsWithChildren<{}>, BoxProps {}
+interface ContainerProps extends React.PropsWithChildren<{}>, FlexProps {}
 
 export function Container({ children, ...props }: ContainerProps) {
   return (

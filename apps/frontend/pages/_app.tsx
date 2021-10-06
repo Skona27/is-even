@@ -45,6 +45,7 @@ const theme = extendTheme({
 interface AppProps {
   user?: User;
   authentication?: Authentication;
+  pageProps?: any;
 }
 
 export default function App({
@@ -58,7 +59,7 @@ export default function App({
       <UserContextProvider user={user} authentication={authentication}>
         <Flex minHeight="100vh" direction="column">
           <Header />
-          <Flex flex="1" direction="column" justifyContent="center">
+          <Flex flex="1" direction="column">
             <Component {...pageProps} />
           </Flex>
           <Footer />
@@ -102,10 +103,11 @@ App.getInitialProps = async function getInitialProps({
       const pageProps = await Component.getInitialProps({
         ctx,
         user,
+        authentication,
       } as GetInitialPropsWithUser);
 
       return {
-        ...pageProps,
+        pageProps,
         user,
         authentication,
       };

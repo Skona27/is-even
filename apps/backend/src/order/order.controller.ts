@@ -6,9 +6,9 @@ import {
   Request,
   Body,
   Get,
-  Delete,
   Param,
   ParseUUIDPipe,
+  Patch,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -29,6 +29,7 @@ import { OrderDto } from './dto/order.dto';
 
 import { ReadOrderError } from './error/read-order.error';
 import { UnathorizedOrderError } from './error/unathorized-order.error';
+import { OrderStatus } from './interface/order-status.interface';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -37,7 +38,7 @@ export class OrderController {
 
   @Post('/')
   @Authorised()
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({ type: OrderDto })
   @ApiUnauthorizedResponse()
   @ApiInternalServerErrorResponse()
   public async createOrder(
@@ -65,7 +66,7 @@ export class OrderController {
 
   @Get('/')
   @Authorised()
-  @ApiOkResponse()
+  @ApiOkResponse({ type: OrderDto, isArray: true })
   @ApiUnauthorizedResponse()
   @ApiInternalServerErrorResponse()
   public async getOrders(
@@ -85,13 +86,13 @@ export class OrderController {
     }
   }
 
-  @Delete('/:id')
+  @Patch('/:id')
   @Authorised()
   @ApiCreatedResponse()
   @ApiNotFoundResponse()
   @ApiUnauthorizedResponse()
   @ApiInternalServerErrorResponse()
-  public async deleteOrder(
+  public async cancelOrder(
     @Request() request: RequestWithUser,
     @Param('id', ParseUUIDPipe) orderId: string,
   ): Promise<void> {
@@ -100,8 +101,9 @@ export class OrderController {
       const order = await this.orderService.getOrderById(orderId);
 
       this.orderService.checkOrderOwner(order, user);
+      this.orderService.checkOrderFulfillment(order);
 
-      return await this.orderService.deleteOrder(order);
+      await this.orderService.updateOrderStatus(order, OrderStatus.Cancelled);
     } catch (error) {
       if (error instanceof UnathorizedOrderError) {
         throw new HttpException('Access forbidden', HttpStatus.FORBIDDEN);

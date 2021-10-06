@@ -9,7 +9,7 @@ import { SignupForm } from '@forms/SignupForm';
 
 export default function SignupPage() {
   return (
-    <Container py="16">
+    <Container flex="1" direction="column" justifyContent="center" py="16">
       <Stack spacing={['8', '8', '16']} alignItems="center">
         <Stack spacing={['2', '2', '4']} textAlign="center">
           <Heading fontSize={['4xl', '4xl', '6xl']}>

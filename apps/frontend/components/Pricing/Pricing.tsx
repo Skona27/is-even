@@ -67,7 +67,13 @@ export function Pricing() {
               name={name}
               badge={badge}
               price={price}
-              cta={cta}
+              cta={{
+                type: 'LINK',
+                props: {
+                  name: cta,
+                  href: '/',
+                },
+              }}
               specification={specification}
             />
           ))}

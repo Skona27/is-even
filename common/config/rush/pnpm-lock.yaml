@@ -45,6 +45,7 @@ specifiers:
   pg: ~8.6.0
   prettier: ^2.3.2
   react: 17.0.2
+  react-circular-progressbar: ~2.0.4
   react-dom: 17.0.2
   react-hook-form: ~7.15.3
   react-icons: 4.2.0
@@ -107,6 +108,7 @@ dependencies:
   pg: 8.6.0
   prettier: 2.3.2
   react: 17.0.2
+  react-circular-progressbar: 2.0.4_react@17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-hook-form: 7.15.3_react@17.0.2
   react-icons: 4.2.0_react@17.0.2
@@ -7495,6 +7497,14 @@ packages:
       unpipe: 1.0.0
     dev: false
 
+  /react-circular-progressbar/2.0.4_react@17.0.2:
+    resolution: {integrity: sha512-OfX0ThSxRYEVGaQSt0DlXfyl5w4DbXHsXetyeivmoQrh9xA9bzVPHNf8aAhOIiwiaxX2WYWpLDB3gcpsDJ9oww==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /react-clientside-effect/1.2.5_react@17.0.2:
     resolution: {integrity: sha512-2bL8qFW1TGBHozGGbVeyvnggRpMjibeZM2536AKNENLECutp2yfs44IL8Hmpn8qjFQ2K7A9PnYf3vc7aQq/cPA==}
     peerDependencies:
@@ -9216,7 +9226,7 @@ packages:
     dev: false
 
   file:projects/backend.tgz:
-    resolution: {integrity: sha512-svnXhNJxxWGZtqNDkUndp1Pgc3uwtUsyDJOGkxR8ikuNfNGIlUlB8clrwdqO9AQYOSTHoctUobtM0op/EqYPGQ==, tarball: file:projects/backend.tgz}
+    resolution: {integrity: sha512-8tHBN3aNQpFsH8I2kk5DUbOVLVw1Be65uSOEhoTSsLScsQMkoPDI8cnJytCdO3y6ESbWfKZ3rh/iMDeGZEs0rA==, tarball: file:projects/backend.tgz}
     name: '@rush-temp/backend'
     version: 0.0.0
     dependencies:
@@ -9237,6 +9247,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 4.28.3_8da3816a7c3fb8ebc9f4c4b3e4b2e38f
       '@typescript-eslint/parser': 4.28.3_eslint@7.30.0+typescript@4.3.5
       aws-sdk: 2.953.0
+      body-parser: 1.19.0
       class-transformer: 0.4.0
       class-validator: 0.13.1
       crypto: 1.0.1
@@ -9292,7 +9303,7 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-cyiAPei4b2rM9lTSTLGKmh0chwTkvNGYnNWJ7oiDrhOnGo27HSRwVWdh1uSYzxBxdmRkaool48zyYxrPgdbOew==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-V0j5o+KJi1ITne7gUThjfB5N9StKUEnR5/fp7Duq+UzKttGvkquzVmg5zvED7nHNJY/Xx+nl6WYz/qFjBwWLqw==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
@@ -9307,6 +9318,7 @@ packages:
       next: 11.0.1_f31b35bdaa3b7c2fce82404f09d2dac4
       nprogress: 0.2.0
       react: 17.0.2
+      react-circular-progressbar: 2.0.4_react@17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-hook-form: 7.15.3_react@17.0.2
       react-icons: 4.2.0_react@17.0.2
