@@ -23,6 +23,8 @@ export class CreditController {
   @ApiTags('credits')
   @ApiResponse({
     status: HttpStatus.OK,
+    type: CreditDto,
+    isArray: true,
     description: 'Credits successfully retrieved',
   })
   @ApiResponse({

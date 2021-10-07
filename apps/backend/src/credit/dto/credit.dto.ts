@@ -1,4 +1,4 @@
-import { IsUUID, IsDate, IsInt } from 'class-validator';
+import { IsUUID, IsDate, IsInt, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Credit } from '../credit.entity';
 
@@ -31,6 +31,10 @@ export class CreditDto {
   @IsDate()
   public toDate: Date;
 
+  @ApiProperty()
+  @IsBoolean()
+  public isActive: boolean;
+
   public static createDtoFromEntity(credit: Credit): CreditDto {
     const dto = new CreditDto();
 
@@ -41,6 +45,9 @@ export class CreditDto {
     dto.updatedAt = credit.updatedAt;
     dto.fromDate = credit.fromDate;
     dto.toDate = credit.toDate;
+
+    const presentDate = new Date();
+    dto.isActive = dto.fromDate <= presentDate && dto.toDate >= presentDate;
 
     return dto;
   }

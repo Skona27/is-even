@@ -1,1 +1,4 @@
-export interface RegisterPaymentApiResponseInterface {}
+export interface RegisterPaymentApiResponseInterface {
+  id: string;
+  url: string;
+}

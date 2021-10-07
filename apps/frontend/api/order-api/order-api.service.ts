@@ -1,10 +1,12 @@
 import { ApiClientService } from '../api-client.service';
+import { CreaditDuration } from './interface/credit-duration.interface';
+import { CreaditLimit } from './interface/credit-limit.interface';
 import { OrderApiResponseInterface } from './interface/order-api-response.interface';
 
 export class OrderApiService extends ApiClientService {
   public static async createOrder(params: {
-    creditLimit: string;
-    creditDuration: string;
+    creditLimit: CreaditLimit;
+    creditDuration: CreaditDuration;
     accessToken: string;
   }): Promise<OrderApiResponseInterface> {
     const { accessToken, ...body } = params;

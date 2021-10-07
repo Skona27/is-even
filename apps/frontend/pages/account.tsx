@@ -23,15 +23,22 @@ import { GetInitialPropsWithUser } from '@common/interface/get-initial-props-wit
 
 import { Plan } from '@components/Plan';
 import { OrderApiService } from '@api/order-api/order-api.service';
+import { CreditApiService } from '@api/credit-api/credit-api.service';
+import { OrderApiResponseInterface } from '@api/order-api/interface/order-api-response.interface';
+import { CreditApiResponseInterface } from '@api/credit-api/interface/credit-api-response.interface';
 
 interface AccountPageProps {
-  orders: unknown[];
+  orders: OrderApiResponseInterface[];
+  activeOrder: OrderApiResponseInterface;
+  activeCredit: CreditApiResponseInterface;
 }
 
-export default function AccountPage({ orders }: AccountPageProps) {
+export default function AccountPage({
+  orders,
+  activeOrder,
+  activeCredit,
+}: AccountPageProps) {
   const userContext = useUserContext();
-
-  const showPurchase = orders.length === 0;
 
   return (
     <Container py={['12']}>
@@ -42,14 +49,21 @@ export default function AccountPage({ orders }: AccountPageProps) {
           <TabList>
             <Tab>Active plan</Tab>
             <Tab>Orders</Tab>
-            <Tab>Payments</Tab>
             <Tab>API Keys</Tab>
           </TabList>
 
           <TabPanels>
             <TabPanel px="2">
               <Box py="4">
-                {showPurchase ? <Plan.Purchase /> : <Plan.Preview />}
+                {!activeCredit ? (
+                  <Plan.Purchase />
+                ) : (
+                  <Plan.Preview
+                    credit={activeCredit}
+                    planName={activeOrder.creditLimit}
+                    duration={activeOrder.creditDuration}
+                  />
+                )}
               </Box>
             </TabPanel>
 
@@ -103,9 +117,19 @@ AccountPage.getInitialProps = async ({
     makeTemporaryRedirect(ctx, '/');
   }
 
-  const orders = await OrderApiService.getOrders({
-    accessToken: authentication.accessToken,
-  });
+  const [orders, credits] = await Promise.all([
+    OrderApiService.getOrders({
+      accessToken: authentication.accessToken,
+    }),
+    CreditApiService.getCredits({
+      accessToken: authentication.accessToken,
+    }),
+  ]);
 
-  return { orders };
+  const activeCredit = credits.find((credit) => credit.isActive);
+  const activeOrder = activeCredit
+    ? orders.find((order) => order.creditId === activeCredit.id)
+    : undefined;
+
+  return { orders, activeCredit, activeOrder };
 };

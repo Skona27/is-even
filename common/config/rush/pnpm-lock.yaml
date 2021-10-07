@@ -25,6 +25,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^4.28.2
   '@typescript-eslint/parser': ^4.28.2
   aws-sdk: ~2.953.0
+  body-parser: ~1.19.0
   class-transformer: ~0.4.0
   class-validator: ~0.13.1
   crypto: ~1.0.1
@@ -62,6 +63,7 @@ specifiers:
   typeorm: ~0.2.34
   typescript: ^4.3.5
   universal-cookie: ~4.0.4
+  xstate: ~4.25.0
 
 dependencies:
   '@chakra-ui/react': 1.6.7_0cd8ff107246f5f64fee70d97cd6c4d3
@@ -88,6 +90,7 @@ dependencies:
   '@typescript-eslint/eslint-plugin': 4.28.3_1c9d952b0dc54af5a6ec241f969f206f
   '@typescript-eslint/parser': 4.28.3_typescript@4.3.5
   aws-sdk: 2.953.0
+  body-parser: 1.19.0
   class-transformer: 0.4.0
   class-validator: 0.13.1
   crypto: 1.0.1
@@ -125,6 +128,7 @@ dependencies:
   typeorm: 0.2.34
   typescript: 4.3.5
   universal-cookie: 4.0.4
+  xstate: 4.25.0
 
 packages:
 
@@ -2634,6 +2638,26 @@ packages:
     dependencies:
       '@webassemblyjs/ast': 1.11.1
       '@xtuc/long': 4.2.2
+    dev: false
+
+  /@xstate/react/1.6.1_e5d4563456c7d77ba5a24e04929aa78a:
+    resolution: {integrity: sha512-M3b32nGhA0K3N6NrYKAMXx3dgGlLmuZfJU/EsZT04kQyVbWSiT3z7p9rdPisQyaQYFUwdqspQZ68wRNWbUkfVQ==}
+    peerDependencies:
+      '@xstate/fsm': ^1.0.0
+      react: ^16.8.0 || ^17.0.0
+      xstate: ^4.11.0
+    peerDependenciesMeta:
+      '@xstate/fsm':
+        optional: true
+      xstate:
+        optional: true
+    dependencies:
+      react: 17.0.2
+      use-isomorphic-layout-effect: 1.1.1_b2f98f1a44929e460196386bafc39b6a
+      use-subscription: 1.5.1_react@17.0.2
+      xstate: 4.25.0
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /@xtuc/ieee754/1.2.0:
@@ -8811,6 +8835,19 @@ packages:
       react: 17.0.2
     dev: false
 
+  /use-isomorphic-layout-effect/1.1.1_b2f98f1a44929e460196386bafc39b6a:
+    resolution: {integrity: sha512-L7Evj8FGcwo/wpbv/qvSfrkHFtOpCzvM5yl2KVyDJoylVuSvzphiiasmjgQPttIGBAy2WKiBNR98q8w7PiNgKQ==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 17.0.14
+      react: 17.0.2
+    dev: false
+
   /use-sidecar/1.0.5_react@17.0.2:
     resolution: {integrity: sha512-k9jnrjYNwN6xYLj1iaGhonDghfvmeTmYjAiGvOr7clwKfPjMXJf4/HOr7oT5tJwYafgp2tG2l3eZEOfoELiMcA==}
     engines: {node: '>=8.5.0'}
@@ -9155,6 +9192,10 @@ packages:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
     dev: false
 
+  /xstate/4.25.0:
+    resolution: {integrity: sha512-qP7lc/ypOuuWME4ArOBnzaCa90TfHkjiqYDmxpiCjPy6FcXstInA2vH6qRVAHbPXRK4KQIYfIEOk1X38P+TldQ==}
+    dev: false
+
   /xtend/4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -9303,7 +9344,7 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-V0j5o+KJi1ITne7gUThjfB5N9StKUEnR5/fp7Duq+UzKttGvkquzVmg5zvED7nHNJY/Xx+nl6WYz/qFjBwWLqw==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-zcB+1NPqRJcWkniY2Ao9VZr+sD6tCZ9zpAkQ1NDWjX8pk2PzVxXJ7pQWQLQ/rOkx1kMEyab/Y/TtwntsZnRp/A==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
@@ -9311,6 +9352,7 @@ packages:
       '@emotion/react': 11.4.1_b2f98f1a44929e460196386bafc39b6a
       '@emotion/styled': 11.3.0_a0344699844b5dd03f4113e250f0ed74
       '@types/react': 17.0.14
+      '@xstate/react': 1.6.1_e5d4563456c7d77ba5a24e04929aa78a
       date-fns: 2.23.0
       eslint: 7.30.0
       eslint-config-next: 11.0.1_6b78ba35645ed557addbb8714920eb26
@@ -9324,8 +9366,10 @@ packages:
       react-icons: 4.2.0_react@17.0.2
       typescript: 4.3.5
       universal-cookie: 4.0.4
+      xstate: 4.25.0
     transitivePeerDependencies:
       - '@babel/core'
+      - '@xstate/fsm'
       - fibers
       - node-sass
       - sass

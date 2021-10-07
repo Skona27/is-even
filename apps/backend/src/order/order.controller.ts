@@ -30,6 +30,7 @@ import { OrderDto } from './dto/order.dto';
 import { ReadOrderError } from './error/read-order.error';
 import { UnathorizedOrderError } from './error/unathorized-order.error';
 import { OrderStatus } from './interface/order-status.interface';
+import { CreditLimit } from 'src/credit/interface/credit-limit.interface';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -54,6 +55,11 @@ export class OrderController {
         creditDuration,
         user,
       );
+
+      if (creditLimit === CreditLimit.Free) {
+        const fullfiledOrder = await this.orderService.fulfillOrder(order);
+        return OrderDto.createDtoFromEntity(fullfiledOrder);
+      }
 
       return OrderDto.createDtoFromEntity(order);
     } catch (error) {

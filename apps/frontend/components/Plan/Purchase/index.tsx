@@ -1,45 +1,42 @@
 import * as React from 'react';
 import { Heading, Stack, Text } from '@chakra-ui/react';
+import {} from '@xstate/react';
 
 import { useUserContext } from '@context/user-context';
 import { Card } from '@components/Pricing/Card';
-import { OrderApiService } from '@api/order-api/order-api.service';
-import { PaymentApiService } from '@api/payment-api/payment-api.service';
-
-enum CreaditDuration {
-  Monthly = 'Monthly',
-}
-
-enum CreaditLimit {
-  Free = 'Free',
-  Standard = 'Standard',
-}
-
-interface CreateOrderParams {
-  creditDuration: CreaditDuration;
-  creditLimit: CreaditLimit;
-  getAccessToken(): Promise<string>;
-}
-
-async function createOrder(params: CreateOrderParams) {
-  const accessToken = await params.getAccessToken();
-
-  const order = await OrderApiService.createOrder({
-    creditDuration: params.creditDuration,
-    creditLimit: params.creditLimit,
-    accessToken,
-  });
-
-  const payment = await PaymentApiService.registerPayment({
-    orderId: order.id,
-    accessToken,
-  });
-
-  console.log(payment);
-}
+import { CreaditDuration } from '@api/order-api/interface/credit-duration.interface';
+import { CreaditLimit } from '@api/order-api/interface/credit-limit.interface';
+import { useMachine } from '@xstate/react';
+import { createPurchaseMachine } from './purchase.machine';
+import { useRouter } from 'next/router';
 
 export function Purchase() {
+  const router = useRouter();
   const userContext = useUserContext();
+
+  const [current, send] = useMachine(
+    createPurchaseMachine({
+      getAccessToken: userContext.getAccessToken,
+    }),
+  );
+
+  if (current.matches('redirect')) {
+    return (
+      <Stack spacing={['6']}>
+        <Heading fontSize="xl">
+          You will be redirected to payment page shortly...
+        </Heading>
+      </Stack>
+    );
+  }
+
+  if (current.matches('done')) {
+    return (
+      <Stack spacing={['6']}>
+        <Heading fontSize="xl">Please wait...</Heading>
+      </Stack>
+    );
+  }
 
   return (
     <Stack spacing={['6']}>
@@ -63,11 +60,14 @@ export function Purchase() {
             type: 'BUTTON',
             props: {
               name: 'Activate now for FREE',
+              isDisabled: !current.matches('idle'),
               action: () => {
-                createOrder({
-                  creditDuration: CreaditDuration.Monthly,
-                  creditLimit: CreaditLimit.Free,
-                  getAccessToken: userContext.getAccessToken,
+                send({
+                  type: 'PURCHASE',
+                  data: {
+                    duration: CreaditDuration.Monthly,
+                    limit: CreaditLimit.Free,
+                  },
                 });
               },
             },
@@ -86,11 +86,14 @@ export function Purchase() {
             type: 'BUTTON',
             props: {
               name: 'Buy now',
+              isDisabled: !current.matches('idle'),
               action: () => {
-                createOrder({
-                  creditDuration: CreaditDuration.Monthly,
-                  creditLimit: CreaditLimit.Standard,
-                  getAccessToken: userContext.getAccessToken,
+                send({
+                  type: 'PURCHASE',
+                  data: {
+                    duration: CreaditDuration.Monthly,
+                    limit: CreaditLimit.Standard,
+                  },
                 });
               },
             },

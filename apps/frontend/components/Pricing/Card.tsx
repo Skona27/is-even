@@ -14,6 +14,7 @@ interface Button {
   type: 'BUTTON';
   props: {
     name: string;
+    isDisabled?: boolean;
     action(): void;
   };
 }
@@ -111,6 +112,7 @@ export function Card({ name, price, badge, specification, cta }: CardProps) {
             colorScheme="green"
             fontWeight="800"
             variant="solid"
+            isDisabled={cta.props.isDisabled}
             onClick={cta.props.action}
           >
             {cta.props.name}

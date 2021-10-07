@@ -1,4 +1,4 @@
-import { IsUUID, IsDate, IsInt, IsEnum } from 'class-validator';
+import { IsUUID, IsDate, IsInt, IsEnum, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 import { Order } from '../order.entity';
@@ -27,6 +27,10 @@ export class OrderDto {
   creditDuration: CreditDuration;
 
   @ApiProperty()
+  @IsString()
+  creditId: string;
+
+  @ApiProperty()
   @IsInt()
   public price: number;
 
@@ -37,6 +41,7 @@ export class OrderDto {
     dto.price = order.price;
     dto.createdAt = order.createdAt;
     dto.updatedAt = order.updatedAt;
+    dto.creditId = order.credit.id;
     dto.creditLimit = order.creditLimit;
     dto.creditDuration = order.creditDuration;
 

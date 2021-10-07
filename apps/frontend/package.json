@@ -21,7 +21,9 @@
     "nprogress": "~0.2.0",
     "universal-cookie": "~4.0.4",
     "date-fns": "~2.23.0",
-    "react-circular-progressbar": "~2.0.4"
+    "react-circular-progressbar": "~2.0.4",
+    "xstate": "~4.25.0",
+    "@xstate/react": "~1.6.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.14",

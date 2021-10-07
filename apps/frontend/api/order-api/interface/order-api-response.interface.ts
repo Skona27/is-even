@@ -1,7 +1,6 @@
 export interface OrderApiResponseInterface {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  creditId: string;
   creditLimit: string;
   creditDuration: string;
   price: number;

@@ -18,6 +18,7 @@ import { ReadOrderError } from './error/read-order.error';
 import { UpdateOrderError } from './error/update-order.error';
 import { InvalidOrderStatusError } from './error/invalid-order-status.error';
 import { FulfilledOrderError } from './error/fulfilled-order.error';
+import { Credit } from 'src/credit/credit.entity';
 
 @Injectable()
 export class OrderService {
@@ -36,6 +37,8 @@ export class OrderService {
     user: User,
   ): Promise<Order> {
     try {
+      await this.checkOrderCreateConditions(user);
+
       const price = this.calculateOrderPrice(creditLimit, creditDuration);
 
       const order = new Order();
@@ -145,6 +148,18 @@ export class OrderService {
     if (order.status === OrderStatus.Fulfilled) {
       this.loggerService.log('Order is already fulfilled');
       throw new FulfilledOrderError();
+    }
+  }
+
+  private async checkOrderCreateConditions(user: User): Promise<void> {
+    let credit: Credit;
+
+    try {
+      credit = await this.creditService.getActiveCredit(user);
+    } catch {}
+
+    if (credit) {
+      throw new Error('User has active credit');
     }
   }
 
