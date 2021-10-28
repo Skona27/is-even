@@ -5,4 +5,5 @@ export interface OrderApiResponseInterface {
   creditDuration: string;
   price: number;
   status: string;
+  createdAt: string;
 }

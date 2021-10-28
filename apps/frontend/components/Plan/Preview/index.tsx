@@ -1,8 +1,13 @@
 import * as React from 'react';
 import { format, parseISO } from 'date-fns';
-import { Stack, Text, Box, Flex } from '@chakra-ui/react';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import {
+  Stack,
+  Text,
+  Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Flex,
+} from '@chakra-ui/react';
 import { CreditApiResponseInterface } from '@api/credit-api/interface/credit-api-response.interface';
 
 interface PreviewProps {
@@ -43,17 +48,16 @@ export function Preview({ credit, planName, duration }: PreviewProps) {
         </Text>
       </Stack>
 
-      <Flex justifyContent="center">
-        <Box width="60" height="60">
-          <CircularProgressbar
-            value={usagePercentage}
-            text={`${usagePercentage}%`}
-            styles={buildStyles({
-              pathColor: 'var(--chakra-colors-green-500)',
-              textColor: 'var(--chakra-colors-green-500)',
-            })}
-          />
-        </Box>
+      <Flex alignItems="center" justifyContent="center">
+        <CircularProgress
+          value={usagePercentage}
+          color="green.500"
+          size={['60', 'xs', 'sm']}
+        >
+          <CircularProgressLabel fontSize="3xl">
+            {usagePercentage}%
+          </CircularProgressLabel>
+        </CircularProgress>
       </Flex>
     </Stack>
   );

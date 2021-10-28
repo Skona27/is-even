@@ -14,6 +14,13 @@ import {
   Th,
   Td,
   Box,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Badge,
+  useClipboard,
+  Button,
 } from '@chakra-ui/react';
 
 import { Container } from '@ui/Container';
@@ -26,15 +33,21 @@ import { OrderApiService } from '@api/order-api/order-api.service';
 import { CreditApiService } from '@api/credit-api/credit-api.service';
 import { OrderApiResponseInterface } from '@api/order-api/interface/order-api-response.interface';
 import { CreditApiResponseInterface } from '@api/credit-api/interface/credit-api-response.interface';
+import { format, parseISO } from 'date-fns';
+import { ApiKeyForm } from '@forms/ApiKeyForm/api-key.form';
+import { ApiKeyApiResponseInterface } from '@api/api-key-api/interface/api-key-api-response.interface';
+import { ApiKeyApiService } from '@api/api-key-api/api-key-api.service';
 
 interface AccountPageProps {
   orders: OrderApiResponseInterface[];
+  apiKeys: ApiKeyApiResponseInterface[];
   activeOrder: OrderApiResponseInterface;
   activeCredit: CreditApiResponseInterface;
 }
 
 export default function AccountPage({
   orders,
+  apiKeys,
   activeOrder,
   activeCredit,
 }: AccountPageProps) {
@@ -43,6 +56,16 @@ export default function AccountPage({
   return (
     <Container py={['12']}>
       <Stack spacing={['8']}>
+        {activeOrder && apiKeys.length === 0 && (
+          <Alert status="warning">
+            <AlertIcon />
+            <AlertTitle mr={2}>No API Key detected.</AlertTitle>
+            <AlertDescription>
+              Create your first API Key in order to use service.
+            </AlertDescription>
+          </Alert>
+        )}
+
         <Heading>Your account</Heading>
 
         <Tabs isFitted size={['sm']} variant="enclosed">
@@ -68,9 +91,18 @@ export default function AccountPage({
             </TabPanel>
 
             <TabPanel px="2">
-              <Box py="4">
-                <OrderTable />
+              <Box py="4" overflowX="scroll">
+                <OrderTable orders={orders} />
               </Box>
+            </TabPanel>
+
+            <TabPanel px="2">
+              <Stack spacing={['8']} py="4">
+                <Box overflowX="scroll">
+                  <ApiKeysTable apiKeys={apiKeys} />
+                </Box>
+                <ApiKeyForm />
+              </Stack>
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -79,32 +111,89 @@ export default function AccountPage({
   );
 }
 
-function OrderRow() {
+interface OrderTableProps {
+  orders: OrderApiResponseInterface[];
+}
+
+function OrderTable({ orders }: OrderTableProps) {
   return (
-    <Tr>
-      <Td>1</Td>
-      <Td>1000 </Td>
-      <Td>Monthly</Td>
-      <Td>9.99</Td>
-    </Tr>
+    <Table variant="simple" overflowX="scroll">
+      <Thead>
+        <Tr>
+          <Th>Number</Th>
+          <Th>Limit</Th>
+          <Th>Duration</Th>
+          <Th>Price</Th>
+          <Th>Status</Th>
+          <Th>Created</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {orders.map((order, index) => (
+          <Tr key={order.id}>
+            <Td>{index + 1}</Td>
+            <Td>{order.creditLimit} </Td>
+            <Td>{order.creditDuration}</Td>
+            <Td>{order.price / 100}</Td>
+            <Td>
+              <Badge colorScheme="green">{order.status}</Badge>
+            </Td>
+            <Td>{format(parseISO(order.createdAt), 'PPP')}</Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 }
 
-function OrderTable() {
+interface ApiKeysTable {
+  apiKeys: ApiKeyApiResponseInterface[];
+}
+
+function ApiKeysTable({ apiKeys }: ApiKeysTable) {
   return (
     <Table variant="simple">
       <Thead>
         <Tr>
-          <Th>ID</Th>
-          <Th>Limit</Th>
-          <Th>Duration</Th>
-          <Th>Price</Th>
+          <Th>Number</Th>
+          <Th>Name</Th>
+          <Th>Last used</Th>
+          <Th>Created</Th>
+          <Th>Value</Th>
         </Tr>
       </Thead>
       <Tbody>
-        <OrderRow />
+        {apiKeys.map((apiKey, index) => (
+          <ApiKeyElement apiKey={apiKey} number={index + 1} key={apiKey.id} />
+        ))}
       </Tbody>
     </Table>
+  );
+}
+
+function ApiKeyElement({
+  apiKey,
+  number,
+}: {
+  apiKey: ApiKeyApiResponseInterface;
+  number: number;
+}) {
+  const { hasCopied, onCopy } = useClipboard(apiKey.value);
+
+  return (
+    <Tr>
+      <Td>{number}</Td>
+      <Td>{apiKey.name} </Td>
+      <Td>
+        {apiKey.lastUsed ? format(parseISO(apiKey.lastUsed), 'PPP') : 'Never'}
+      </Td>
+      <Td>{format(parseISO(apiKey.createdAt), 'PPP')}</Td>
+      <Td>
+        <Button width="20" onClick={onCopy}>
+          {hasCopied ? 'Copied' : 'Copy'}
+        </Button>
+      </Td>
+    </Tr>
   );
 }
 
@@ -117,11 +206,14 @@ AccountPage.getInitialProps = async ({
     makeTemporaryRedirect(ctx, '/');
   }
 
-  const [orders, credits] = await Promise.all([
+  const [orders, credits, apiKeys] = await Promise.all([
     OrderApiService.getOrders({
       accessToken: authentication.accessToken,
     }),
     CreditApiService.getCredits({
+      accessToken: authentication.accessToken,
+    }),
+    ApiKeyApiService.getApiKeys({
       accessToken: authentication.accessToken,
     }),
   ]);
@@ -131,5 +223,5 @@ AccountPage.getInitialProps = async ({
     ? orders.find((order) => order.creditId === activeCredit.id)
     : undefined;
 
-  return { orders, activeCredit, activeOrder };
+  return { orders, apiKeys, activeCredit, activeOrder };
 };

@@ -62,6 +62,8 @@ export class ApiKeyController {
   @Authorised()
   @ApiTags('api-keys')
   @ApiResponse({
+    type: ApiKeyDto,
+    isArray: true,
     status: HttpStatus.OK,
     description: 'API Key has been successfully retrieved',
   })

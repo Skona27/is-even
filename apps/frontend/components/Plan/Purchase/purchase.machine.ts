@@ -27,6 +27,12 @@ interface Events {
       duration: CreaditDuration;
     };
   };
+  CONFIRM: {
+    type: 'CONFIRM';
+  };
+  CANCEL: {
+    type: 'CANCEL';
+  };
 }
 
 type ValueOf<T> = T[keyof T];
@@ -39,9 +45,25 @@ export function createPurchaseMachine(params: Params) {
       states: {
         idle: {
           on: {
-            PURCHASE: {
+            PURCHASE: [
+              {
+                target: 'confirmation',
+                actions: 'setPurchaseData',
+              },
+              // {
+              //   target: 'confirmation',
+              //   actions: 'setPurchaseData',
+              // },
+            ],
+          },
+        },
+        confirmation: {
+          on: {
+            CONFIRM: {
               target: 'purchase',
-              actions: 'setPurchaseData',
+            },
+            CANCEL: {
+              target: 'idle',
             },
           },
         },
