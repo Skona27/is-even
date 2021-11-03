@@ -9,6 +9,7 @@ import { RegisterPaymentApiResponseInterface } from '@api/payment-api/interface/
 
 interface Params {
   getAccessToken: () => Promise<string>;
+  reload: () => void;
 }
 
 interface Context {
@@ -50,10 +51,6 @@ export function createPurchaseMachine(params: Params) {
                 target: 'confirmation',
                 actions: 'setPurchaseData',
               },
-              // {
-              //   target: 'confirmation',
-              //   actions: 'setPurchaseData',
-              // },
             ],
           },
         },
@@ -161,7 +158,7 @@ export function createPurchaseMachine(params: Params) {
         },
         reload: () => {
           setTimeout(() => {
-            window.location.reload();
+            params.reload();
           }, 1000);
         },
       } as any,

@@ -4,6 +4,7 @@ import { Box } from '@chakra-ui/react';
 import { Features } from '@components/Features';
 import { Hero } from '@components/Hero';
 import { Pricing } from '@components/Pricing';
+import { Docs } from '@components/Docs';
 
 export default function HomePage() {
   return (
@@ -11,6 +12,7 @@ export default function HomePage() {
       <Hero />
       <Features />
       <Pricing />
+      <Docs />
     </Box>
   );
 }

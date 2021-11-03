@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { Stack, Heading, Text } from '@chakra-ui/react';
 import { Container } from '@ui/Container';
-import { Card } from './Card';
+import { Card, CardProps } from './Card';
 
-const cards = [
+const cards: CardProps[] = [
   {
     badge: undefined,
     name: 'Basic',
     price: '0',
-    cta: 'Start now',
+    cta: {
+      type: 'LINK',
+      props: {
+        href: '/account',
+        name: 'Start now',
+      },
+    },
     specification: [
       'Free forever',
       'Unlimited range',
@@ -20,7 +26,13 @@ const cards = [
     badge: 'Recommended',
     name: 'Standard',
     price: '3.99',
-    cta: 'Buy',
+    cta: {
+      type: 'LINK',
+      props: {
+        href: '/account',
+        name: 'Buy',
+      },
+    },
     specification: [
       'Unlimited range',
       'Support negative numbers',
@@ -31,7 +43,13 @@ const cards = [
     badge: undefined,
     name: 'Enterprise',
     price: '9.99',
-    cta: 'Contact us',
+    cta: {
+      type: 'LINK',
+      props: {
+        href: 'mailto:contact@iseven.com',
+        name: 'Contact us',
+      },
+    },
     specification: [
       'Unlimited range',
       'Support negative numbers',
@@ -67,13 +85,7 @@ export function Pricing() {
               name={name}
               badge={badge}
               price={price}
-              cta={{
-                type: 'LINK',
-                props: {
-                  name: cta,
-                  href: '/',
-                },
-              }}
+              cta={cta}
               specification={specification}
             />
           ))}

@@ -9,6 +9,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { FaCheckCircle } from 'react-icons/fa';
+import { Link } from '@ui/Link';
 
 interface Button {
   type: 'BUTTON';
@@ -114,6 +115,19 @@ export function Card({ name, price, badge, specification, cta }: CardProps) {
             variant="solid"
             isDisabled={cta.props.isDisabled}
             onClick={cta.props.action}
+          >
+            {cta.props.name}
+          </Button>
+        )}
+
+        {cta.type === 'LINK' && (
+          <Button
+            as="a"
+            w="80%"
+            colorScheme="green"
+            fontWeight="800"
+            variant="solid"
+            href={cta.props.href}
           >
             {cta.props.name}
           </Button>

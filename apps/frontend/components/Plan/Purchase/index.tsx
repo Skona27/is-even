@@ -10,6 +10,8 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
+  Spinner,
+  Flex,
 } from '@chakra-ui/react';
 
 import { useUserContext } from '@context/user-context';
@@ -28,26 +30,11 @@ export function Purchase() {
   const [current, send] = useMachine(
     createPurchaseMachine({
       getAccessToken: userContext.getAccessToken,
+      reload: () => {
+        router.push('/account');
+      },
     }),
   );
-
-  if (current.matches('redirect')) {
-    return (
-      <Stack spacing={['6']}>
-        <Heading fontSize="xl">
-          You will be redirected to payment page shortly...
-        </Heading>
-      </Stack>
-    );
-  }
-
-  if (current.matches('done')) {
-    return (
-      <Stack spacing={['6']}>
-        <Heading fontSize="xl">Please wait...</Heading>
-      </Stack>
-    );
-  }
 
   return (
     <>
@@ -119,7 +106,7 @@ export function Purchase() {
         </Stack>
       </Stack>
 
-      {current.matches('confirmation') && (
+      {!current.matches('idle') && (
         <AlertDialog
           isOpen={true}
           leastDestructiveRef={cancelRef}
@@ -130,16 +117,52 @@ export function Purchase() {
           <AlertDialogOverlay>
             <AlertDialogContent m={4}>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                {current.context.limit} plan purchase
+                {current.context.limit} plan{' '}
+                {current.context.limit === CreaditLimit.Free
+                  ? 'activation'
+                  : 'purchase'}
               </AlertDialogHeader>
 
-              <AlertDialogBody>
-                You will be redirected to payment page
-              </AlertDialogBody>
+              {current.matches('confirmation') && (
+                <AlertDialogBody>
+                  You are about to{' '}
+                  {current.context.limit === CreaditLimit.Free
+                    ? 'activate'
+                    : 'purchase'}{' '}
+                  {current.context.limit} plan. Are you sure?
+                </AlertDialogBody>
+              )}
+
+              {current.matches('redirect') && (
+                <AlertDialogBody>
+                  <Flex alignItems="center">
+                    <Spinner
+                      alignSelf="center"
+                      size="sm"
+                      mr={['4', '4', '2']}
+                    />
+                    <Text>You will be redirected to payment page</Text>
+                  </Flex>
+                </AlertDialogBody>
+              )}
+
+              {(current.matches('purchase') || current.matches('done')) && (
+                <AlertDialogBody>
+                  <Flex alignItems="center">
+                    <Spinner
+                      alignSelf="center"
+                      size="sm"
+                      mr={['4', '4', '2']}
+                    />
+                    <Text>Please wait</Text>
+                  </Flex>
+                </AlertDialogBody>
+              )}
 
               <AlertDialogFooter>
                 <Button
                   ref={cancelRef}
+                  disabled={!current.matches('confirmation')}
                   onClick={() => {
                     send({ type: 'CANCEL' });
                   }}
@@ -148,12 +171,15 @@ export function Purchase() {
                 </Button>
                 <Button
                   ml={3}
+                  disabled={!current.matches('confirmation')}
                   colorScheme="green"
                   onClick={() => {
                     send({ type: 'CONFIRM' });
                   }}
                 >
-                  Purchase
+                  {current.context.limit === CreaditLimit.Free
+                    ? 'Activate'
+                    : 'Purchase'}
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>

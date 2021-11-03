@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 
 import { FieldError } from '@ui/FieldError';
 import { useUserContext } from '@context/user-context';
+import { promptToast } from '@components/Toast';
 
 interface LoginFormData {
   email: string;
@@ -41,6 +42,12 @@ export function LoginForm() {
         email: data.email,
         password: data.password,
         remember: data.remember,
+      });
+
+      promptToast({
+        status: 'success',
+        title: 'Logged in',
+        description: 'You have been successfully logged in.',
       });
 
       router.push('/');

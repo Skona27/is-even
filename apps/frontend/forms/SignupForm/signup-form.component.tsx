@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 
 import { FieldError } from '@ui/FieldError';
 import { useUserContext } from '@context/user-context';
+import { promptToast } from '@components/Toast';
 
 interface SignupFormData {
   email: string;
@@ -43,6 +44,12 @@ export function SignupForm() {
         password: data.password,
         firstName: data.firstName,
         lastName: data.lastName,
+      });
+
+      promptToast({
+        status: 'success',
+        title: 'Account created',
+        description: 'You can now log in',
       });
 
       router.push('/login');

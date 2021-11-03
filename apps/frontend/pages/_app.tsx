@@ -16,6 +16,7 @@ import { UserApiService } from '@api/user-api/user-api.service';
 import { User } from '@common/interface/user.interface';
 import { Authentication } from '@common/interface/authentication.interface';
 import { GetInitialPropsWithUser } from '@common/interface/get-initial-props-with-user.interface';
+import { Toast } from '@components/Toast';
 
 NProgress.configure({ showSpinner: false });
 
@@ -59,6 +60,7 @@ export default function App({
       <UserContextProvider user={user} authentication={authentication}>
         <Flex minHeight="100vh" direction="column">
           <Header />
+          <Toast />
           <Flex flex="1" direction="column">
             <Component {...pageProps} />
           </Flex>

@@ -7,20 +7,12 @@ import {
   TabPanel,
   Heading,
   Stack,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Box,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  Badge,
-  useClipboard,
-  Button,
+  Text,
 } from '@chakra-ui/react';
 
 import { Container } from '@ui/Container';
@@ -33,10 +25,10 @@ import { OrderApiService } from '@api/order-api/order-api.service';
 import { CreditApiService } from '@api/credit-api/credit-api.service';
 import { OrderApiResponseInterface } from '@api/order-api/interface/order-api-response.interface';
 import { CreditApiResponseInterface } from '@api/credit-api/interface/credit-api-response.interface';
-import { format, parseISO } from 'date-fns';
 import { ApiKeyForm } from '@forms/ApiKeyForm/api-key.form';
 import { ApiKeyApiResponseInterface } from '@api/api-key-api/interface/api-key-api-response.interface';
 import { ApiKeyApiService } from '@api/api-key-api/api-key-api.service';
+import { OrderTable, ApiKeysTable } from '@components/Tables';
 
 interface AccountPageProps {
   orders: OrderApiResponseInterface[];
@@ -68,7 +60,7 @@ export default function AccountPage({
 
         <Heading>Your account</Heading>
 
-        <Tabs isFitted size={['sm']} variant="enclosed">
+        <Tabs isFitted size="sm" variant="enclosed">
           <TabList>
             <Tab>Active plan</Tab>
             <Tab>Orders</Tab>
@@ -91,109 +83,32 @@ export default function AccountPage({
             </TabPanel>
 
             <TabPanel px="2">
-              <Box py="4" overflowX="scroll">
-                <OrderTable orders={orders} />
+              <Box py="4" overflowX="auto">
+                {orders.length ? (
+                  <OrderTable orders={orders} />
+                ) : (
+                  <Text>No orders</Text>
+                )}
               </Box>
             </TabPanel>
 
             <TabPanel px="2">
-              <Stack spacing={['8']} py="4">
-                <Box overflowX="scroll">
-                  <ApiKeysTable apiKeys={apiKeys} />
-                </Box>
-                <ApiKeyForm />
+              <Stack spacing={['14']} py="4">
+                {apiKeys.length > 0 && (
+                  <Box overflowX="auto">
+                    <ApiKeysTable apiKeys={apiKeys} />
+                  </Box>
+                )}
+                <Stack spacing="6">
+                  <Heading size="md">Create new API Key</Heading>
+                  <ApiKeyForm />
+                </Stack>
               </Stack>
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Stack>
     </Container>
-  );
-}
-
-interface OrderTableProps {
-  orders: OrderApiResponseInterface[];
-}
-
-function OrderTable({ orders }: OrderTableProps) {
-  return (
-    <Table variant="simple" overflowX="scroll">
-      <Thead>
-        <Tr>
-          <Th>Number</Th>
-          <Th>Limit</Th>
-          <Th>Duration</Th>
-          <Th>Price</Th>
-          <Th>Status</Th>
-          <Th>Created</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {orders.map((order, index) => (
-          <Tr key={order.id}>
-            <Td>{index + 1}</Td>
-            <Td>{order.creditLimit} </Td>
-            <Td>{order.creditDuration}</Td>
-            <Td>{order.price / 100}</Td>
-            <Td>
-              <Badge colorScheme="green">{order.status}</Badge>
-            </Td>
-            <Td>{format(parseISO(order.createdAt), 'PPP')}</Td>
-          </Tr>
-        ))}
-      </Tbody>
-    </Table>
-  );
-}
-
-interface ApiKeysTable {
-  apiKeys: ApiKeyApiResponseInterface[];
-}
-
-function ApiKeysTable({ apiKeys }: ApiKeysTable) {
-  return (
-    <Table variant="simple">
-      <Thead>
-        <Tr>
-          <Th>Number</Th>
-          <Th>Name</Th>
-          <Th>Last used</Th>
-          <Th>Created</Th>
-          <Th>Value</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {apiKeys.map((apiKey, index) => (
-          <ApiKeyElement apiKey={apiKey} number={index + 1} key={apiKey.id} />
-        ))}
-      </Tbody>
-    </Table>
-  );
-}
-
-function ApiKeyElement({
-  apiKey,
-  number,
-}: {
-  apiKey: ApiKeyApiResponseInterface;
-  number: number;
-}) {
-  const { hasCopied, onCopy } = useClipboard(apiKey.value);
-
-  return (
-    <Tr>
-      <Td>{number}</Td>
-      <Td>{apiKey.name} </Td>
-      <Td>
-        {apiKey.lastUsed ? format(parseISO(apiKey.lastUsed), 'PPP') : 'Never'}
-      </Td>
-      <Td>{format(parseISO(apiKey.createdAt), 'PPP')}</Td>
-      <Td>
-        <Button width="20" onClick={onCopy}>
-          {hasCopied ? 'Copied' : 'Copy'}
-        </Button>
-      </Td>
-    </Tr>
   );
 }
 

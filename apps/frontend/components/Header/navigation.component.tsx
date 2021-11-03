@@ -21,14 +21,6 @@ const links = [
     href: '/',
     text: 'Home',
   },
-  {
-    href: '/pricing',
-    text: 'Pricing',
-  },
-  {
-    href: '/docs',
-    text: 'Docs',
-  },
 ];
 
 const sidebarLinks_loggedOut = [
@@ -82,7 +74,7 @@ export function Navigation({ user }: NavigationProps) {
           <Text
             as="span"
             fontSize={['3xl', '3xl']}
-            color="blackAlpha.800"
+            color="white"
             fontWeight="800"
           >
             {user.firstName} {user.lastName}

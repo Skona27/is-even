@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { Flex, IconButton, Text, useDisclosure, Box } from '@chakra-ui/react';
+import {
+  Flex,
+  IconButton,
+  Text,
+  useDisclosure,
+  Box,
+  Icon,
+} from '@chakra-ui/react';
 import { FaBars } from 'react-icons/fa';
 
 import { Container } from '@ui/Container';
@@ -23,7 +30,7 @@ export function Header() {
         <IconButton
           aria-label="Menu"
           colorScheme="green"
-          icon={<FaBars size="26px" />}
+          icon={<Icon boxSize="20px" as={FaBars} />}
           onClick={onOpen}
           display={['block', 'block', 'none']}
         />
