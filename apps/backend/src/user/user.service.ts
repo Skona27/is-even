@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as util from 'util';
 
 import { User } from './user.entity';
 import { LoggerService } from '../logger/logger.service';
@@ -41,9 +40,7 @@ export class UserService {
     try {
       return await this.usersRepository.save(user);
     } catch (error) {
-      this.loggerService.log(
-        `Failed to create a new user. ${util.inspect(error)}`,
-      );
+      this.loggerService.error(`Failed to create a new user. ${error.message}`);
       throw new CreateUserError(error);
     }
   }
@@ -61,7 +58,9 @@ export class UserService {
         auth,
       };
     } catch (error) {
-      this.loggerService.log(`Failed to login user with credentials. ${error}`);
+      this.loggerService.error(
+        `Failed to login user with credentials. ${error.message}`,
+      );
       throw new LoginUserError(error);
     }
   }
@@ -77,7 +76,9 @@ export class UserService {
         auth,
       };
     } catch (error) {
-      this.loggerService.log(`Failed to login user with token. ${error}`);
+      this.loggerService.error(
+        `Failed to login user with token. ${error.message}`,
+      );
       throw new LoginUserError(error);
     }
   }
@@ -86,7 +87,7 @@ export class UserService {
     try {
       await this.cognitoService.logout(email);
     } catch (error) {
-      this.loggerService.log(`Failed to logout user. ${error}`);
+      this.loggerService.error(`Failed to logout user. ${error.message}`);
       throw new LogoutUserError(error);
     }
   }
@@ -99,7 +100,7 @@ export class UserService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`Failed to read user data. ${error}`);
+      this.loggerService.error(`Failed to read user data. ${error.message}`);
       throw new ReadUserError(error);
     }
   }
@@ -112,7 +113,7 @@ export class UserService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`Failed to read user data. ${error}`);
+      this.loggerService.error(`Failed to read user data. ${error.message}`);
       throw new ReadUserError(error);
     }
   }

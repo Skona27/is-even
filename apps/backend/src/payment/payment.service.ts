@@ -49,7 +49,7 @@ export class PaymentService {
 
       return { url: session.url, id: session.id };
     } catch (error) {
-      this.loggerService.log(`Failed to register payment. ${error}`);
+      this.loggerService.error(`Failed to register payment. ${error.message}`);
       throw new RegisterPaymentError(error);
     }
   }
@@ -65,7 +65,9 @@ export class PaymentService {
       );
       return sessionEventMapper(stripeEvent);
     } catch (error) {
-      this.loggerService.log(`Failed to construct session event. ${error}`);
+      this.loggerService.error(
+        `Failed to construct session event. ${error.message}`,
+      );
       throw new ConstructPaymentEventError(error);
     }
   }
@@ -83,7 +85,7 @@ export class PaymentService {
 
       return await this.paymentRepository.save(payment);
     } catch (error) {
-      this.loggerService.log(`Failed to create payment. ${error}`);
+      this.loggerService.error(`Failed to create payment. ${error.message}`);
       throw new CreatePaymentError(error);
     }
   }
@@ -108,7 +110,7 @@ export class PaymentService {
     status: PaymentStatus,
   ): Promise<Payment> {
     if (payment.status === status) {
-      this.loggerService.log(
+      this.loggerService.error(
         `Cannot update payment status with the exact same value`,
       );
       throw new InvalidPaymentStatusError(
@@ -117,7 +119,7 @@ export class PaymentService {
     }
 
     if (payment.status === PaymentStatus.Successful) {
-      this.loggerService.log(
+      this.loggerService.error(
         `Cannot change the status of successfull payment's`,
       );
       throw new InvalidPaymentStatusError(
@@ -129,7 +131,7 @@ export class PaymentService {
       payment.status = status;
       return await this.paymentRepository.save(payment);
     } catch (error) {
-      this.loggerService.log(
+      this.loggerService.error(
         `Failed to update payment status. ${error.message}`,
       );
       throw new UpdatePaymentError(error.message);

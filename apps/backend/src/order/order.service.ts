@@ -51,7 +51,9 @@ export class OrderService {
 
       return await this.orderRepository.save(order);
     } catch (error) {
-      this.loggerService.log(`Failed to create a new order. ${error}`);
+      this.loggerService.error(
+        `Failed to create a new order. ${error.message}`,
+      );
       throw new CreateOrderError(error);
     }
   }
@@ -64,7 +66,9 @@ export class OrderService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`Failed to read a orders for a user. ${error}`);
+      this.loggerService.error(
+        `Failed to read a orders for a user. ${error.message}`,
+      );
       throw new ReadOrderError(error);
     }
   }
@@ -77,7 +81,7 @@ export class OrderService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`Failed to read a order. ${error}`);
+      this.loggerService.error(`Failed to read a order. ${error.message}`);
       throw new ReadOrderError(error);
     }
   }
@@ -87,7 +91,7 @@ export class OrderService {
     status: OrderStatus,
   ): Promise<Order> {
     if (order.status === status) {
-      this.loggerService.log(
+      this.loggerService.error(
         `Cannot update order status with the exact same value`,
       );
       throw new InvalidOrderStatusError(
@@ -99,7 +103,7 @@ export class OrderService {
       status === OrderStatus.Created &&
       order.status !== OrderStatus.Created
     ) {
-      this.loggerService.log(
+      this.loggerService.error(
         `Cannot change the order's status to Created again`,
       );
       throw new InvalidOrderStatusError(
@@ -112,7 +116,9 @@ export class OrderService {
     try {
       return await this.orderRepository.save(order);
     } catch (error) {
-      this.loggerService.log(`Failed to update order status. ${error}`);
+      this.loggerService.error(
+        `Failed to update order status. ${error.message}`,
+      );
       throw new UpdateOrderError(error);
     }
   }
@@ -132,21 +138,21 @@ export class OrderService {
 
       return await this.orderRepository.save(order);
     } catch (error) {
-      this.loggerService.log('Failed to fulfill and save order.');
+      this.loggerService.error('Failed to fulfill and save order.');
       throw new UpdateOrderError(error);
     }
   }
 
   public checkOrderOwner(order: Order, user: User): void {
     if (!order.belongsTo(user.id)) {
-      this.loggerService.log(`Order does not belong to the user.`);
+      this.loggerService.error(`Order does not belong to the user.`);
       throw new UnathorizedOrderError();
     }
   }
 
   public checkOrderFulfillment(order: Order): void {
     if (order.status === OrderStatus.Fulfilled) {
-      this.loggerService.log('Order is already fulfilled');
+      this.loggerService.error('Order is already fulfilled');
       throw new FulfilledOrderError();
     }
   }

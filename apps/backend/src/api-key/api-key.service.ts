@@ -33,7 +33,9 @@ export class ApiKeyService {
 
       return await this.apiKeyRepository.save(apiKey);
     } catch (error) {
-      this.loggerService.log(`Failed to create a new API key. ${error}`);
+      this.loggerService.error(
+        `Failed to create a new API key. ${error.message}`,
+      );
       throw new CreateApiKeyError(error);
     }
   }
@@ -46,7 +48,7 @@ export class ApiKeyService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`Failed to read API keys. ${error}`);
+      this.loggerService.error(`Failed to read API keys. ${error.message}`);
       throw new ReadApiKeyError(error);
     }
   }
@@ -57,7 +59,7 @@ export class ApiKeyService {
     try {
       apiKey = await this.findApiKeyById(apiKeyId);
     } catch (error) {
-      this.loggerService.log(`Failed to read API key. ${error}`);
+      this.loggerService.error(`Failed to read API key. ${error.message}`);
       throw new DeleteApiKeyError(error);
     }
 
@@ -72,7 +74,7 @@ export class ApiKeyService {
     try {
       await this.apiKeyRepository.delete({ id: apiKeyId });
     } catch (error) {
-      this.loggerService.log(`Failed to delete API key. ${error}`);
+      this.loggerService.error(`Failed to delete API key. ${error.message}`);
       throw new DeleteApiKeyError(error);
     }
   }
@@ -91,7 +93,9 @@ export class ApiKeyService {
 
       return apiKey;
     } catch (error) {
-      this.loggerService.log(`Failed to fetch owner of API key. ${error}`);
+      this.loggerService.error(
+        `Failed to fetch owner of API key. ${error.message}`,
+      );
       throw new NotFoundApiKeyError();
     }
   }

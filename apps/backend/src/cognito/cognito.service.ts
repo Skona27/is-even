@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
 import { InjectAwsService } from 'nest-aws-sdk';
-import * as util from 'util';
 import jwtDecode from 'jwt-decode';
 
 import { LoggerService } from '../logger/logger.service';
@@ -42,18 +41,23 @@ export class CognitoService {
         })
         .promise();
 
-      await this.cognitoService
-        .adminSetUserPassword({
-          UserPoolId: this.userPoolId,
-          Username: email,
-          Password: password,
-          Permanent: true,
-        })
-        .promise();
+      try {
+        await this.cognitoService
+          .adminSetUserPassword({
+            UserPoolId: this.userPoolId,
+            Username: email,
+            Password: password,
+            Permanent: true,
+          })
+          .promise();
+      } catch (error) {
+        await this.deleteUser(email);
+        throw error;
+      }
 
       return this.getUserId(response.User);
     } catch (error) {
-      this.loggerService.log(`Failed to create a new user. ${error}`);
+      this.loggerService.error(`Failed to create a new user. ${error.message}`);
       throw new CognitoCreateUserError(error);
     }
   }
@@ -95,8 +99,22 @@ export class CognitoService {
         expiration,
       };
     } catch (error) {
-      this.loggerService.log(`Failed to login user: ${util.inspect(error)}`);
+      this.loggerService.error(`Failed to login user: ${error.message}`);
       throw new CognitoLoginUserError(error);
+    }
+  }
+
+  public async deleteUser(email: string): Promise<void> {
+    try {
+      await this.cognitoService
+        .adminDeleteUser({
+          Username: email,
+          UserPoolId: this.userPoolId,
+        })
+        .promise();
+    } catch (error) {
+      this.loggerService.error(`Failed to delete user: ${error.message}`);
+      throw error;
     }
   }
 
@@ -125,7 +143,7 @@ export class CognitoService {
         expiration,
       };
     } catch (error) {
-      this.loggerService.log(`Failed to refresh token: ${util.inspect(error)}`);
+      this.loggerService.error(`Failed to refresh token: ${error.message}`);
       throw new CognitoLoginUserError(error);
     }
   }
@@ -139,7 +157,7 @@ export class CognitoService {
         })
         .promise();
     } catch (error) {
-      this.loggerService.log(`Failed to logout user: ${util.inspect(error)}`);
+      this.loggerService.error(`Failed to logout user: ${error.message}`);
       throw new CognitoLogoutUserError(error);
     }
   }
@@ -154,7 +172,7 @@ export class CognitoService {
     const userId = user.Attributes.find((attr) => attr.Name === 'sub').Value;
 
     if (!userId) {
-      this.loggerService.log('User ID is missing but cannot be undefined');
+      this.loggerService.error('User ID is missing but cannot be undefined');
       throw new CognitoUserIdMissingError();
     }
 

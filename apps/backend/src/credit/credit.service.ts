@@ -36,7 +36,9 @@ export class CreditService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`Failed to read user's credits. ${error}`);
+      this.loggerService.error(
+        `Failed to read user's credits. ${error.message}`,
+      );
       throw new ReadCreditError(error);
     }
   }
@@ -61,7 +63,9 @@ export class CreditService {
 
       return await this.creditRepository.save(credit);
     } catch (error) {
-      this.loggerService.log(`Failed to create a new credit. ${error}`);
+      this.loggerService.error(
+        `Failed to create a new credit. ${error.message}`,
+      );
       throw new CreateCreditError(error);
     }
   }
@@ -78,7 +82,9 @@ export class CreditService {
         },
       });
     } catch (error) {
-      this.loggerService.log(`Failed to read user's active credit. ${error}`);
+      this.loggerService.error(
+        `Failed to read user's active credit. ${error.message}`,
+      );
       throw new ReadActiveCreditError(error);
     }
   }
@@ -90,7 +96,7 @@ export class CreditService {
 
       this.creditRepository.save(credit);
     } catch (error) {
-      this.loggerService.log(`Failed to increment credit. ${error}`);
+      this.loggerService.error(`Failed to increment credit. ${error.message}`);
       throw new IncrementCreditError(error);
     }
   }

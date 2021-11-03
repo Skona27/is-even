@@ -39,7 +39,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       user = await this.userService.findUserByAuthId(payload.sub);
     } catch (error) {
       this.loggerService.error(
-        `Error while reading user from database (authId: ${payload.sub}). ${error}`,
+        `Error while reading user from database (authId: ${payload.sub}). ${error.message}`,
       );
     }
 
