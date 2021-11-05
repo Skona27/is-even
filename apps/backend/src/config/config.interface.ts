@@ -28,4 +28,5 @@ export interface Config {
     webhook_secret: string;
   };
   creditsConfig: Record<CreditLimit, number>;
+  pricesConfig: Record<CreditLimit, number>;
 }

@@ -18,7 +18,8 @@ import { ReadOrderError } from './error/read-order.error';
 import { UpdateOrderError } from './error/update-order.error';
 import { InvalidOrderStatusError } from './error/invalid-order-status.error';
 import { FulfilledOrderError } from './error/fulfilled-order.error';
-import { Credit } from 'src/credit/credit.entity';
+import { Credit } from '../credit/credit.entity';
+import { AppConfigService } from '../config/config.service';
 
 @Injectable()
 export class OrderService {
@@ -27,6 +28,7 @@ export class OrderService {
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
     private readonly creditService: CreditService,
+    private readonly configService: AppConfigService,
   ) {
     this.loggerService.setContext(OrderService.name);
   }
@@ -39,7 +41,7 @@ export class OrderService {
     try {
       await this.checkOrderCreateConditions(user);
 
-      const price = this.calculateOrderPrice(creditLimit, creditDuration);
+      const price = this.calculateOrderPrice(creditLimit);
 
       const order = new Order();
 
@@ -169,13 +171,16 @@ export class OrderService {
     }
   }
 
-  // TODO: Calculate order price
-  private calculateOrderPrice(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _creditLimit: CreditLimit,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _creditDuration: CreditDuration,
-  ): number {
-    return 1000;
+  private calculateOrderPrice(limit: CreditLimit): number {
+    const creditsConfig = this.configService.pricesConfig;
+
+    switch (limit) {
+      case CreditLimit.Free:
+        return creditsConfig.Free;
+      case CreditLimit.Standard:
+        return creditsConfig.Standard;
+      default:
+        throw new Error(`Cannot calculate price for limit type ${limit}`);
+    }
   }
 }

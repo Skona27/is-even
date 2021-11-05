@@ -58,6 +58,13 @@ export class AppConfigService {
     };
   }
 
+  get pricesConfig(): Config['pricesConfig'] {
+    return {
+      [CreditLimit.Free]: 0,
+      [CreditLimit.Standard]: 99,
+    };
+  }
+
   get stripeConfig(): Config['stripeConfig'] {
     return {
       api_key: this.configService.get<string>('STRIPE_API_KEY'),
