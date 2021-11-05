@@ -25,7 +25,7 @@ const cards: CardProps[] = [
   {
     badge: 'Recommended',
     name: 'Standard',
-    price: '3.99',
+    price: '0.99',
     cta: {
       type: 'LINK',
       props: {
@@ -46,7 +46,7 @@ const cards: CardProps[] = [
     cta: {
       type: 'LINK',
       props: {
-        href: 'mailto:contact@iseven.com',
+        href: 'mailto:lokismind@gmail.com',
         name: 'Contact us',
       },
     },

@@ -80,7 +80,7 @@ export function Purchase() {
 
           <Card
             name="Standard"
-            price="3.99"
+            price="0.99"
             cta={{
               type: 'BUTTON',
               props: {

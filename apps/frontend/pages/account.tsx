@@ -16,7 +16,6 @@ import {
 } from '@chakra-ui/react';
 
 import { Container } from '@ui/Container';
-import { useUserContext } from '@context/user-context';
 import { makeTemporaryRedirect } from '@common/utils/make-temporary-redirect.util';
 import { GetInitialPropsWithUser } from '@common/interface/get-initial-props-with-user.interface';
 
@@ -29,38 +28,95 @@ import { ApiKeyForm } from '@forms/ApiKeyForm/api-key.form';
 import { ApiKeyApiResponseInterface } from '@api/api-key-api/interface/api-key-api-response.interface';
 import { ApiKeyApiService } from '@api/api-key-api/api-key-api.service';
 import { OrderTable, ApiKeysTable } from '@components/Tables';
+import { useRouter } from 'next/router';
+
+type PaymentStatus = 'success' | 'failed';
 
 interface AccountPageProps {
   orders: OrderApiResponseInterface[];
   apiKeys: ApiKeyApiResponseInterface[];
   activeOrder: OrderApiResponseInterface;
   activeCredit: CreditApiResponseInterface;
+  paymentStatus: PaymentStatus;
 }
+
+const TABS_PARAM_NAME = 'tab';
+const TABS_URL = ['activePlan', 'orders', 'apiKeys'];
 
 export default function AccountPage({
   orders,
   apiKeys,
   activeOrder,
   activeCredit,
+  paymentStatus,
 }: AccountPageProps) {
-  const userContext = useUserContext();
+  const router = useRouter();
+  const [tabIndex, setTabIndex] = React.useState(0);
+
+  const handleTabsChange = React.useCallback(
+    (index) => {
+      setTabIndex(index);
+
+      router.push(
+        { query: { [TABS_PARAM_NAME]: TABS_URL[index] } },
+        undefined,
+        { shallow: true },
+      );
+    },
+    [router],
+  );
+
+  React.useEffect(() => {
+    const value = router.query[TABS_PARAM_NAME];
+    const index = TABS_URL.findIndex((element) => element === value);
+
+    if (index >= 0 && index !== tabIndex) {
+      setTabIndex(index);
+    }
+  }, [router.query, tabIndex]);
 
   return (
     <Container py={['12']}>
       <Stack spacing={['8']}>
-        {activeOrder && apiKeys.length === 0 && (
-          <Alert status="warning">
-            <AlertIcon />
-            <AlertTitle mr={2}>No API Key detected.</AlertTitle>
-            <AlertDescription>
-              Create your first API Key in order to use service.
-            </AlertDescription>
-          </Alert>
-        )}
+        <Stack spacing="4">
+          {paymentStatus === 'failed' && (
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle mr={2}>Payment failed!</AlertTitle>
+              <AlertDescription>
+                There was a problem with your payment.
+              </AlertDescription>
+            </Alert>
+          )}
+          {paymentStatus === 'success' && (
+            <Alert status="success">
+              <AlertIcon />
+              <AlertTitle mr={2}>Payment succeded!</AlertTitle>
+              <AlertDescription>
+                Your order has been fulfilled.
+              </AlertDescription>
+            </Alert>
+          )}
+          {activeOrder && apiKeys.length === 0 && (
+            <Alert status="warning">
+              <AlertIcon />
+              <AlertTitle mr={2}>No API Key detected!</AlertTitle>
+              <AlertDescription>
+                Create your first API Key in order to use service.
+              </AlertDescription>
+            </Alert>
+          )}
+        </Stack>
 
         <Heading>Your account</Heading>
 
-        <Tabs isFitted size="sm" variant="enclosed">
+        <Tabs
+          isFitted
+          size="sm"
+          variant="enclosed"
+          index={tabIndex}
+          onChange={handleTabsChange}
+        >
           <TabList>
             <Tab>Active plan</Tab>
             <Tab>Orders</Tab>
@@ -138,5 +194,7 @@ AccountPage.getInitialProps = async ({
     ? orders.find((order) => order.creditId === activeCredit.id)
     : undefined;
 
-  return { orders, apiKeys, activeCredit, activeOrder };
+  const paymentStatus = ctx.query.paymentStatus as PaymentStatus;
+
+  return { orders, apiKeys, activeCredit, activeOrder, paymentStatus };
 };

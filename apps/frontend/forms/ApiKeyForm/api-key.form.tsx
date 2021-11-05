@@ -4,7 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
 } from '@chakra-ui/react';
@@ -43,7 +42,7 @@ export function ApiKeyForm() {
         name: data.name,
       });
 
-      router.push('/');
+      router.push('/account?tab=apiKeys');
     } catch (error) {
       setError(error.message);
       setIsLoading(false);

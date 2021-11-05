@@ -80,7 +80,7 @@ export function Card({ name, price, badge, specification, cta }: CardProps) {
 
         <Stack direction="row" justifyContent="center">
           <Text fontSize={['2xl', '2xl', '3xl']} fontWeight="600">
-            $
+            €
           </Text>
           <Text fontSize={['3xl', '3xl', '5xl']} fontWeight="900">
             {price}
