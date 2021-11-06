@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@api/*": ["api/*"],
+      "@api/*": ["api-libs/*"],
       "@common/*": ["common/*"],
       "@components/*": ["components/*"],
       "@context/*": ["context/*"],
