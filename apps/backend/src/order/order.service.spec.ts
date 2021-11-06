@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
+import { AppConfigService } from '../config/config.service';
+import { AppConfigServiceMock } from '../config/config.service.mock';
 import { CreditService } from '../credit/credit.service';
 import { LoggerService } from '../logger/logger.service';
 import { LoggerServiceMock } from '../logger/logger.service.mock';
@@ -32,6 +34,10 @@ describe('OrderService', () => {
         {
           provide: getRepositoryToken(Order),
           useValue: orderRepositoryMock,
+        },
+        {
+          provide: AppConfigService,
+          useValue: AppConfigServiceMock,
         },
       ],
     }).compile();
