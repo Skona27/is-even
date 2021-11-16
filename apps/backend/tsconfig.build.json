@@ -1,4 +1,8 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+  "include": ["**/src", "./package.json"],
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
+  "compilerOptions": {
+    "resolveJsonModule": true
+  }
 }

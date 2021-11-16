@@ -5,7 +5,6 @@ import { AwsSdkModule } from 'nest-aws-sdk';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AppConfigService } from '../config/config.service';
 import { AppConfigModule } from '../config/config.module';
 import { UserModule } from '../user/user.module';
@@ -50,6 +49,6 @@ import { PaymentModule } from '../payment/payment.module';
     PaymentModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

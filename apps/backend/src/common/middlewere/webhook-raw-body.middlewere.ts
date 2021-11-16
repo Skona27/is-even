@@ -6,6 +6,7 @@ export interface RequestWithRawBody extends Request {
 }
 
 const webhooks = ['/payments/verify'];
+// No signatures found matching the expected signature for payload. Are you passing the raw request body you received from Stripe?
 
 export function webhookRawBodyMiddleware() {
   return json({

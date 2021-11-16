@@ -33,8 +33,8 @@ export class AppConfigService {
       username: this.configService.get<string>('DB_USERNAME'),
       password: this.configService.get<string>('DB_PASSWORD'),
       database: this.configService.get<string>('DB_DATABASE_NAME'),
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      migrations: ['dist/**/database/migrations/*.js'],
+      entities: ['**/**.entity.js'],
+      migrations: ['**/database/migrations/*.js'],
       synchronize: false,
       migrationsRun: true,
     };
