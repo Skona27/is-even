@@ -16,12 +16,13 @@ class MyDocument extends Document {
             content="is-even, iseven, is, even, saas, number, parity"
           />
           <meta name="author" content="Jakub Skoneczny" />
+
+          <Analytics />
         </Head>
 
         <body>
           <Main />
           <NextScript />
-          <Analytics />
         </body>
       </Html>
     );
