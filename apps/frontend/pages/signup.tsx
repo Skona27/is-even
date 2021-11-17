@@ -10,6 +10,10 @@ import { SignupForm } from '@forms/SignupForm';
 export default function SignupPage() {
   return (
     <Container flex="1" direction="column" alignItems="center" py="16">
+      <title>
+        Sign up | isEven API - SaaS platform for checking if number is even
+      </title>
+
       <Stack spacing={['8', '8', '16']} alignItems="center">
         <Stack spacing={['2', '2', '4']} textAlign="center">
           <Heading fontSize={['4xl', '4xl', '6xl']}>

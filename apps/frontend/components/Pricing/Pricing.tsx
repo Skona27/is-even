@@ -46,7 +46,7 @@ const cards: CardProps[] = [
     cta: {
       type: 'LINK',
       props: {
-        href: 'mailto:lokismind@gmail.com',
+        href: 'mailto:skoneczny.j+iseven@gmail.com',
         name: 'Contact us',
       },
     },

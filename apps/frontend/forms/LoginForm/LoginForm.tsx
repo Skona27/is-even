@@ -50,7 +50,7 @@ export function LoginForm() {
         description: 'You have been successfully logged in.',
       });
 
-      router.push('/');
+      router.push('/account');
     } catch (error) {
       setError(error.message);
       setIsLoading(false);

@@ -10,6 +10,10 @@ import { LoginForm } from '@forms/LoginForm';
 export default function LoginPage() {
   return (
     <Container flex="1" direction="column" alignItems="center">
+      <title>
+        Login | isEven API - SaaS platform for checking if number is even
+      </title>
+
       <Stack spacing={['8', '8', '16']} alignItems="center">
         <Stack spacing={['2', '2', '4']} textAlign="center">
           <Heading fontSize={['4xl', '4xl', '6xl']}>

@@ -77,6 +77,10 @@ export default function AccountPage({
 
   return (
     <Container py={['12']}>
+      <title>
+        Account | isEven API - SaaS platform for checking if number is even
+      </title>
+
       <Stack spacing={['8']}>
         <Stack spacing="4">
           {paymentStatus === 'failed' && (
@@ -174,7 +178,7 @@ AccountPage.getInitialProps = async ({
   authentication,
 }: GetInitialPropsWithUser) => {
   if (!user) {
-    makeTemporaryRedirect(ctx, '/');
+    makeTemporaryRedirect(ctx, '/login');
   }
 
   const [orders, credits, apiKeys] = await Promise.all([

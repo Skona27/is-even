@@ -26,6 +26,10 @@ export default function LogoutPage() {
 
   return (
     <Container flex="1" direction="column" alignItems="center">
+      <title>
+        Logout | isEven API - SaaS platform for checking if number is even
+      </title>
+
       <Stack alignItems="center" justifyContent="center" textAlign="center">
         <Heading fontSize={['2xl', '2xl', '3xl']}>
           You have been successfully logged out
