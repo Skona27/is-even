@@ -12,6 +12,8 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     environment:
       - PORT=${FRONTEND_PORT}
+      - ENVIRONMENT=${FRONTEND_ENVIRONMENT}
+      - SENTRY_DSN=${FRONTEND_SENTRY_DSN}
       - API_BASE_URL=${API_BASE_URL}
     command: npm run dev
 

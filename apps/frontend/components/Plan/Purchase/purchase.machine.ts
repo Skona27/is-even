@@ -1,4 +1,5 @@
 import { createMachine, DoneInvokeEvent, assign } from 'xstate';
+import * as Sentry from '@sentry/react';
 
 import { OrderApiService } from '@api/order-api/order-api.service';
 import { PaymentApiService } from '@api/payment-api/payment-api.service';
@@ -76,6 +77,7 @@ export function createPurchaseMachine(params: Params) {
                 },
                 onError: {
                   target: '#error',
+                  actions: 'reportToSentry',
                 },
               },
             },
@@ -94,6 +96,7 @@ export function createPurchaseMachine(params: Params) {
                 ],
                 onError: {
                   target: '#error',
+                  actions: 'reportToSentry',
                 },
               },
             },
@@ -106,6 +109,7 @@ export function createPurchaseMachine(params: Params) {
                 },
                 onError: {
                   target: '#error',
+                  actions: 'reportToSentry',
                 },
               },
             },
@@ -160,6 +164,16 @@ export function createPurchaseMachine(params: Params) {
           setTimeout(() => {
             params.reload();
           }, 1000);
+        },
+        reportToSentry: (context: Context, event: any) => {
+          Sentry.withScope((scope) => {
+            scope.setTag('where', 'purchase.createPurchaseMachine');
+            scope.setExtra('limit', context.limit);
+            scope.setExtra('duration', context.duration);
+            scope.setExtra('orderId', context.orderId);
+
+            Sentry.captureException(event.data);
+          });
         },
       } as any,
       services: {

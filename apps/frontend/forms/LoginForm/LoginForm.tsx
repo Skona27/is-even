@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import * as Sentry from '@sentry/react';
 
 import { FieldError } from '@ui/FieldError';
 import { useUserContext } from '@context/user-context';
@@ -54,6 +55,11 @@ export function LoginForm() {
     } catch (error) {
       setError(error.message);
       setIsLoading(false);
+
+      Sentry.withScope((scope) => {
+        scope.setTag('where', 'loginForm.onSubmit');
+        Sentry.captureException(error);
+      });
     }
   }
 

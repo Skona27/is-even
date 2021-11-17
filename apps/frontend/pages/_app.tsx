@@ -4,6 +4,9 @@ import NProgress from 'nprogress';
 import Router from 'next/router';
 import { AppProps as NextAppProps } from 'next/app';
 import UniversalCookie from 'universal-cookie';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
+import getConfig from 'next/config';
 
 import { Header } from '@components/Header';
 import { Footer } from '@components/Footer';
@@ -58,6 +61,18 @@ export default function App({
   user,
   authentication,
 }: AppProps & NextAppProps) {
+  const { publicRuntimeConfig } = getConfig();
+
+  Sentry.init({
+    environment: publicRuntimeConfig.ENVIRONMENT,
+    dsn: publicRuntimeConfig.SENTRY_DSN,
+    release: publicRuntimeConfig.APP_VERSION,
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 0.5,
+  });
+
+  Sentry.setTag('isLoggedIn', !!user);
+
   return (
     <ChakraProvider theme={theme}>
       <UserContextProvider user={user} authentication={authentication}>
@@ -124,6 +139,12 @@ App.getInitialProps = async function getInitialProps({
     };
   } catch (error) {
     console.error(`Failed to fetch initial props for page. ${error.message}`);
+
+    Sentry.withScope((scope) => {
+      scope.setTag('where', 'app.getInitialProps');
+      Sentry.captureException(error);
+    });
+
     return {};
   }
 };

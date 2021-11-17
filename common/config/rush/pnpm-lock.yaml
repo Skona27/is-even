@@ -28,6 +28,7 @@ specifiers:
   '@rush-temp/docker': file:./projects/docker.tgz
   '@rush-temp/frontend': file:./projects/frontend.tgz
   '@rush-temp/infrastructure': file:./projects/infrastructure.tgz
+  '@sentry/react': ~6.15.0
   '@types/express': ^4.17.13
   '@types/react': ^17.0.14
   '@types/supertest': ^2.0.11
@@ -41,6 +42,7 @@ specifiers:
   class-validator: ~0.13.1
   crypto: ~1.0.1
   date-fns: ~2.23.0
+  dotenv: ~10.0.0
   eslint-config-next: 11.0.1
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^3.4.0
@@ -101,6 +103,7 @@ dependencies:
   '@rush-temp/docker': file:projects/docker.tgz
   '@rush-temp/frontend': file:projects/frontend.tgz
   '@rush-temp/infrastructure': file:projects/infrastructure.tgz
+  '@sentry/react': 6.15.0_react@17.0.2
   '@types/express': 4.17.13
   '@types/react': 17.0.14
   '@types/supertest': 2.0.11
@@ -114,6 +117,7 @@ dependencies:
   class-validator: 0.13.1
   crypto: 1.0.1
   date-fns: 2.23.0
+  dotenv: 10.0.0
   eslint-config-next: 11.0.1_next@11.0.1
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier: 3.4.0_ae3805332b62cec006ed24a9ec35ea79
@@ -2786,6 +2790,84 @@ packages:
 
   /@rushstack/eslint-patch/1.0.6:
     resolution: {integrity: sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==}
+    dev: false
+
+  /@sentry/browser/6.15.0:
+    resolution: {integrity: sha512-ZiqfHK5DMVgDsgMTuSwxilWIqEnZzy4yuJ9Sr6Iap1yZddPSiKHYjbBieSHn57UsWHViRB3ojbwu44LfvXKJdQ==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/core': 6.15.0
+      '@sentry/types': 6.15.0
+      '@sentry/utils': 6.15.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/core/6.15.0:
+    resolution: {integrity: sha512-mCbKyqvD1G3Re6gv6N8tRkBz84gvVWDfLtC6d1WBArIopzter6ktEbvq0cMT6EOvGI2OLXuJ6mtHA93/Q0gGpw==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/hub': 6.15.0
+      '@sentry/minimal': 6.15.0
+      '@sentry/types': 6.15.0
+      '@sentry/utils': 6.15.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/hub/6.15.0:
+    resolution: {integrity: sha512-cUbHPeG6kKpGBaEMgbTWeU03Y1Up5T3urGF+cgtrn80PmPYYSUPvVvWlZQWPb8CJZ1yQ0gySWo5RUTatBFrEHA==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/types': 6.15.0
+      '@sentry/utils': 6.15.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/minimal/6.15.0:
+    resolution: {integrity: sha512-7RJIvZsjBa1qFUfMrAzQsWdfZT6Gm4t6ZTYfkpsXPBA35hkzglKbBrhhsUvkxGIhUGw/PiCUqxBUjcmzQP0vfg==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/hub': 6.15.0
+      '@sentry/types': 6.15.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/react/6.15.0_react@17.0.2:
+    resolution: {integrity: sha512-vrrFF/KtPJQ41tmDCWpaR+bN+/TqPwqncsGLfbClE2irY3x3eCJjT2qPstlB7NQ6rTYtScyekbB0fOoNkq9FFg==}
+    engines: {node: '>=6'}
+    peerDependencies:
+      react: 15.x || 16.x || 17.x
+    dependencies:
+      '@sentry/browser': 6.15.0
+      '@sentry/minimal': 6.15.0
+      '@sentry/types': 6.15.0
+      '@sentry/utils': 6.15.0
+      hoist-non-react-statics: 3.3.2
+      react: 17.0.2
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/tracing/6.15.0:
+    resolution: {integrity: sha512-V5unvX8qNEfdawX+m2n0jKgmH/YR2ItWZLH+3UevBTptO+xyfvRtpgGXYWUCo3iGvFgWb1C+iIC7LViR9rTvBg==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/hub': 6.15.0
+      '@sentry/minimal': 6.15.0
+      '@sentry/types': 6.15.0
+      '@sentry/utils': 6.15.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/types/6.15.0:
+    resolution: {integrity: sha512-zBw5gPUsofXUSpS3ZAXqRNedLRBvirl3sqkj2Lez7X2EkKRgn5D8m9fQIrig/X3TsKcXUpijDW5Buk5zeCVzJA==}
+    engines: {node: '>=6'}
+    dev: false
+
+  /@sentry/utils/6.15.0:
+    resolution: {integrity: sha512-gnhKKyFtnNmKWjDizo7VKD0/Vx8cgW1lCusM6WI7jy2jlO3bQA0+Dzgmr4mIReZ74mq4VpOd2Vfrx7ZldW1DMw==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/types': 6.15.0
+      tslib: 1.14.1
     dev: false
 
   /@sinonjs/commons/1.8.3:
@@ -12069,13 +12151,15 @@ packages:
     dev: false
 
   file:projects/frontend.tgz:
-    resolution: {integrity: sha512-zcB+1NPqRJcWkniY2Ao9VZr+sD6tCZ9zpAkQ1NDWjX8pk2PzVxXJ7pQWQLQ/rOkx1kMEyab/Y/TtwntsZnRp/A==, tarball: file:projects/frontend.tgz}
+    resolution: {integrity: sha512-wMO0VRJo6Gp24oei6foz1pXRNX4nOwr3/Dyz+Nis8w/0TW4s2/82ntOCyH1Zkm61aQqkhXsGXVIEYus3+kNG5w==, tarball: file:projects/frontend.tgz}
     name: '@rush-temp/frontend'
     version: 0.0.0
     dependencies:
       '@chakra-ui/react': 1.6.7_0cd8ff107246f5f64fee70d97cd6c4d3
       '@emotion/react': 11.4.1_b2f98f1a44929e460196386bafc39b6a
       '@emotion/styled': 11.3.0_a0344699844b5dd03f4113e250f0ed74
+      '@sentry/react': 6.15.0_react@17.0.2
+      '@sentry/tracing': 6.15.0
       '@types/react': 17.0.14
       '@xstate/react': 1.6.1_e5d4563456c7d77ba5a24e04929aa78a
       date-fns: 2.23.0

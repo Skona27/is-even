@@ -1,6 +1,6 @@
 import { AlertStatus, useToast } from '@chakra-ui/react';
 import * as React from 'react';
-import UniversalCookie from 'universal-cookie';
+import * as Sentry from '@sentry/react';
 
 interface ToastData {
   title: string;
@@ -35,6 +35,11 @@ export function Toast() {
       window.sessionStorage.removeItem(TOAST_COOKIE);
     } catch (error) {
       console.error(error.message);
+
+      Sentry.withScope((scope) => {
+        scope.setTag('where', 'toast.useEffect');
+        Sentry.captureException(error);
+      });
     }
   });
 

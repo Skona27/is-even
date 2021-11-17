@@ -1,5 +1,6 @@
 import UniversalCookie from 'universal-cookie';
 import { addMonths } from 'date-fns';
+import * as Sentry from '@sentry/react';
 
 import { Authentication } from '@common/interface/authentication.interface';
 
@@ -29,5 +30,10 @@ export function persistRefreshToken(authentication: Authentication) {
     }
   } catch (error) {
     console.error(`Failed to store refresh token in storage. ${error.message}`);
+
+    Sentry.withScope((scope) => {
+      scope.setTag('where', 'utils.persistRefreshToken');
+      Sentry.captureException(error);
+    });
   }
 }

@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { Analytics } from '@components/Analytics';
 
 class MyDocument extends Document {
   render() {
@@ -20,6 +21,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <Analytics />
         </body>
       </Html>
     );
