@@ -21,8 +21,8 @@ export function Hero() {
         <Flex>
           <Text color="gray.500" maxWidth="4xl" margin="auto">
             Use this awesome Software as a Service platform for checking the
-            parity of a number. You don't need any advanced and heavy 3rd party
-            libraries. Start now with free tier!
+            parity of a number. You don&apos;t need any advanced and heavy 3rd
+            party libraries. Start now with free tier!
           </Text>
         </Flex>
 
