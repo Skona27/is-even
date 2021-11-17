@@ -11,6 +11,7 @@ import { FaBars } from 'react-icons/fa';
 
 import { Container } from '@ui/Container';
 import { useUserContext } from '@context/user-context';
+import { Link } from '@ui/Link';
 
 import { Sidemenu } from './sidemenu.component';
 import { Navigation } from './navigation.component';
@@ -21,11 +22,19 @@ export function Header() {
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   return (
-    <Container bg="green.500" py={['4', '6']}>
+    <Container
+      bg="green.500"
+      py={['4', '6']}
+      position="sticky"
+      top="0"
+      zIndex="100"
+    >
       <Flex justifyContent="space-between" alignItems="center">
-        <Text fontWeight="900" color="white" fontSize="xl">
-          isEven API
-        </Text>
+        <Link href="/#">
+          <Text fontWeight="900" color="white" fontSize="xl">
+            isEven API
+          </Text>
+        </Link>
 
         <IconButton
           aria-label="Menu"

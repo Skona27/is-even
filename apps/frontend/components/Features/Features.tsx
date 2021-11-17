@@ -8,24 +8,24 @@ import { Feature } from './Feature';
 const features = [
   {
     title: '24/7 Support',
-    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...',
+    text: 'We provide necessary technical assistance in case of issues with our API service. ',
     icon: FcAssistant,
   },
   {
     title: '99.99% SLA',
-    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...',
+    text: 'Our platform has extremely high availability. We offer 99.99% up time of our services.',
     icon: FcGlobe,
   },
   {
     title: 'Quick implementaion',
-    text: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...',
+    text: 'Our API is easy to use and can be adopted gradually',
     icon: FcAlarmClock,
   },
 ];
 
 export function Features() {
   return (
-    <Container bg="gray.100" py={['20', '20', '24']}>
+    <Container id="features" bg="gray.100" py={['20', '20', '24']}>
       <Stack spacing={['10', '10', '12']} alignItems="center">
         <Flex>
           <Heading

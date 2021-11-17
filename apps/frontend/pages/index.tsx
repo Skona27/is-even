@@ -5,6 +5,7 @@ import { Features } from '@components/Features';
 import { Hero } from '@components/Hero';
 import { Pricing } from '@components/Pricing';
 import { Docs } from '@components/Docs';
+import { Testimonials } from '@components/Testimonials';
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <Hero />
       <Features />
       <Pricing />
+      <Testimonials />
       <Docs />
     </Box>
   );

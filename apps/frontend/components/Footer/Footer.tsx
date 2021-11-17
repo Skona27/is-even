@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Stack, Text } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaTwitter, FaGithub, FaDev } from 'react-icons/fa';
 
 import { SocialLink } from '@ui/Link';
 import { Container } from '@ui/Container';
@@ -14,14 +14,14 @@ export function Footer() {
         </Text>
 
         <Stack direction="row" spacing={['4', '4', '6']}>
-          <SocialLink href="/">
+          <SocialLink href="https://github.com/Skona27/is-even">
+            <FaGithub />
+          </SocialLink>
+          <SocialLink href="https://twitter.com/SkonecznyJakub">
             <FaTwitter />
           </SocialLink>
-          <SocialLink href="/">
-            <FaYoutube />
-          </SocialLink>
-          <SocialLink href="/">
-            <FaInstagram />
+          <SocialLink href="https://dev.to/skona27">
+            <FaDev />
           </SocialLink>
         </Stack>
       </Stack>

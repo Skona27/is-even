@@ -27,13 +27,16 @@ Router.events.on('routeChangeError', () => NProgress.done());
 const theme = extendTheme({
   styles: {
     global: {
+      html: {
+        scrollBehavior: 'smooth',
+      },
       '#nprogress': {
         pointerEvents: 'none',
       },
       '#nprogress .bar': {
         backgroundColor: '#000',
         position: 'fixed',
-        zIndex: 1,
+        zIndex: 1000,
         top: 0,
         left: 0,
         width: '100%',

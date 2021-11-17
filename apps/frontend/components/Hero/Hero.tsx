@@ -20,14 +20,16 @@ export function Hero() {
 
         <Flex>
           <Text color="gray.500" maxWidth="4xl" margin="auto">
-            Phasellus at urna nunc. Vestibulum at dui eu lorem rutrum consequat.
-            Morbi vitae bibendum justo. In nec diam lectus. Cras a ornare
-            sapien, vel venenatis est.
+            Stop using advanced and heavy 3rd party libraries for checking the
+            parity of a number! Use this awesome Software as a Service platform
+            instead. Start now with free tier!
           </Text>
         </Flex>
 
         <Stack spacing="4" direction="column" align="center" alignSelf="center">
           <Button
+            as="a"
+            href="/#docs"
             p={['5', '5', '6']}
             fontWeight="800"
             colorScheme="green"
@@ -40,7 +42,14 @@ export function Hero() {
             View docs
           </Button>
 
-          <Button variant="link" fontWeight="700" colorScheme="black" size="m">
+          <Button
+            as="a"
+            href="/#features"
+            variant="link"
+            fontWeight="700"
+            colorScheme="black"
+            size="m"
+          >
             Learn more
           </Button>
         </Stack>

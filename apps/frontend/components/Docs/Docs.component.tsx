@@ -1,10 +1,10 @@
-import { Code, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Code, Heading, Stack, Text } from '@chakra-ui/react';
 import { Container } from '@ui/Container';
 import * as React from 'react';
 
 export function Docs() {
   return (
-    <Container py={['20', '24', '32']}>
+    <Container id="docs" py={['20', '24', '32']}>
       <Stack
         direction={['column', 'column', 'row']}
         justifyContent="space-between"
@@ -19,14 +19,14 @@ export function Docs() {
               Public Docs
             </Heading>
 
-            <Text>isEven API is a RESTful API that returns json.</Text>
+            <Text>isEven API is a RESTful API that returns JSON</Text>
           </Stack>
 
           <Stack spacing={['4', '4', '6']}>
             <Text fontWeight="700">
               API base URL:
               <Code ml="2" fontWeight="bold">
-                https://api.is-even.com/
+                https://api.is-even.eu/
               </Code>
             </Text>
 
@@ -62,7 +62,7 @@ export function Docs() {
           <Text fontWeight="800">Example API Response</Text>
           <Code overflowX="scroll" p="3">
             <pre>
-              $ curl https://api.is-even.com/is-even/6?apiKey=xyz
+              $ curl https://api.is-even.eu/is-even/6?apiKey=xyz
               <br />
               <br />
               {JSON.stringify(

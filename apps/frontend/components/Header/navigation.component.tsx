@@ -18,8 +18,16 @@ import { Link } from '@ui/Link';
 
 const links = [
   {
-    href: '/',
+    href: '/#',
     text: 'Home',
+  },
+  {
+    href: '/#pricing',
+    text: 'Pricing',
+  },
+  {
+    href: '/#docs',
+    text: 'Docs',
   },
 ];
 

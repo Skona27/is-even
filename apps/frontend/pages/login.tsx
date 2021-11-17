@@ -17,8 +17,7 @@ export default function LoginPage() {
           </Heading>
 
           <Text color="gray.500" maxWidth="4xl">
-            Vestibulum at dui eu lorem rutrum consequat. Morbi vitae bibendum
-            justo.
+            You can upgrade or track your services via your profile
           </Text>
         </Stack>
 
