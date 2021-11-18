@@ -9,7 +9,7 @@ interface FeatureProps {
 
 export function Feature({ icon, text, title }: FeatureProps) {
   return (
-    <Stack alignItems="center">
+    <Stack alignItems="center" flex="1">
       <Flex
         align="center"
         justify="center"
