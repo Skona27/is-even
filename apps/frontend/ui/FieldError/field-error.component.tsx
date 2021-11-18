@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stack, StackProps, Text } from '@chakra-ui/react';
+import { Stack, StackProps, Text, Box } from '@chakra-ui/react';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
 interface FieldErrorProps extends StackProps {
@@ -9,7 +9,9 @@ interface FieldErrorProps extends StackProps {
 export function FieldError({ message, ...props }: FieldErrorProps) {
   return (
     <Stack direction="row" alignItems="center" color="red.600" {...props}>
-      <FaExclamationTriangle size="18px" />
+      <Box>
+        <FaExclamationTriangle size="18px" />
+      </Box>
       <Text fontWeight="600">{message}</Text>
     </Stack>
   );

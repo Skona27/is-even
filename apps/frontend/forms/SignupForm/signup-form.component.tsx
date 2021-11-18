@@ -23,6 +23,9 @@ interface SignupFormData {
   lastName: string;
 }
 
+const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+const passwordRegex = /(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
 export function SignupForm() {
   const router = useRouter();
   const userContext = useUserContext();
@@ -73,7 +76,13 @@ export function SignupForm() {
           <Input
             type="email"
             bg="whiteAlpha.600"
-            {...register('email', { required: 'Email is required' })}
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: emailRegex,
+                message: 'Email is not valid',
+              },
+            })}
           />
           {errors.email && (
             <FieldError message={errors.email.message} pt="2" pb="1" />
@@ -85,7 +94,14 @@ export function SignupForm() {
           <Input
             type="password"
             bg="whiteAlpha.600"
-            {...register('password', { required: 'Password is required' })}
+            {...register('password', {
+              required: 'Password is required',
+              pattern: {
+                value: passwordRegex,
+                message:
+                  'Password must contain at least one number and one uppercase and lowercase letter, and at least 8 characters',
+              },
+            })}
           />
           {errors.password && (
             <FieldError message={errors.password.message} pt="2" pb="1" />
@@ -97,7 +113,9 @@ export function SignupForm() {
           <Input
             type="text"
             bg="whiteAlpha.600"
-            {...register('firstName', { required: 'First name is required' })}
+            {...register('firstName', {
+              required: 'First name is required',
+            })}
           />
           {errors.firstName && (
             <FieldError message={errors.firstName.message} pt="2" pb="1" />
@@ -109,7 +127,9 @@ export function SignupForm() {
           <Input
             type="text"
             bg="whiteAlpha.600"
-            {...register('lastName', { required: 'Last name is required' })}
+            {...register('lastName', {
+              required: 'Last name is required',
+            })}
           />
           {errors.lastName && (
             <FieldError message={errors.lastName.message} pt="2" pb="1" />
