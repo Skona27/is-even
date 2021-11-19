@@ -3,10 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from './user.entity';
+import { UserWithAuth } from './interface/user-with-auth.interface';
+
 import { LoggerService } from '../logger/logger.service';
 import { CognitoService } from '../cognito/cognito.service';
+import { SentryService } from '../sentry/sentry.service';
+
 import { CreateUserError } from './error/create-user.error';
-import { UserWithAuth } from './interface/user-with-auth.interface';
 import { LoginUserError } from './error/login-user.error';
 import { ReadUserError } from './error/read-user.error';
 import { LogoutUserError } from './error/logout-user.error';
@@ -16,6 +19,7 @@ export class UserService {
   constructor(
     private readonly loggerService: LoggerService,
     private readonly cognitoService: CognitoService,
+    private readonly sentryService: SentryService,
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) {
     this.loggerService.setContext(UserService.name);
@@ -41,6 +45,12 @@ export class UserService {
       return await this.usersRepository.save(user);
     } catch (error) {
       this.loggerService.error(`Failed to create a new user. ${error.message}`);
+
+      this.sentryService.instance.withScope((scope) => {
+        scope.setTag('where', 'userService.createUser');
+        this.sentryService.instance.captureException(error);
+      });
+
       throw new CreateUserError(error);
     }
   }

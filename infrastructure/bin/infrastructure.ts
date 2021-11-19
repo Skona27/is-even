@@ -16,6 +16,7 @@ const stripeApiKey = process.env.STRIPE_API_KEY;
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const stripeSuccessUrl = process.env.STRIPE_SUCCESS_URL;
 const stripeCancelUrl = process.env.STRIPE_CANCEL_URL;
+const sentryDsn = process.env.SENTRY_DSN;
 
 const vpcStack = new VpcStack(app, 'vpc-stack');
 const cognitoStack = new CognitoStack(app, 'cognito-stack');
@@ -35,6 +36,7 @@ const ebsEnvironment: EbsStackProps = {
   awsCognitoClientId: cognitoStack.userPoolClientId,
   awsCognitoUserPoolId: cognitoStack.userPoolId,
   ebsInstanceProfileName: securityStack.ebsInstanceProfileName,
+  sentryDsn: sentryDsn || '',
   stripeApiKey: stripeApiKey || '',
   stripeCancelUrl: stripeCancelUrl || '',
   stripeSuccessUrl: stripeSuccessUrl || '',

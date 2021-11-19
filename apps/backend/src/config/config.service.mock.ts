@@ -5,4 +5,5 @@ export const AppConfigServiceMock = {
   awsConfig: jest.fn(),
   creditsConfig: jest.fn(),
   stripeConfig: jest.fn(),
+  sentryConfig: jest.fn(),
 };

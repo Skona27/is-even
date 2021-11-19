@@ -6,6 +6,8 @@ import { LoggerService } from '../logger/logger.service';
 import { PaymentService } from './payment.service';
 import { LoggerServiceMock } from '../logger/logger.service.mock';
 import { Payment } from './payment.entity';
+import { SentryService } from '../sentry/sentry.service';
+import { sentryServiceMock } from '../sentry/sentry-service.mock';
 
 describe('PaymentService', () => {
   let service: PaymentService;
@@ -31,6 +33,10 @@ describe('PaymentService', () => {
         {
           provide: StripeService,
           useValue: stripeServiceMock,
+        },
+        {
+          provide: SentryService,
+          useValue: sentryServiceMock,
         },
       ],
     }).compile();

@@ -8,6 +8,7 @@ import { Credit } from './credit.entity';
 
 import { LoggerService } from '../logger/logger.service';
 import { AppConfigService } from '../config/config.service';
+import { SentryService } from '../sentry/sentry.service';
 
 import { CreditLimit } from './interface/credit-limit.interface';
 import { CreditDuration } from './interface/credit-duration.interface';
@@ -22,6 +23,7 @@ export class CreditService {
   constructor(
     private readonly loggerService: LoggerService,
     private readonly configService: AppConfigService,
+    private readonly sentryService: SentryService,
     @InjectRepository(Credit)
     private readonly creditRepository: Repository<Credit>,
   ) {
@@ -66,6 +68,14 @@ export class CreditService {
       this.loggerService.error(
         `Failed to create a new credit. ${error.message}`,
       );
+
+      this.sentryService.instance.withScope((scope) => {
+        scope.setTag('where', 'creditService.createCredit');
+        scope.setExtra('limit', limit);
+        scope.setExtra('duration', duration);
+        this.sentryService.instance.captureException(error);
+      });
+
       throw new CreateCreditError(error);
     }
   }

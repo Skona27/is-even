@@ -6,6 +6,8 @@ import { UserService } from './user.service';
 import { LoggerService } from '../logger/logger.service';
 import { LoggerServiceMock } from '../logger/logger.service.mock';
 import { CognitoService } from '../cognito/cognito.service';
+import { SentryService } from '../sentry/sentry.service';
+import { sentryServiceMock } from '../sentry/sentry-service.mock';
 
 describe('UserService', () => {
   let service: UserService;
@@ -33,6 +35,10 @@ describe('UserService', () => {
         {
           provide: CognitoService,
           useValue: cognitoServiceMock,
+        },
+        {
+          provide: SentryService,
+          useValue: sentryServiceMock,
         },
       ],
     }).compile();

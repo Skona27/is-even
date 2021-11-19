@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 
 import { LoggerService } from '../logger/logger.service';
 import { StripeService } from '../stripe/stripe.service';
+import { SentryService } from '../sentry/sentry.service';
 
 import { Payment } from './payment.entity';
 import { Order } from '../order/order.entity';
@@ -26,6 +27,7 @@ export class PaymentService {
     @InjectRepository(Payment)
     private readonly paymentRepository: Repository<Payment>,
     private readonly stripeService: StripeService,
+    private readonly sentryService: SentryService,
   ) {
     this.loggerService.setContext(PaymentService.name);
   }
@@ -50,6 +52,13 @@ export class PaymentService {
       return { url: session.url, id: session.id };
     } catch (error) {
       this.loggerService.error(`Failed to register payment. ${error.message}`);
+
+      this.sentryService.instance.withScope((scope) => {
+        scope.setTag('where', 'paymentService.registerPayment');
+        scope.setExtra('order.id', order.id);
+        this.sentryService.instance.captureException(error);
+      });
+
       throw new RegisterPaymentError(error);
     }
   }
@@ -68,6 +77,12 @@ export class PaymentService {
       this.loggerService.error(
         `Failed to construct session event. ${error.message}`,
       );
+
+      this.sentryService.instance.withScope((scope) => {
+        scope.setTag('where', 'paymentService.constructSessionEvent');
+        this.sentryService.instance.captureException(error);
+      });
+
       throw new ConstructPaymentEventError(error);
     }
   }

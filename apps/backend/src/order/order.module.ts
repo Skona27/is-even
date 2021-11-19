@@ -7,6 +7,7 @@ import { LoggerModule } from '../logger/logger.module';
 import { Order } from './order.entity';
 import { CreditModule } from '../credit/credit.module';
 import { AppConfigModule } from '../config/config.module';
+import { SentryModule } from '../sentry/sentry.module';
 
 @Module({
   providers: [OrderService],
@@ -16,6 +17,7 @@ import { AppConfigModule } from '../config/config.module';
     LoggerModule,
     CreditModule,
     AppConfigModule,
+    SentryModule,
     TypeOrmModule.forFeature([Order]),
   ],
 })

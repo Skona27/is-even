@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
+import { sentryServiceMock } from '../sentry/sentry-service.mock';
+import { SentryService } from '../sentry/sentry.service';
 import { AppConfigService } from '../config/config.service';
 import { AppConfigServiceMock } from '../config/config.service.mock';
 import { LoggerService } from '../logger/logger.service';
@@ -31,6 +33,10 @@ describe('CreditService', () => {
         {
           provide: getRepositoryToken(Credit),
           useValue: creditRepositoryMock,
+        },
+        {
+          provide: SentryService,
+          useValue: sentryServiceMock,
         },
       ],
     }).compile();

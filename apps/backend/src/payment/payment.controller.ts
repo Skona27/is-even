@@ -116,7 +116,6 @@ export class PaymentController {
           break;
       }
     } catch (error) {
-      console.error(error.message);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,

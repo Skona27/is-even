@@ -12,6 +12,7 @@ export interface EbsStackProps extends cdk.StackProps {
   dbHost: string;
   dbPort: string;
   dbName: string;
+  sentryDsn: string;
   stripeWebhookSecret: string;
   stripeApiKey: string;
   stripeSuccessUrl: string;
@@ -94,6 +95,7 @@ export class EbsStack extends cdk.Stack {
 
   private getEnvironmentVariables(props: EbsStackProps) {
     const environmentVariables: Record<string, any> = {
+      ENVIRONMENT: 'PROD',
       DB_HOST: props.dbHost,
       DB_PORT: props.dbPort,
       DB_PASSWORD: props.dbPassword,
@@ -107,6 +109,7 @@ export class EbsStack extends cdk.Stack {
       STRIPE_SUCCESS_URL: props.stripeSuccessUrl,
       STRIPE_CANCEL_URL: props.stripeCancelUrl,
       STRIPE_WEBHOOK_SECRET: props.stripeWebhookSecret,
+      SENTRY_DSN: props.sentryDsn,
     };
 
     return Object.keys(environmentVariables).map((variable) => {

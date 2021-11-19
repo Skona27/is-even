@@ -8,9 +8,12 @@ import { OrderStatus } from './interface/order-status.interface';
 
 import { LoggerService } from '../logger/logger.service';
 import { CreditService } from '../credit/credit.service';
+import { AppConfigService } from '../config/config.service';
+import { SentryService } from '../sentry/sentry.service';
 
 import { Order } from './order.entity';
 import { User } from '../user/user.entity';
+import { Credit } from '../credit/credit.entity';
 
 import { UnathorizedOrderError } from './error/unathorized-order.error';
 import { CreateOrderError } from './error/create-order.error';
@@ -18,8 +21,6 @@ import { ReadOrderError } from './error/read-order.error';
 import { UpdateOrderError } from './error/update-order.error';
 import { InvalidOrderStatusError } from './error/invalid-order-status.error';
 import { FulfilledOrderError } from './error/fulfilled-order.error';
-import { Credit } from '../credit/credit.entity';
-import { AppConfigService } from '../config/config.service';
 
 @Injectable()
 export class OrderService {
@@ -29,6 +30,7 @@ export class OrderService {
     private readonly orderRepository: Repository<Order>,
     private readonly creditService: CreditService,
     private readonly configService: AppConfigService,
+    private readonly sentryService: SentryService,
   ) {
     this.loggerService.setContext(OrderService.name);
   }
@@ -56,6 +58,14 @@ export class OrderService {
       this.loggerService.error(
         `Failed to create a new order. ${error.message}`,
       );
+
+      this.sentryService.instance.withScope((scope) => {
+        scope.setTag('where', 'orderService.createOrder');
+        scope.setExtra('creditLimit', creditLimit);
+        scope.setExtra('creditDuration', creditDuration);
+        this.sentryService.instance.captureException(error);
+      });
+
       throw new CreateOrderError(error);
     }
   }
