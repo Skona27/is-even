@@ -5,9 +5,7 @@ export interface RequestWithRawBody extends Request {
   rawBody: Buffer;
 }
 
-const webhooks = ['/payments/verify'];
 // No signatures found matching the expected signature for payload. Are you passing the raw request body you received from Stripe?
-
 export function webhookRawBodyMiddleware() {
   return json({
     verify: (
@@ -15,7 +13,7 @@ export function webhookRawBodyMiddleware() {
       _response: Response,
       buffer: Buffer,
     ) => {
-      if (webhooks.includes(request.url) && Buffer.isBuffer(buffer)) {
+      if (Buffer.isBuffer(buffer)) {
         request.rawBody = Buffer.from(buffer);
       }
       return true;
