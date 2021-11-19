@@ -10,6 +10,7 @@ export class AppConfigService {
   get appConfig(): Config['appConfig'] {
     return {
       cors: true,
+      behindProxy: true,
       version: process.env.npm_package_version,
       port: this.configService.get<string>('PORT'),
       environment: this.configService.get<string>('ENVIRONMENT') || 'DEV',
@@ -78,6 +79,13 @@ export class AppConfigService {
   get sentryConfig(): Config['sentryConfig'] {
     return {
       dsn: this.configService.get<string>('SENTRY_DSN'),
+    };
+  }
+
+  get rateLimitConfig(): Config['rateLimitConfig'] {
+    return {
+      maxRequests: 100,
+      ttlMs: 10 * 1000,
     };
   }
 }

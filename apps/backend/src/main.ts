@@ -1,14 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import * as helmet from 'helmet';
+import * as rateLimit from 'express-rate-limit';
 
 import { AppModule } from './app/app.module';
 import { AppConfigService } from './config/config.service';
 import { webhookRawBodyMiddleware } from './common/middlewere/webhook-raw-body.middlewere';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.use(helmet());
 
@@ -20,6 +22,16 @@ async function bootstrap() {
   if (config.appConfig.cors) {
     app.enableCors();
   }
+  if (config.appConfig.behindProxy) {
+    app.set('trust proxy', 1);
+  }
+
+  app.use(
+    rateLimit({
+      windowMs: config.rateLimitConfig.ttlMs,
+      max: config.rateLimitConfig.maxRequests,
+    }),
+  );
 
   if (config.swaggerConfig.enabled) {
     const swaggerParams = new DocumentBuilder()

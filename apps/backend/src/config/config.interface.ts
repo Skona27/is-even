@@ -8,6 +8,7 @@ export interface Config {
     version: string;
     cors: boolean;
     environment: string;
+    behindProxy: boolean;
   };
   swaggerConfig: {
     title: string;
@@ -30,6 +31,10 @@ export interface Config {
   };
   sentryConfig: {
     dsn: string;
+  };
+  rateLimitConfig: {
+    ttlMs: number;
+    maxRequests: number;
   };
   creditsConfig: Record<CreditLimit, number>;
   pricesConfig: Record<CreditLimit, number>;

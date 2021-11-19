@@ -6,4 +6,5 @@ export const AppConfigServiceMock = {
   creditsConfig: jest.fn(),
   stripeConfig: jest.fn(),
   sentryConfig: jest.fn(),
+  rateLimitConfig: jest.fn(),
 };
