@@ -6539,6 +6539,11 @@ packages:
     resolution: {integrity: sha1-CH4fELBGky/IWU3Z5tN4r8nR5aw=}
     dev: false
 
+  /helmet/4.6.0:
+    resolution: {integrity: sha512-HVqALKZlR95ROkrnesdhbbZJFi/rIVSoNq6f3jA/9u6MIbTsPh3xZwihjeI5+DO/2sOV6HMHooXcEOuwskHpTg==}
+    engines: {node: '>=10.0.0'}
+    dev: false
+
   /hey-listen/1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
     dev: false
@@ -12104,7 +12109,7 @@ packages:
     dev: false
 
   file:projects/backend.tgz:
-    resolution: {integrity: sha512-WpJkBqP1YXO3kFwJrG3GBWTsoeH4B9hMg+zCdNiyjYY5M1oevrPu18cic5xrtP79q+jShA0zEJgybWcZDnKKPQ==, tarball: file:projects/backend.tgz}
+    resolution: {integrity: sha512-RoxI4UzADJzEgWpA9T32wn6hG+q2QHTPueGxWan/gKZaHHKbUEDPef72I4TPiWQN3Dmc4nRLz3gTQKbkFHOCRA==, tarball: file:projects/backend.tgz}
     name: '@rush-temp/backend'
     version: 0.0.0
     dependencies:
@@ -12135,6 +12140,7 @@ packages:
       eslint: 7.30.0
       eslint-config-prettier: 8.3.0_eslint@7.30.0
       eslint-plugin-prettier: 3.4.0_0470f3bcd018a045da11d0bbb868d6c6
+      helmet: 4.6.0
       jest: 27.0.6_ts-node@10.1.0
       jwks-rsa: 2.0.4
       jwt-decode: 3.1.2
