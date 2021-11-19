@@ -28,7 +28,9 @@ specifiers:
   '@rush-temp/docker': file:./projects/docker.tgz
   '@rush-temp/frontend': file:./projects/frontend.tgz
   '@rush-temp/infrastructure': file:./projects/infrastructure.tgz
+  '@sentry/node': ~6.15.0
   '@sentry/react': ~6.15.0
+  '@sentry/tracing': ~6.15.0
   '@types/express': ^4.17.13
   '@types/react': ^17.0.14
   '@types/supertest': ^2.0.11
@@ -103,7 +105,9 @@ dependencies:
   '@rush-temp/docker': file:projects/docker.tgz
   '@rush-temp/frontend': file:projects/frontend.tgz
   '@rush-temp/infrastructure': file:projects/infrastructure.tgz
+  '@sentry/node': 6.15.0
   '@sentry/react': 6.15.0_react@17.0.2
+  '@sentry/tracing': 6.15.0
   '@types/express': 4.17.13
   '@types/react': 17.0.14
   '@types/supertest': 2.0.11
@@ -2831,6 +2835,23 @@ packages:
       tslib: 1.14.1
     dev: false
 
+  /@sentry/node/6.15.0:
+    resolution: {integrity: sha512-V1GeupWi9ClmoMy5eBWdVTv3k+Yx/JpddT4zCzzYY9QfjYtEvQI7R3SWFtlgXuaQQaZNU0WUoE2UgJV2N/vS8g==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@sentry/core': 6.15.0
+      '@sentry/hub': 6.15.0
+      '@sentry/tracing': 6.15.0
+      '@sentry/types': 6.15.0
+      '@sentry/utils': 6.15.0
+      cookie: 0.4.1
+      https-proxy-agent: 5.0.0
+      lru_map: 0.3.3
+      tslib: 1.14.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@sentry/react/6.15.0_react@17.0.2:
     resolution: {integrity: sha512-vrrFF/KtPJQ41tmDCWpaR+bN+/TqPwqncsGLfbClE2irY3x3eCJjT2qPstlB7NQ6rTYtScyekbB0fOoNkq9FFg==}
     engines: {node: '>=6'}
@@ -4746,6 +4767,11 @@ packages:
 
   /cookie/0.4.0:
     resolution: {integrity: sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie/0.4.1:
+    resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -8453,6 +8479,10 @@ packages:
       lru-cache: 4.0.2
     dev: false
 
+  /lru_map/0.3.3:
+    resolution: {integrity: sha1-tcg1G5Rky9dQM1p5ZQoOwOVhGN0=}
+    dev: false
+
   /macos-release/2.5.0:
     resolution: {integrity: sha512-EIgv+QZ9r+814gjJj0Bt5vSLJLzswGmSUbUpbi9AIr/fsN2IWFBl2NucV9PAiek+U1STK468tEkxmVYUtuAN3g==}
     engines: {node: '>=6'}
@@ -12074,7 +12104,7 @@ packages:
     dev: false
 
   file:projects/backend.tgz:
-    resolution: {integrity: sha512-8tHBN3aNQpFsH8I2kk5DUbOVLVw1Be65uSOEhoTSsLScsQMkoPDI8cnJytCdO3y6ESbWfKZ3rh/iMDeGZEs0rA==, tarball: file:projects/backend.tgz}
+    resolution: {integrity: sha512-WpJkBqP1YXO3kFwJrG3GBWTsoeH4B9hMg+zCdNiyjYY5M1oevrPu18cic5xrtP79q+jShA0zEJgybWcZDnKKPQ==, tarball: file:projects/backend.tgz}
     name: '@rush-temp/backend'
     version: 0.0.0
     dependencies:
@@ -12088,6 +12118,8 @@ packages:
       '@nestjs/swagger': 5.0.3_bac0b549b65e9d06c8e1de6d14c2f6a6
       '@nestjs/testing': 8.0.2_4a76b0219c13cd87272f870fd4818ead
       '@nestjs/typeorm': 8.0.1_7fa4f2dfed7726163b5eba772311ecd9
+      '@sentry/node': 6.15.0
+      '@sentry/tracing': 6.15.0
       '@types/express': 4.17.13
       '@types/jest': 26.0.24
       '@types/node': 16.3.1

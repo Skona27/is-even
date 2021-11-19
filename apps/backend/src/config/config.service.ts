@@ -9,9 +9,10 @@ export class AppConfigService {
 
   get appConfig(): Config['appConfig'] {
     return {
-      port: this.configService.get<string>('PORT'),
-      version: process.env.npm_package_version,
       cors: true,
+      version: process.env.npm_package_version,
+      port: this.configService.get<string>('PORT'),
+      environment: this.configService.get<string>('ENVIRONMENT') || 'DEV',
     };
   }
 
@@ -71,6 +72,12 @@ export class AppConfigService {
       success_url: this.configService.get<string>('STRIPE_SUCCESS_URL'),
       cancel_url: this.configService.get<string>('STRIPE_CANCEL_URL'),
       webhook_secret: this.configService.get<string>('STRIPE_WEBHOOK_SECRET'),
+    };
+  }
+
+  get sentryConfig(): Config['sentryConfig'] {
+    return {
+      dsn: this.configService.get<string>('SENTRY_DSN'),
     };
   }
 }

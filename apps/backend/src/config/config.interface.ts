@@ -7,6 +7,7 @@ export interface Config {
     port: string;
     version: string;
     cors: boolean;
+    environment: string;
   };
   swaggerConfig: {
     title: string;
@@ -26,6 +27,9 @@ export interface Config {
     success_url: string;
     cancel_url: string;
     webhook_secret: string;
+  };
+  sentryConfig: {
+    dsn: string;
   };
   creditsConfig: Record<CreditLimit, number>;
   pricesConfig: Record<CreditLimit, number>;

@@ -15,6 +15,7 @@ import { CreditModule } from '../credit/credit.module';
 import { UsageModule } from '../usage/usage.module';
 import { OrderModule } from '../order/order.module';
 import { PaymentModule } from '../payment/payment.module';
+import { SentryModule } from '../sentry/sentry.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { PaymentModule } from '../payment/payment.module';
     UsageModule,
     OrderModule,
     PaymentModule,
+    SentryModule,
   ],
   controllers: [AppController],
   providers: [],

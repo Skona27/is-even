@@ -44,6 +44,8 @@ services:
       STRIPE_SUCCESS_URL: ${STRIPE_SUCCESS_URL}
       STRIPE_CANCEL_URL: ${STRIPE_CANCEL_URL}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      ENVIRONMENT: ${BACKEND_ENVIRONMENT}
+      SENTRY_DSN: ${BACKEND_SENTRY_DSN}
     command: npm run start:dev
     depends_on:
       - postgres
