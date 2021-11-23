@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Stack, Text } from '@chakra-ui/react';
+import { Box, Divider, Stack, StackDivider, Text } from '@chakra-ui/react';
 import { FaTwitter, FaGithub, FaDev } from 'react-icons/fa';
 
-import { SocialLink } from '@ui/Link';
+import { Link, SocialLink } from '@ui/Link';
 import { Container } from '@ui/Container';
 
 export function Footer() {
@@ -13,16 +13,25 @@ export function Footer() {
           © 2021 isEven API - All rights reserved
         </Text>
 
-        <Stack direction="row" spacing={['4', '4', '6']}>
-          <SocialLink href="https://github.com/Skona27/is-even">
-            <FaGithub />
-          </SocialLink>
-          <SocialLink href="https://twitter.com/SkonecznyJakub">
-            <FaTwitter />
-          </SocialLink>
-          <SocialLink href="https://dev.to/skona27">
-            <FaDev />
-          </SocialLink>
+        <Stack
+          direction="row"
+          spacing="4"
+          divider={<StackDivider />}
+          alignItems="center"
+        >
+          <Link href="/about-the-project">About the project</Link>
+
+          <Stack direction="row" spacing={['4', '4', '6']}>
+            <SocialLink href="https://github.com/Skona27/is-even">
+              <FaGithub />
+            </SocialLink>
+            <SocialLink href="https://twitter.com/SkonecznyJakub">
+              <FaTwitter />
+            </SocialLink>
+            <SocialLink href="https://dev.to/skona27">
+              <FaDev />
+            </SocialLink>
+          </Stack>
         </Stack>
       </Stack>
     </Container>
