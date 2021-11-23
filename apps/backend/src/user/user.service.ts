@@ -13,6 +13,7 @@ import { CreateUserError } from './error/create-user.error';
 import { LoginUserError } from './error/login-user.error';
 import { ReadUserError } from './error/read-user.error';
 import { LogoutUserError } from './error/logout-user.error';
+import { CognitoCreateUserError } from '../cognito/error/cognito-create-user.error';
 
 @Injectable()
 export class UserService {
@@ -31,25 +32,31 @@ export class UserService {
     email: string,
     password: string,
   ): Promise<User> {
-    const user = new User();
-
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.email = email;
-
-    const authId = await this.cognitoService.createUser(user.email, password);
-
-    user.authId = authId;
-
     try {
+      const user = new User();
+
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.email = email;
+
+      const authId = await this.cognitoService.createUser(user.email, password);
+
+      user.authId = authId;
+
       return await this.usersRepository.save(user);
     } catch (error) {
       this.loggerService.error(`Failed to create a new user. ${error.message}`);
 
       this.sentryService.instance.withScope((scope) => {
+        console.log('Sentry');
+
         scope.setTag('where', 'userService.createUser');
         this.sentryService.instance.captureException(error);
       });
+
+      if (error instanceof CognitoCreateUserError) {
+        throw error;
+      }
 
       throw new CreateUserError(error);
     }
