@@ -14,7 +14,7 @@ async function bootstrap() {
 
   app.use(helmet());
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.use(webhookRawBodyMiddleware());
 
   const config = app.get(AppConfigService);
