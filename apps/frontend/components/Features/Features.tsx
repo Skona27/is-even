@@ -13,7 +13,7 @@ const features = [
   },
   {
     title: '99.99% SLA',
-    text: 'Our platform has extremely high availability. We offer 99.99% up time of our services.',
+    text: 'Our platform has extremely high availability. We offer 99.99% uptime of our services.',
     icon: FcGlobe,
   },
   {

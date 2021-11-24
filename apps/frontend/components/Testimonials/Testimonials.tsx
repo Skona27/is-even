@@ -17,7 +17,7 @@ const data = [
     position: 'CEO at ABC Corporation',
     title: 'Efficient Collaborating',
     content:
-      ' Thank you for making the integration painless, pleasant and most of all, hassle free!',
+      'Thank you for making the integration painless, pleasant, and most of all, hassle-free!',
   },
   {
     image: 'https://randomuser.me/api/portraits/men/33.jpg',
@@ -25,7 +25,7 @@ const data = [
     position: 'Javascript Developer',
     title: 'High Product Quality',
     content:
-      ' It really saves me time and effort. It is exactly what our business has been lacking. One of the best APIs ever!',
+      ' It really saves me time and effort. It is precisely what our business has been lacking. One of the best APIs ever!',
   },
   {
     image: 'https://randomuser.me/api/portraits/men/31.jpg',
@@ -33,7 +33,7 @@ const data = [
     position: 'Python Developer',
     title: 'Awesome features',
     content:
-      ' I highly recommend this service to anyone who has struggled with checking the parity of numbers',
+      'I highly recommend this service to anyone who has struggled with checking the parity of numbers',
   },
 ];
 

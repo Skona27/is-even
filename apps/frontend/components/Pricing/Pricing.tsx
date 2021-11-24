@@ -68,7 +68,8 @@ export function Pricing() {
             Plans that fit your need
           </Heading>
           <Text fontSize={['md', 'md', 'lg']} color="gray.500">
-            Start now with no charges. No credit card needed. Cancel at anytime.
+            Start now with no charges. No credit card is needed. Cancel at any
+            time.
           </Text>
         </Stack>
 

@@ -54,18 +54,17 @@ export default function AboutPage() {
           <Text>
             If you&apos;ve found this example project useful or funny, feel free
             to <strong>buy</strong> our services for one month 🙂 This will
-            allow to keep us up and running for longer period of time.{' '}
+            allow us to keep up and running for a longer time.{' '}
             <strong>AWS ain&apos;t cheap. 💰</strong>
           </Text>
 
           <Text>
-            If you would like to contact the author If you have a suggestion
-            that would make this project better, please visit our repository and
-            open an issue.
+            If you have a suggestion to make this project better, please visit
+            our repository and open an issue.
           </Text>
 
           <Text>
-            You can always contact with the author via email:{' '}
+            You can always contact the author via email:{' '}
             <Link textDecoration="underline" href="mailto:contact@is-even.eu">
               contact@is-even.eu
             </Link>{' '}

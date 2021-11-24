@@ -9,7 +9,7 @@ class MyDocument extends Document {
           <link rel="shortcut icon" href="/images/favicon.ico" />
           <meta
             name="description"
-            content="Awesome Software as a Service platform for checking the parity of a number. Blazing fast and lightweight! Start now with free tier!"
+            content="Awesome Software as a Service platform for checking the parity of a number. Blazing fast and lightweight! Start now with a free tier!"
           />
           <meta
             name="keywords"

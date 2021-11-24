@@ -20,9 +20,9 @@ export function Hero() {
 
         <Flex>
           <Text color="gray.500" maxWidth="4xl" margin="auto">
-            Use this awesome Software as a Service platform for checking the
+            Use this fantastic Software as a Service platform for checking the
             parity of a number. You don&apos;t need any advanced and heavy 3rd
-            party libraries. Start now with free tier!
+            party libraries. Start now with a free tier!
           </Text>
         </Flex>
 

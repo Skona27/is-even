@@ -42,8 +42,8 @@ export function Purchase() {
         <Stack spacing="1">
           <Heading fontSize="xl">You have no active plan</Heading>
           <Text color="gray.500" maxWidth="4xl">
-            Choose your plan from one od the available plans below. You can
-            start with basic plan for free!
+            Choose your plan from one of the available plans below. You can
+            start with the basic plan for free!
           </Text>
         </Stack>
 
@@ -141,7 +141,7 @@ export function Purchase() {
                       size="sm"
                       mr={['4', '4', '2']}
                     />
-                    <Text>You will be redirected to payment page</Text>
+                    <Text>You will be redirected to the payment page</Text>
                   </Flex>
                 </AlertDialogBody>
               )}
