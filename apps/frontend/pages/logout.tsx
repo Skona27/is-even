@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
 import { Heading, Stack, Text } from '@chakra-ui/react';
-
+import Head from 'next/head';
 import { Container } from '@ui/Container';
 import { useUserContext } from '@context/user-context';
 import { makeTemporaryRedirect } from '@common/utils/make-temporary-redirect.util';
@@ -26,9 +26,11 @@ export default function LogoutPage() {
 
   return (
     <Container flex="1" direction="column" alignItems="center">
-      <title>
-        Logout | isEven API - SaaS platform for checking if number is even
-      </title>
+      <Head>
+        <title>
+          Logout | isEven API - SaaS platform for checking if number is even
+        </title>
+      </Head>
 
       <Stack alignItems="center" justifyContent="center" textAlign="center">
         <Heading fontSize={['2xl', '2xl', '3xl']}>

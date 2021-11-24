@@ -1,18 +1,19 @@
 import * as React from 'react';
-import { Stack, Heading, Text, Box, Link } from '@chakra-ui/react';
-
+import { Stack, Heading, Text, Link } from '@chakra-ui/react';
+import Head from 'next/head';
 import { Container } from '@ui/Container';
-import { LoginForm } from '@forms/LoginForm';
 import { SocialLink } from '@ui/Link';
 import { FaDev, FaGithub, FaTwitter } from 'react-icons/fa';
 
 export default function AboutPage() {
   return (
     <Container flex="1" direction="column" alignItems="center">
-      <title>
-        About the project | isEven API - SaaS platform for checking if number is
-        even
-      </title>
+      <Head>
+        <title>
+          About the project | isEven API - SaaS platform for checking if number
+          is even
+        </title>
+      </Head>
 
       <Stack spacing={['8', '8', '16']} alignItems="center" py="8">
         <Stack spacing={['2', '2', '4']} textAlign="center">

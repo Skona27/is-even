@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Stack, Heading, Text, Box } from '@chakra-ui/react';
-
+import Head from 'next/head';
 import { makeTemporaryRedirect } from '@common/utils/make-temporary-redirect.util';
 import { GetInitialPropsWithUser } from '@common/interface/get-initial-props-with-user.interface';
 
@@ -10,9 +10,11 @@ import { LoginForm } from '@forms/LoginForm';
 export default function LoginPage() {
   return (
     <Container flex="1" direction="column" alignItems="center">
-      <title>
-        Login | isEven API - SaaS platform for checking if number is even
-      </title>
+      <Head>
+        <title>
+          Login | isEven API - SaaS platform for checking if number is even
+        </title>
+      </Head>
 
       <Stack spacing={['8', '8', '16']} alignItems="center">
         <Stack spacing={['2', '2', '4']} textAlign="center">

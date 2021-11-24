@@ -14,7 +14,7 @@ import {
   AlertDescription,
   Text,
 } from '@chakra-ui/react';
-
+import Head from 'next/head';
 import { Container } from '@ui/Container';
 import { makeTemporaryRedirect } from '@common/utils/make-temporary-redirect.util';
 import { GetInitialPropsWithUser } from '@common/interface/get-initial-props-with-user.interface';
@@ -77,9 +77,11 @@ export default function AccountPage({
 
   return (
     <Container py={['12']}>
-      <title>
-        Account | isEven API - SaaS platform for checking if number is even
-      </title>
+      <Head>
+        <title>
+          Account | isEven API - SaaS platform for checking if number is even
+        </title>
+      </Head>
 
       <Stack spacing={['8']}>
         <Stack spacing="4">
