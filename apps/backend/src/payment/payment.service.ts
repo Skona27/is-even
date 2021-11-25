@@ -124,6 +124,10 @@ export class PaymentService {
     payment: Payment,
     status: PaymentStatus,
   ): Promise<Payment> {
+    this.loggerService.log(
+      `Updating payment: ${payment.id} with status: ${status}`,
+    );
+
     if (payment.status === status) {
       this.loggerService.error(
         `Cannot update payment status with the exact same value`,

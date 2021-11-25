@@ -20,6 +20,8 @@ import {
 import { OrderService } from '../order/order.service';
 import { StripeService } from '../stripe/stripe.service';
 import { PaymentService } from './payment.service';
+import { LoggerService } from '../logger/logger.service';
+import { SentryService } from '../sentry/sentry.service';
 
 import { RegisterPaymentDto } from './dto/register-payment.dto';
 
@@ -41,6 +43,8 @@ export class PaymentController {
     private readonly stripeService: StripeService,
     private readonly orderService: OrderService,
     private readonly paymentService: PaymentService,
+    private readonly loggerService: LoggerService,
+    private readonly sentryService: SentryService,
   ) {}
 
   @Post('/register')
@@ -55,6 +59,10 @@ export class PaymentController {
     @Request() request: RequestWithUser,
   ): Promise<PaymentSession> {
     try {
+      this.loggerService.log(
+        `Registering payment for order: ${registerPaymentDto.orderId}`,
+      );
+
       const user = request.user;
       const { orderId } = registerPaymentDto;
 
@@ -69,6 +77,8 @@ export class PaymentController {
 
       return session;
     } catch (error) {
+      this.loggerService.error(`Failed to register payment: ${error.message}`);
+
       if (error instanceof ReadOrderError) {
         throw new HttpException('Not found', HttpStatus.NOT_FOUND);
       }
@@ -116,6 +126,13 @@ export class PaymentController {
           break;
       }
     } catch (error) {
+      this.loggerService.error(`Failed to verify payment: ${error.message}`);
+
+      this.sentryService.instance.withScope((scope) => {
+        scope.setTag('where', 'paymentController.verifyPayment');
+        this.sentryService.instance.captureException(error);
+      });
+
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,

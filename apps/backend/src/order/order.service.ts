@@ -137,6 +137,8 @@ export class OrderService {
 
   public async fulfillOrder(order: Order): Promise<Order> {
     try {
+      this.loggerService.log(`Fulfilling order: ${order.id}`);
+
       const { creditLimit, creditDuration } = order;
 
       const credit = await this.creditService.createCredit(
