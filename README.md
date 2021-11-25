@@ -20,6 +20,8 @@ This project is an example of a real-world production application. This project 
 
 The project is maintained as a monorepo. Each application or library is kept as a separate package. Monorepo introduces the ability to reuse code and detect cross-stack bugs early.
 
+This whole project is a SaaS boilerplate, ready to copy and use accordingly to your start-up idea! Feel free to fork it and adjust to your needs.
+
 ## Prerequisites
 
 The first step is to install `node` and `npm` globally on your machine.
