@@ -23,7 +23,7 @@ export class StripeService {
 
     return this.stripePaymentService.checkout.sessions.create({
       line_items: lineItems,
-      payment_method_types: ['p24'],
+      payment_method_types: ['card'],
       mode: 'payment',
       success_url,
       cancel_url,

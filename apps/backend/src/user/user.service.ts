@@ -48,8 +48,6 @@ export class UserService {
       this.loggerService.error(`Failed to create a new user. ${error.message}`);
 
       this.sentryService.instance.withScope((scope) => {
-        console.log('Sentry');
-
         scope.setTag('where', 'userService.createUser');
         this.sentryService.instance.captureException(error);
       });
