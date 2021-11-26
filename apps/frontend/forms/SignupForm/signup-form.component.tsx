@@ -24,7 +24,8 @@ interface SignupFormData {
 }
 
 const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-const passwordRegex = /(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+const passwordRegex =
+  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
 export function SignupForm() {
   const router = useRouter();
