@@ -4,7 +4,7 @@
 
 SaaS platform for checking if a number is even.
 
-Check out [Live](https://is-even.eu) version and [API Documentation](https://api.is-even.eu/docs).
+Check out [Live](https://is-even-three.vercel.app/) version and [API Documentation](https://api.is-even.eu/docs).
 
 ## Why API is down?
 
